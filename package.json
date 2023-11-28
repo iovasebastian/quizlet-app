@@ -1,7 +1,7 @@
 {
   "name": "quizlet-app",
   "version": "0.1.0",
-  "homepage": "https://iovasebastian.github.io/quizlet-app/index.html",
+  "homepage": "https://iovasebastian.github.io/quizlet-app/index.js",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
