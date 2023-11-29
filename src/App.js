@@ -8,6 +8,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <Start/>
       <Router>
         <Routes>
           <Route path="/" element={<Start />} />
