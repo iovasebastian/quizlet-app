@@ -9,13 +9,7 @@ function App() {
   return (
     <div className="App">
       <Start/>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Start />} />
-          <Route path="/main" element={<MainComponent />} />
-          <Route path="/final" element={<Final/>}/>
-        </Routes>
-      </Router>
+      
     </div>
   );
 }
