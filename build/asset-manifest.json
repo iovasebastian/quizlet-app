@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/iovasebastian/quizlet-app/static/css/main.0460811f.css",
-    "main.js": "/iovasebastian/quizlet-app/static/js/main.0dbc4fdc.js",
-    "static/js/787.ce4533b9.chunk.js": "/iovasebastian/quizlet-app/static/js/787.ce4533b9.chunk.js",
-    "index.html": "/iovasebastian/quizlet-app/index.html",
-    "main.0460811f.css.map": "/iovasebastian/quizlet-app/static/css/main.0460811f.css.map",
-    "main.0dbc4fdc.js.map": "/iovasebastian/quizlet-app/static/js/main.0dbc4fdc.js.map",
-    "787.ce4533b9.chunk.js.map": "/iovasebastian/quizlet-app/static/js/787.ce4533b9.chunk.js.map"
+    "main.css": "/quizlet-app/static/css/main.0460811f.css",
+    "main.js": "/quizlet-app/static/js/main.8506c354.js",
+    "static/js/787.ce4533b9.chunk.js": "/quizlet-app/static/js/787.ce4533b9.chunk.js",
+    "index.html": "/quizlet-app/index.html",
+    "main.0460811f.css.map": "/quizlet-app/static/css/main.0460811f.css.map",
+    "main.8506c354.js.map": "/quizlet-app/static/js/main.8506c354.js.map",
+    "787.ce4533b9.chunk.js.map": "/quizlet-app/static/js/787.ce4533b9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0460811f.css",
-    "static/js/main.0dbc4fdc.js"
+    "static/js/main.8506c354.js"
   ]
 }
