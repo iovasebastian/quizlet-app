@@ -11,7 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path={process.env.PUBLIC_URL + "/"} element={<Start />} />
-          <Route path={process.env.PUBLIC_URL + "/main"} element={<MainComponent />} />
+          <Route path={"/main"} element={<MainComponent />} />
           <Route path={process.env.PUBLIC_URL + "/final"} element={<Final/>}/>
         </Routes>
       </Router>
