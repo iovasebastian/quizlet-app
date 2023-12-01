@@ -7,7 +7,7 @@ const Start = () => {
 
   function switchScreen() {
     // Navigate to the "/main" route
-    navigate('/main');
+    navigate('/quizlet-app/main');
   }
 
   return <button onClick={switchScreen} className='startButton'>Start</button>;
