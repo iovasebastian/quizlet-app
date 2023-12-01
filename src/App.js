@@ -8,10 +8,10 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename="/quizlet-app">
         <Routes>
           <Route path={process.env.PUBLIC_URL + "/"} element={<Start />} />
-          <Route path={"/main"} element={<MainComponent />} />
+          <Route path={process.env.PUBLIC_URL + "/main"} element={<MainComponent />} />
           <Route path={process.env.PUBLIC_URL + "/final"} element={<Final/>}/>
         </Routes>
       </Router>
