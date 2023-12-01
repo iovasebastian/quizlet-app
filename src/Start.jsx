@@ -10,7 +10,7 @@ const Start = () => {
     navigate('/main');
   }
 
-  return <button className='startButton' onClick={switchScreen}>Start</button>;
+  return <button onClick={switchScreen} className='startButton'>Start</button>;
 };
 
 export default Start;
