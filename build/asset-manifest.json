@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/quizlet-app/static/css/main.0460811f.css",
+    "main.js": "/quizlet-app/static/js/main.6b02c725.js",
+    "static/js/787.ce4533b9.chunk.js": "/quizlet-app/static/js/787.ce4533b9.chunk.js",
+    "index.html": "/quizlet-app/index.html",
+    "main.0460811f.css.map": "/quizlet-app/static/css/main.0460811f.css.map",
+    "main.6b02c725.js.map": "/quizlet-app/static/js/main.6b02c725.js.map",
+    "787.ce4533b9.chunk.js.map": "/quizlet-app/static/js/787.ce4533b9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0460811f.css",
+    "static/js/main.6b02c725.js"
+  ]
+}
