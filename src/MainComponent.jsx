@@ -43,7 +43,7 @@ const MainComponent = () => {
 
   const navigateToFinal = () => {
     console.log("Input data before navigation:", inputData);
-    navigate('/final', { state: { inputData } });
+    navigate('/quizlet-app/final', { state: { inputData } });
   };
 
   return (
