@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
+// LineComp.jsx
+import './lineComp.css';
+import React, { useState } from "react";
 
 const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete }) => {
   const [question, setQuestion] = useState(initialQuestion);
   const [answer, setAnswer] = useState(initialAnswer);
 
-  useEffect(() => {
-    // Notify the parent component about input changes
-    onInputComplete({ question, answer });
-  }, [question, answer, onInputComplete]);
+  const handleQuestionChange = (e) => {
+    setQuestion(e.target.value);
+    onInputComplete({ question: e.target.value, answer });
+  };
+
+  const handleAnswerChange = (e) => {
+    setAnswer(e.target.value);
+    onInputComplete({ question, answer: e.target.value });
+  };
 
   return (
     <div className="lineComp">
-      <span>Question : </span>
-      <input
-        type="text"
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-      />
-      <span>Answer : </span>
-      <input
-        type="text"
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-      />
+      <span>Question: </span>
+      <input type="text" value={question} onChange={handleQuestionChange} />
+      <span>Answer: </span>
+      <input type="text" value={answer} onChange={handleAnswerChange} />
     </div>
   );
 };

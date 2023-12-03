@@ -1,0 +1,46 @@
+.buttonAdd{
+    all:unset;
+    border:1px solid black;
+    text-align: center;
+    border-radius: 0.3em;
+    width:6em;
+    background-color: purple;
+    font-weight: 500;
+    display:block;
+    margin: auto;
+    color:white;
+    margin-top:1em;
+    cursor: pointer;
+    height:1.5em;
+}
+.buttonFinish{
+    all:unset;
+    border:1px solid black;
+    text-align: center;
+    border-radius: 0.3em;
+    width:6em;
+    background-color: purple;
+    font-weight: 500;
+    display:block;
+    margin-right: 1em;
+    margin-left:auto;
+    color:white;
+    margin-top:1em;
+    cursor: pointer;
+    height:2em;
+}
+.buttonRemove{
+    all:unset;
+    border:1px solid black;
+    text-align: center;
+    border-radius: 0.3em;
+    width:6em;
+    background-color: purple;
+    font-weight: 500;
+    display:block;
+    margin: auto;
+    color:white;
+    margin-top:1em;
+    cursor: pointer;
+    height:1.5em;
+}

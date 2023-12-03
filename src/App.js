@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 import Start from './Start.jsx';
 import MainComponent from './MainComponent.jsx';
 import Final from './Final.jsx';

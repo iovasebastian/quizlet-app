@@ -1,12 +1,59 @@
 .quizCard{
     display: flex;
-    justify-content: center;
     align-items: center;
-    width:30em;
-    height:20em;
+    width:30rem;
+    height:20rem;
     border:1px solid black;
     border-radius:1em;
+    background-color: white;
+    font-size:x-large;
+    justify-content: center;
+    padding:1em;
+}
+p{
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 .quizCard:hover{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;;
 }
+.prevButton {
+    all: unset;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 0.3em;
+    width: 6em;
+    background-color: purple;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 1em;
+    margin-right: auto;
+    color: white;
+    margin-top: 1em;
+    cursor: pointer;
+    height: 1.5em;
+  }
+  .spread-apart{
+    display: flex;
+    justify-content: space-between;
+  }
+  .nextButton {
+    all: unset;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 0.3em;
+    width: 6em;
+    background-color: purple;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: 1em;
+    color: white;
+    margin-top: 1em;
+    cursor: pointer;
+    height: 1.5em;
+  }
+  .quizCard p {
+    overflow-wrap: break-word;
+}
+  

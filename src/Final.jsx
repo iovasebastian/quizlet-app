@@ -16,7 +16,7 @@ const Final = () => {
 
   const inputData = inputDataWrapper.inputData;
 
-  const style = state ? inputData[number].question : inputData[number].answer;
+  const style = state ? inputData[number].answer : inputData[number].question;
 
   function reverseState() {
     setState((prevState) => !prevState);
@@ -24,20 +24,22 @@ const Final = () => {
 
   function handleNext() {
     setNumber((prevNumber) => (prevNumber < inputData.length - 1 ? prevNumber + 1 : 0));
+    setState(false);
   }
 
   function handlePrev() {
     setNumber((prevNumber) => (prevNumber > 0 ? prevNumber - 1 : inputData.length - 1));
+    setState(false);
   }
 
   return (
     <div>
       <div className='quizCard' onClick={reverseState}>
-        <p>{style}</p>
+        <p className="p-afisare">{style}</p>
       </div>
-      <div>
-        <button onClick={handleNext}>Next</button>
-        <button onClick={handlePrev}>Previous</button>
+      <div className="spread-apart">
+        <button className = 'prevButton' onClick={handlePrev}>Previous</button>
+        <button className = 'nextButton' onClick={handleNext}>Next</button> 
       </div>
     </div>
   );

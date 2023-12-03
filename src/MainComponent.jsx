@@ -1,8 +1,10 @@
-import './MainComponent.css';
+// MainComponent.jsx
 import React, { useState, useEffect } from 'react';
 import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
+import './MainComponent.css';
+
 
 const STORAGE_KEY = 'questionAnswerData';
 
@@ -22,11 +24,23 @@ const MainComponent = () => {
     setInputData((prevData) => [...prevData, { question: '', answer: '' }]);
   };
 
+  const removeLine = () => {
+    setInputData((prevData) => {
+      if (prevData.length > 0) {
+        const updatedData = [...prevData];
+        updatedData.pop();
+        saveData(STORAGE_KEY, updatedData);
+        return updatedData;
+      } else {
+        return prevData;
+      }
+    });
+  };
+
   const handleInputComplete = (index, newData) => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
-      // Save the updated data to local storage
       saveData(STORAGE_KEY, updatedData);
       return updatedData;
     });
@@ -47,12 +61,13 @@ const MainComponent = () => {
   };
 
   return (
-    <div>
+    <div className='background'>
       <div className='border'>
         {elements}
       </div>
-      <button onClick={addLine}>Add</button>
-      <button onClick={navigateToFinal}>Finish</button>
+      <button className='buttonAdd' onClick={addLine}>ADD</button>
+      <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
+      {inputData.length>0&&<button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
     </div>
   );
 };

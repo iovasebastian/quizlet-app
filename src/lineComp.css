@@ -1,0 +1,16 @@
+.lineComp{
+    margin-bottom: 1em;
+}
+span{
+    margin:1em;
+}
+input{
+    all:unset;
+    background-color: white;
+    border:1px solid black;
+    border-radius: 1em;
+    padding:0.5em;
+}
+.background{
+    height:auto;
+}
