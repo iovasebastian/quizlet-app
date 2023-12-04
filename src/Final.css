@@ -9,6 +9,7 @@
     font-size:x-large;
     justify-content: center;
     padding:1em;
+    overflow: scroll;
 }
 p{
     overflow-wrap: break-word;
