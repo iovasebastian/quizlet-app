@@ -71,7 +71,6 @@ p {
     height: 1.5em;
 }
 .nextButton {
-    user-select: none;
     all: unset;
     border: 1px solid black;
     text-align: center;
