@@ -10,6 +10,11 @@
     justify-content: center;
     padding: 1em;
     overflow: scroll;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.all-card{
+    max-width: 90vw;
 }
 .cover-final{
     display: flex;

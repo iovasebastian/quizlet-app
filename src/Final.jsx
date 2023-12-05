@@ -55,7 +55,7 @@ const Final = () => {
 
   return (
     <div className="cover-final">
-      <div>
+      <div className="all-card">
         <div className='quizCard' onClick={reverseState}>
           <p className="p-afisare">{style}</p>
         </div>
