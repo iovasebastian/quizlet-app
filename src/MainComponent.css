@@ -1,10 +1,23 @@
 .background{
-    background-color: antiquewhite;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: pink;
+}
+.container-main{
+    margin-top: 25vh;
     border:1px solid black;
     border-radius: 1em;
     padding: 2em;
+    background-color: antiquewhite;
+    margin-bottom: 2em;
 }
 .buttonAdd{
+    user-select: none;
+    -moz-user-select: none; /* For Mozilla Firefox */
+    -ms-user-select: none; /* For Microsoft Edge */
+    -webkit-user-select: none;
     all:unset;
     border:1px solid black;
     text-align: center;

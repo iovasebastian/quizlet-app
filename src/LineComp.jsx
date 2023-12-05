@@ -18,7 +18,7 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete })
 
   return (
     <div className="lineComp">
-      <span>Question: </span>
+      <span>Question:</span>
       <input type="text" value={question} onChange={handleQuestionChange} />
       <span>Answer: </span>
       <input type="text" value={answer} onChange={handleAnswerChange} />

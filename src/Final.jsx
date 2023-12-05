@@ -14,7 +14,8 @@ const Final = () => {
     inputDataWrapper = { inputData: loadData('questionAnswerData') || [] };
   }
 
-  const inputData = inputDataWrapper.inputData;
+  const originalInputData = inputDataWrapper.inputData;
+  const [inputData, setInputData] = useState([...originalInputData]);
 
   const style = state ? inputData[number].answer : inputData[number].question;
 
@@ -32,14 +33,37 @@ const Final = () => {
     setState(false);
   }
 
+  function shuffle() {
+    const shuffledData = [...originalInputData];
+    
+    let currentIndex = shuffledData.length, randomIndex;
+
+    while (currentIndex > 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [shuffledData[currentIndex], shuffledData[randomIndex]] = [
+        shuffledData[randomIndex], shuffledData[currentIndex]
+      ];
+    }
+
+    setInputData(shuffledData);
+    for(let i = 0;i<shuffledData.length;i++){
+      console.log(shuffledData[i]);
+    }
+  }
+
   return (
-    <div>
-      <div className='quizCard' onClick={reverseState}>
-        <p className="p-afisare">{style}</p>
-      </div>
-      <div className="spread-apart">
-        <button className = 'prevButton' onClick={handlePrev}>Previous</button>
-        <button className = 'nextButton' onClick={handleNext}>Next</button> 
+    <div className="cover-final">
+      <div>
+        <div className='quizCard' onClick={reverseState}>
+          <p className="p-afisare">{style}</p>
+        </div>
+        <div className="spread-apart">
+          <button className='prevButton' onClick={handlePrev}>Previous</button>
+          <button className='shuffleButton' onClick={shuffle}>Shuffle</button>
+          <button className='nextButton' onClick={handleNext}>Next</button>
+        </div>
       </div>
     </div>
   );

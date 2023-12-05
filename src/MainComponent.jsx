@@ -62,12 +62,12 @@ const MainComponent = () => {
 
   return (
     <div className='background'>
-      <div className='border'>
-        {elements}
+      <div className='container-main'>
+        {elements} 
+        <button className='buttonAdd' onClick={addLine}>ADD</button>
+        <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
+        {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
-      <button className='buttonAdd' onClick={addLine}>ADD</button>
-      <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
-      {inputData.length>0&&<button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
     </div>
   );
 };
