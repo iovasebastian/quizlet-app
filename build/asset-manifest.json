@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/quizlet-app/static/css/main.920dfbd1.css",
-    "main.js": "/quizlet-app/static/js/main.cd7445df.js",
+    "main.css": "/quizlet-app/static/css/main.f7cb5bd1.css",
+    "main.js": "/quizlet-app/static/js/main.f1ed24cb.js",
     "static/js/787.ce4533b9.chunk.js": "/quizlet-app/static/js/787.ce4533b9.chunk.js",
     "index.html": "/quizlet-app/index.html",
-    "main.920dfbd1.css.map": "/quizlet-app/static/css/main.920dfbd1.css.map",
-    "main.cd7445df.js.map": "/quizlet-app/static/js/main.cd7445df.js.map",
+    "main.f7cb5bd1.css.map": "/quizlet-app/static/css/main.f7cb5bd1.css.map",
+    "main.f1ed24cb.js.map": "/quizlet-app/static/js/main.f1ed24cb.js.map",
     "787.ce4533b9.chunk.js.map": "/quizlet-app/static/js/787.ce4533b9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.920dfbd1.css",
-    "static/js/main.cd7445df.js"
+    "static/css/main.f7cb5bd1.css",
+    "static/js/main.f1ed24cb.js"
   ]
 }
