@@ -5,9 +5,29 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-
-
 const baseURL = 'https://api.render.com/deploy/srv-clu8bg0cmk4c73875pc0?key=-o7G5B1s-fI';
+const xhr = new XMLHttpRequest();
+
+// Set the CORS headers
+xhr.open('GET', baseURL);
+xhr.setRequestHeader('Access-Control-Allow-Origin', 'iovasebastian.github.io/quizlet-app');
+xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+
+// Send the request
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    // Handle the response
+    console.log(xhr.responseText);
+  } else {
+    console.error('Error:', xhr.statusText);
+  }
+};
+
+// Send the request
+xhr.send();
+
+
 
 
 const MainComponent = () => {
