@@ -5,45 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://api.render.com/deploy/srv-clu8bg0cmk4c73875pc0?key=-o7G5B1s-fI';
-const xhr = new XMLHttpRequest();
-
-// Set the CORS headers
-xhr.open('GET', baseURL);
-xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://iovasebastian.github.io');
-xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-
-// Send the request
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    // Handle the response
-    console.log(xhr.responseText);
-  } else {
-    console.error('Error:', xhr.statusText);
-  }
-};
-
-// Send the request
-xhr.send();
-
-
-
+const baseURL = 'https://fine-erin-harp-seal-hat.cyclic.app';
 
 const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
 
-  /*const handleDeleteAll = async () => {
-    try {
-      const response = await axios.delete('http://localhost:5001/api/items');
-      console.log('Delete response:', response.data);
-      // Handle the response as needed
-    } catch (error) {
-      console.error('Error deleting entries:', error);
-      // Handle the error as needed
-    }
-  };*/
   const getExistingData = async () => {
     const response = await axios.get(baseURL);
     return response.data;
@@ -59,21 +26,18 @@ const MainComponent = () => {
           return updatedData;
         });
       });
-  
+
       // Proceed with deletion
       const deleteResponse = await axios.delete(baseURL);
       console.log('Delete response:', deleteResponse.data);
-  
+
       // Handle the response as needed
     } catch (error) {
       console.error('Error deleting entries:', error);
       // Handle the error as needed
     }
   };
-  
-  
-  
-  
+
   useEffect(() => {
     handleDeleteAll();
   }, []);
@@ -114,8 +78,8 @@ const MainComponent = () => {
       console.error('Error adding items:', error);
     }
   };
-  
-  
+
+
 
   const elements = inputData.map((data, index) => (
     <LineComp
@@ -135,7 +99,7 @@ const MainComponent = () => {
   return (
     <div className='background'>
       <div className='container-main'>
-        {elements} 
+        {elements}
         <button className='buttonAdd' onClick={addLine}>ADD</button>
         <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
         {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
