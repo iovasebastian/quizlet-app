@@ -10,7 +10,7 @@ const xhr = new XMLHttpRequest();
 
 // Set the CORS headers
 xhr.open('GET', baseURL);
-xhr.setRequestHeader('Access-Control-Allow-Origin', 'iovasebastian.github.io/quizlet-app');
+xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://iovasebastian.github.io');
 xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
