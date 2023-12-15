@@ -1,23 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import './Final.css';
-import { loadData } from './storage';
 
 const Final = () => {
   const [state, setState] = useState(false);
   const [number, setNumber] = useState(0);
   const location = useLocation();
-  let inputDataWrapper = location.state;
+  const inputDataWrapper = location.state;
+  const [inputData, setInputData] = useState([]);
 
-  if (!inputDataWrapper) {
-    // If the state is not provided, try loading from local storage
-    inputDataWrapper = { inputData: loadData('questionAnswerData') || [] };
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/api/items');
+        setInputData(response.data);
 
-  const originalInputData = inputDataWrapper.inputData;
-  const [inputData, setInputData] = useState([...originalInputData]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  const style = state ? inputData[number].answer : inputData[number].question;
+    if (!inputDataWrapper) {
+      // If the state is not provided, fetch data from the database
+      fetchData();
+      
+    } else {
+      // If the state is provided, use it
+      setInputData(inputDataWrapper.inputData || []);
+    }
+  }, [inputDataWrapper]); // Dependency array ensures this effect runs when the component mounts or when inputDataWrapper changes
+
+  const currentItem = inputData[number];
+  const style = state ? currentItem?.answer : currentItem?.question;
 
   function reverseState() {
     setState((prevState) => !prevState);
@@ -34,8 +49,8 @@ const Final = () => {
   }
 
   function shuffle() {
-    const shuffledData = [...originalInputData];
-    
+    const shuffledData = [...inputData];
+
     let currentIndex = shuffledData.length, randomIndex;
 
     while (currentIndex > 0) {

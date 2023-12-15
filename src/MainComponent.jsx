@@ -4,6 +4,7 @@ import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
+import axios from 'axios';
 
 
 const STORAGE_KEY = 'questionAnswerData';
@@ -12,12 +13,48 @@ const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
 
-  useEffect(() => {
-    // Load data from local storage when the component mounts
-    const savedData = loadData(STORAGE_KEY);
-    if (savedData) {
-      setInputData(savedData);
+  /*const handleDeleteAll = async () => {
+    try {
+      const response = await axios.delete('http://localhost:5001/api/items');
+      console.log('Delete response:', response.data);
+      // Handle the response as needed
+    } catch (error) {
+      console.error('Error deleting entries:', error);
+      // Handle the error as needed
     }
+  };*/
+  const getExistingData = async () => {
+    const response = await axios.get('http://localhost:5001/api/items');
+    return response.data;
+  };
+  const handleDeleteAll = async () => {
+    try {
+      // Get the existing data from the database and update the input data accordingly
+      const existingData = await getExistingData();
+      existingData.forEach((item, index) => {
+        setInputData((prevData) => {
+          const updatedData = [...prevData];
+          updatedData[index] = item;
+          return updatedData;
+        });
+      });
+  
+      // Proceed with deletion
+      const deleteResponse = await axios.delete('http://localhost:5001/api/items');
+      console.log('Delete response:', deleteResponse.data);
+  
+      // Handle the response as needed
+    } catch (error) {
+      console.error('Error deleting entries:', error);
+      // Handle the error as needed
+    }
+  };
+  
+  
+  
+  
+  useEffect(() => {
+    handleDeleteAll();
   }, []);
 
   const addLine = () => {
@@ -29,7 +66,6 @@ const MainComponent = () => {
       if (prevData.length > 0) {
         const updatedData = [...prevData];
         updatedData.pop();
-        saveData(STORAGE_KEY, updatedData);
         return updatedData;
       } else {
         return prevData;
@@ -41,10 +77,24 @@ const MainComponent = () => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
-      saveData(STORAGE_KEY, updatedData);
       return updatedData;
     });
   };
+
+  const handleAddAllItems = async () => {
+    try {
+      await Promise.all(inputData.map(async (item) => {
+        if (item.question || item.answer) {
+          const response = await axios.post('http://localhost:5001/api/items', item);
+          console.log('Item added successfully:', response.data);
+        }
+      }));
+    } catch (error) {
+      console.error('Error adding items:', error);
+    }
+  };
+  
+  
 
   const elements = inputData.map((data, index) => (
     <LineComp
@@ -57,6 +107,7 @@ const MainComponent = () => {
 
   const navigateToFinal = () => {
     console.log("Input data before navigation:", inputData);
+    handleAddAllItems();
     navigate('/final', { state: { inputData } });
   };
 
