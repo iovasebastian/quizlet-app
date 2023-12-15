@@ -7,7 +7,7 @@ import './MainComponent.css';
 import axios from 'axios';
 
 
-const baseURL = 'https://iovasebastian.github.io/quizlet-app/api/items';
+const baseURL = 'https://quizlet-app-backend.onrender.com';
 
 
 const MainComponent = () => {
