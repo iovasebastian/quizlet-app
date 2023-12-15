@@ -7,7 +7,8 @@ import './MainComponent.css';
 import axios from 'axios';
 
 
-const STORAGE_KEY = 'questionAnswerData';
+const baseURL = 'https://iovasebastian.github.io/quizlet-app/api/items';
+
 
 const MainComponent = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const MainComponent = () => {
     }
   };*/
   const getExistingData = async () => {
-    const response = await axios.get('http://localhost:5001/api/items');
+    const response = await axios.get(baseURL);
     return response.data;
   };
   const handleDeleteAll = async () => {
@@ -40,7 +41,7 @@ const MainComponent = () => {
       });
   
       // Proceed with deletion
-      const deleteResponse = await axios.delete('http://localhost:5001/api/items');
+      const deleteResponse = await axios.delete(baseURL);
       console.log('Delete response:', deleteResponse.data);
   
       // Handle the response as needed
@@ -85,7 +86,7 @@ const MainComponent = () => {
     try {
       await Promise.all(inputData.map(async (item) => {
         if (item.question || item.answer) {
-          const response = await axios.post('http://localhost:5001/api/items', item);
+          const response = await axios.post(baseURL, item);
           console.log('Item added successfully:', response.data);
         }
       }));
