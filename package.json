@@ -22,11 +22,10 @@
   "scripts": {
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "clean": "rm -rf build",
-    "setCIToFalse": "export process.env.CI=false"
+    "clean": "rm -rf build"
   },
   "eslintConfig": {
     "extends": [
