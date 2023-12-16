@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/api/items';
+const baseURL = 'https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/';
 
 const MainComponent = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const MainComponent = () => {
       });
 
       // Proceed with deletion
-      const deleteResponse = await axios.delete(baseURL);
+      const deleteResponse = await axios.delete('${baseURL}/api/items');
       console.log('Delete response:', deleteResponse.data);
 
       // Handle the response as needed
