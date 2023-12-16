@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://eloquent-griffin-4ccdd9.netlify.app';
+const baseURL = 'https://eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server';
 
 const MainComponent = () => {
   const navigate = useNavigate();
