@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://elegant-bunny-d389b9.netlify.app/functions/server';
+const baseURL = 'https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server';
 
 const MainComponent = () => {
   const navigate = useNavigate();
