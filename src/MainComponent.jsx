@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://fine-erin-harp-seal-hat.cyclic.app';
+const baseURL = 'https://elegant-bunny-d389b9.netlify.app/functions/server';
 
 const MainComponent = () => {
   const navigate = useNavigate();
