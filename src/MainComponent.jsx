@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/';
+const baseURL = 'https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server';
 
 const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
 
   const getExistingData = async () => {
-    const response = await axios.get(baseURL);
+    const response = await axios.get('https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server/api/items');
     return response.data;
   };
   const handleDeleteAll = async () => {
@@ -28,7 +28,7 @@ const MainComponent = () => {
       });
 
       // Proceed with deletion
-      const deleteResponse = await axios.delete('${baseURL}/api/items');
+      const deleteResponse = await axios.delete('https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server/api/items');
       console.log('Delete response:', deleteResponse.data);
 
       // Handle the response as needed
@@ -70,7 +70,7 @@ const MainComponent = () => {
     try {
       await Promise.all(inputData.map(async (item) => {
         if (item.question || item.answer) {
-          const response = await axios.post(baseURL, item);
+          const response = await axios.post('https://657dd03d1d85b84b974388ce--eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server/api/items', item);
           console.log('Item added successfully:', response.data);
         }
       }));
