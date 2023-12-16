@@ -12,7 +12,7 @@ const MainComponent = () => {
   const [inputData, setInputData] = useState([]);
 
   const getExistingData = async () => {
-    const response = await axios.get(baseURL);
+    const response = await axios.get(`${baseURL}/api/items`);
     return response.data;
   };
   const handleDeleteAll = async () => {
