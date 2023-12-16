@@ -12,7 +12,7 @@ const MainComponent = () => {
   const [inputData, setInputData] = useState([]);
 
   const getExistingData = async () => {
-    const response = await axios.get(`${baseURL}/api/items`);
+    const response = await axios.get(`${baseURL}/items`);
     return response.data;
   };
   const handleDeleteAll = async () => {
@@ -28,7 +28,7 @@ const MainComponent = () => {
       });
 
       // Proceed with deletion
-      const deleteResponse = await axios.delete(baseURL);
+      const deleteResponse = await axios.delete(`${baseURL}/items`);
       console.log('Delete response:', deleteResponse.data);
 
       // Handle the response as needed
@@ -70,7 +70,7 @@ const MainComponent = () => {
     try {
       await Promise.all(inputData.map(async (item) => {
         if (item.question || item.answer) {
-          const response = await axios.post(baseURL, item);
+          const response = await axios.post(`${baseURL}/items`, item);
           console.log('Item added successfully:', response.data);
         }
       }));
