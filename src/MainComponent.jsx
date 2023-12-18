@@ -12,7 +12,7 @@ const MainComponent = () => {
   const [inputData, setInputData] = useState([]);
 
   const getExistingData = async () => {
-    const response = await axios.get(`${baseURL}/items`);
+    const response = await axios.get('/.netlify/functions/server');
     return response.data;
   };
   const handleDeleteAll = async () => {

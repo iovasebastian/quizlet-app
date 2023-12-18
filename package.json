@@ -2,6 +2,8 @@
   "name": "quizlet-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3000",
+
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -9,6 +11,7 @@
     "axios": "^1.6.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
     "react": "^18.2.0",
@@ -21,8 +24,9 @@
   "scripts": {
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "CI=false react-scripts build",
+    "build": "netlify-lambda build .netlify/functions && react-scripts build",
     "test": "react-scripts test",
+    "api:serve": "netlify-lambda serve .netlify/functions",
     "eject": "react-scripts eject",
     "clean": "rm -rf build"
   },
