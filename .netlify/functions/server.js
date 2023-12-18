@@ -34,6 +34,15 @@ exports.handler = async (event, context) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+  app.delete('/', async (req, res) => {
+    try {
+      await Item.deleteMany({});
+      res.status(200).json({ message: 'All entries deleted successfully.' });
+    } catch (error) {
+      console.error('Error deleting entries:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 }
 mongoose.connect('mongodb+srv://iovasebastian8:Sebica2003@project.y36dsll.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
