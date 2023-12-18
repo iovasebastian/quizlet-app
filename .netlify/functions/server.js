@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 5001;
+
 
 app.use(cors());
 app.use(express.json());
@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
   answer: String,
   });
   const Item = mongoose.model('Item', ItemSchema);
-  app.get('/api/items', async (req, res) => {
+  app.get('/', async (req, res) => {
     try {
       const allItems = await Item.find();
       res.status(200).json(allItems);
@@ -53,7 +53,7 @@ const ItemSchema = new mongoose.Schema({
 });
 const Item = mongoose.model('Item', ItemSchema);
 
-app.post('/api/items', async (req, res) => {
+app.post('/', async (req, res) => {
   try {
     const newItem = new Item(req.body);
     await newItem.save();
