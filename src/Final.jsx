@@ -13,7 +13,7 @@ const Final = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/items');
+        const response = await axios.get('https://server-quizlet.onrender.com/api/items');
         setInputData(response.data);
 
       } catch (error) {

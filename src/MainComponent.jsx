@@ -2,21 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
-import { saveData, loadData } from './storage';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = 'https://eloquent-griffin-4ccdd9.netlify.app/.netlify/functions/server';
+const baseURL = "https://server-quizlet.onrender.com/api/items";
 
 const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
 
   const getExistingData = async () => {
-    const response = await axios.get('/.netlify/functions/server');
+    const response = await axios.get(baseURL);
+    console.log(response);
     return response.data;
   };
   const handleDeleteAll = async () => {
     try {
+      
       // Get the existing data from the database and update the input data accordingly
       const existingData = await getExistingData();
       existingData.forEach((item, index) => {
@@ -28,7 +29,7 @@ const MainComponent = () => {
       });
 
       // Proceed with deletion
-      const deleteResponse = await axios.delete(`${baseURL}/items`);
+      const deleteResponse = await axios.delete(baseURL);
       console.log('Delete response:', deleteResponse.data);
 
       // Handle the response as needed
@@ -70,12 +71,16 @@ const MainComponent = () => {
     try {
       await Promise.all(inputData.map(async (item) => {
         if (item.question || item.answer) {
-          const response = await axios.post(`${baseURL}/items`, item);
+          const response = await axios.post(baseURL, {
+            question: item.question,
+            answer: item.answer,
+          });
           console.log('Item added successfully:', response.data);
         }
       }));
     } catch (error) {
       console.error('Error adding items:', error);
+      // Handle the error as needed
     }
   };
 
