@@ -15,27 +15,46 @@ const MainComponent = () => {
     console.log(response);
     return response.data;
   };
-  const handleRetrieveAll = async () => {
-    try {
 
-      // Get the existing data from the database and update the input data accordingly
-      const existingData = await getExistingData();
-      existingData.forEach((item, index) => {
-        setInputData((prevData) => {
-          const updatedData = [...prevData];
-          updatedData[index] = item;
-          return updatedData;
-        });
+  const handleDuplicates = async (inputData) => {
+    console.log('Items before deletion', inputData);
+      const updatedData = [...inputData];
+      for (let i = 0; i < updatedData.length; i++) {
+        for (let j = i + 1; j < updatedData.length; j++) {
+          if (
+            updatedData[i].question === updatedData[j].question &&
+            updatedData[i].answer === updatedData[j].answer
+          ) {
+            updatedData.splice(j, 1);
+            j--;
+          }
+        }
+      }
+      setInputData(updatedData);
+      console.log('items after deletion', inputData)
+  }
+  const handleRetrieveAll = async () => {
+  try {
+    // Get the existing data from the database and update the input data accordingly
+    const existingData = await getExistingData();
+    existingData.forEach((item, index) => {
+      setInputData((prevData) => {
+        const updatedData = [...prevData];
+        updatedData[index] = item;
+        return updatedData;
       });
-    } catch (error) {
-      console.error('Error deleting entries:', error);
-    }
-  };
+    });
+    await handleDuplicates(existingData);
+  } catch (error) {
+    console.error('Error deleting entries:', error);
+  }
+};
+
 
   useEffect(() => {
     handleRetrieveAll();
-    handleDuplicates(inputData);
   }, []);
+
 
   const addLine = () => {
     setInputData((prevData) => [...prevData, { question: '', answer: '' }]);
@@ -61,22 +80,7 @@ const MainComponent = () => {
     });
   };
 
-  const handleDuplicates = (inputData) => {
-    console.log('Items before deletion', inputData);
-      const updatedData = [...inputData];
-      for (let i = 0; i < updatedData.length; i++) {
-        for (let j = i + 1; j < updatedData.length; j++) {
-          if (
-            updatedData[i].question === updatedData[j].question &&
-            updatedData[i].answer === updatedData[j].answer
-          ) {
-            updatedData.splice(j, 1);
-            j--; // Decrement j to account for the removed item
-          }
-        }
-      }
-      setInputData(updatedData);
-  }
+  
 
   const handleAddAllItems = async () => {
     try {
@@ -107,9 +111,10 @@ const MainComponent = () => {
     />
   ));
 
-  const navigateToFinal = () => {
+  const navigateToFinal = async () => {
     console.log("Input data before navigation:", inputData);
-    handleAddAllItems();
+    await handleDuplicates(inputData);
+    await handleAddAllItems();
     navigate('/final', { state: { inputData } });
   };
 
