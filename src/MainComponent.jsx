@@ -15,7 +15,7 @@ const MainComponent = () => {
     console.log(response);
     return response.data;
   };
-  const handleDeleteAll = async () => {
+  const handleRetrieveAll = async () => {
     try {
       
       // Get the existing data from the database and update the input data accordingly
@@ -27,20 +27,13 @@ const MainComponent = () => {
           return updatedData;
         });
       });
-
-      // Proceed with deletion
-      const deleteResponse = await axios.delete(baseURL);
-      console.log('Delete response:', deleteResponse.data);
-
-      // Handle the response as needed
     } catch (error) {
       console.error('Error deleting entries:', error);
-      // Handle the error as needed
     }
   };
 
   useEffect(() => {
-    handleDeleteAll();
+    handleRetrieveAll();
   }, []);
 
   const addLine = () => {
@@ -69,7 +62,16 @@ const MainComponent = () => {
 
   const handleAddAllItems = async () => {
     try {
+      console.log('Items before deletion', inputData);
+      for(let i = 0; i<inputData.length;i++){
+        for(let j = i+1; j<inputData.length;j++)
+        if(inputData[i].question === inputData[j].question && inputData[i].answer === inputData[j].answer){
+          inputData.splice(j,1);
+        }
+        console.log('items after deletion', inputData);
+      }
       await Promise.all(inputData.map(async (item) => {
+
         if (item.question || item.answer) {
           const response = await axios.post(baseURL, {
             question: item.question,
