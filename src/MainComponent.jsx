@@ -33,8 +33,8 @@ const MainComponent = () => {
   };
 
   useEffect(() => {
-    handleDuplicates(inputData);
     handleRetrieveAll();
+    handleDuplicates(inputData);
   }, []);
 
   const addLine = () => {
