@@ -33,6 +33,7 @@ const MainComponent = () => {
   };
 
   useEffect(() => {
+    handleDuplicates(inputData);
     handleRetrieveAll();
   }, []);
 
@@ -79,7 +80,6 @@ const MainComponent = () => {
 
   const handleAddAllItems = async () => {
     try {
-      handleDuplicates(inputData);
       await Promise.all(inputData.map(async (item) => {
 
         if (item.question || item.answer) {
