@@ -26,6 +26,7 @@ const MainComponent = () => {
             updatedData[i].answer === updatedData[j].answer
           ) {
             updatedData.splice(j, 1);
+
             j--;
           }
         }
@@ -37,6 +38,7 @@ const MainComponent = () => {
   try {
     // Get the existing data from the database and update the input data accordingly
     const existingData = await getExistingData();
+    await handleDuplicates(existingData);
     existingData.forEach((item, index) => {
       setInputData((prevData) => {
         const updatedData = [...prevData];
@@ -44,7 +46,7 @@ const MainComponent = () => {
         return updatedData;
       });
     });
-    await handleDuplicates(existingData);
+    
   } catch (error) {
     console.error('Error deleting entries:', error);
   }
