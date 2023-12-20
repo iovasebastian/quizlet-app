@@ -19,32 +19,38 @@ const MainComponent = () => {
   const handleDuplicates = async (inputData) => {
     const updatedData = [...inputData];
   
+    // Iterate through the input data array
     for (let i = 0; i < updatedData.length; i++) {
-      for (let j = i + 1; j < updatedData.length; j++) {
-        if (
-          updatedData[i].question === updatedData[j].question &&
-          updatedData[i].answer === updatedData[j].answer
-        ) {
-          const itemIdToDelete = updatedData[i]._id; // Assuming the item has an "_id" property
+      const item = updatedData[i];
   
-          // Send DELETE request to your API endpoint with the item's ID
+      // Check for duplicates within the current array
+      for (let j = i + 1; j < updatedData.length; j++) {
+        const otherItem = updatedData[j];
+  
+        if (
+          item.question === otherItem.question &&
+          item.answer === otherItem.answer
+        ) {
+          // Remove the duplicate item from the array
+          const itemIdToDelete = item._id;
+          updatedData.splice(j, 1);
+  
+          // Send DELETE request to server to remove the item
           try {
             await axios.delete(`'https://server-quizlet.onrender.com/api/items/'${itemIdToDelete}`)
-            console.log(`Item with id ${itemIdToDelete} deleted successfully from the database.`);
+            console.log(`Item with id ${itemIdToDelete} deleted successfully from the database.`)
           } catch (error) {
-            console.error(`Error deleting item with id ${itemIdToDelete}:`, error);
+            console.error(`Error deleting item with id ${itemIdToDelete}`, error);
             // Handle the error as needed
           }
-  
-          // Remove the item from the local state
-          updatedData.splice(j, 1);
-          j--;
         }
       }
     }
-    
+  
+    // Update the input data with the updated array
     setInputData(updatedData);
   };
+  
   
   const handleRetrieveAll = async () => {
   try {
