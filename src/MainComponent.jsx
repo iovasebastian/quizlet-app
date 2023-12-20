@@ -4,7 +4,7 @@ import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = "hhttps://server-quizlet.onrender.com/api/items/"; 
+const baseURL = "https://server-quizlet.onrender.com/api/items/"; 
 
 
 const MainComponent = () => {
