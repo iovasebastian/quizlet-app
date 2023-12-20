@@ -6,8 +6,6 @@ import './Final.css';
 const Final = () => {
   const [state, setState] = useState(false);
   const [number, setNumber] = useState(0);
-  const location = useLocation();
-  const inputDataWrapper = location.state;
   const [inputData, setInputData] = useState([]);
 
   useEffect(() => {
