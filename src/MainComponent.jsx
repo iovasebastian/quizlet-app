@@ -35,7 +35,7 @@ const MainComponent = () => {
   
           // Send DELETE request to server to remove the item
           try {
-            const response = await axios.delete(`'https://server-quizlet.onrender.com/api/items/'${itemIdToDelete}`)
+            const response = await axios.delete(`'https://server-quizlet.onrender.com/api/items/${itemIdToDelete}'`)
             console.log(`Item with id ${itemIdToDelete} deleted successfully from the database.`,response.data);
             break; // Break out of the inner loop after removing the first duplicate
           } catch (error) {
