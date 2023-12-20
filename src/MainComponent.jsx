@@ -19,11 +19,9 @@ const MainComponent = () => {
   const handleDuplicates = async (inputData) => {
     const updatedData = [...inputData];
   
-    // Iterate through the input data array
     for (let i = 0; i < updatedData.length; i++) {
       const item = updatedData[i];
   
-      // Check for duplicates within the current array
       for (let j = i + 1; j < updatedData.length; j++) {
         const otherItem = updatedData[j];
   
@@ -39,6 +37,7 @@ const MainComponent = () => {
           try {
             await axios.delete(`'https://server-quizlet.onrender.com/api/items/'${itemIdToDelete}`)
             console.log(`Item with id ${itemIdToDelete} deleted successfully from the database.`)
+            break; // Break out of the inner loop after removing the first duplicate
           } catch (error) {
             console.error(`Error deleting item with id ${itemIdToDelete}`, error);
             // Handle the error as needed
