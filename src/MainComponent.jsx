@@ -4,7 +4,8 @@ import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = "https://server-quizlet.onrender.com/api/items"; 
+const baseURL = "hhttps://server-quizlet.onrender.com/api/items/"; 
+
 
 const MainComponent = () => {
   const navigate = useNavigate();
@@ -17,46 +18,39 @@ const MainComponent = () => {
   };
 
   const handleDuplicates = async (inputData) => {
-    const updatedData = [...inputData];
+    try {
+      // Delete all of the existing items from the database
+      await axios.delete(`${baseURL}`);
   
-    for (let i = 0; i < updatedData.length; i++) {
-      const item = updatedData[i];
-  
-      for (let j = i + 1; j < updatedData.length; j++) {
-        const otherItem = updatedData[j];
-  
-        if (
-          item.question === otherItem.question &&
-          item.answer === otherItem.answer
-        ) {
-          // Remove the duplicate item from the array
-          const itemIdToDelete = item._id;
-          updatedData.splice(j, 1);
-  
-          // Send DELETE request to server to remove the item
-          try {
-            console.log(`Item with id ${itemIdToDelete} deleted successfully from the database.`,response.data);
-            const response = await axios.delete(`'https://server-quizlet.onrender.com/api/items/${itemIdToDelete}'`)
-            
-            break; // Break out of the inner loop after removing the first duplicate
-          } catch (error) {
-            console.error(`Error deleting item with id ${itemIdToDelete}`, error);
-            // Handle the error as needed
-          }
+      // Insert the new items into the database
+      for (const item of inputData) {
+        try {
+          await axios.post(baseURL, {
+            question: item.question,
+            answer: item.answer,
+          });
+        } catch (error) {
+          console.error(`Error inserting item with question ${item.question} and answer ${item.answer}`, error);
+          // Handle the error as needed
         }
       }
+    } catch (error) {
+      console.error('Error handling duplicates:', error);
+      // Handle the error as needed
     }
-  
-    // Update the input data with the updated array
-    setInputData(updatedData);
   };
+  
+  
+  
+  
+  
+  
   
   
   const handleRetrieveAll = async () => {
   try {
     // Get the existing data from the database and update the input data accordingly
     const existingData = await getExistingData();
-    await handleDuplicates(inputData);
     existingData.forEach((item, index) => {
       setInputData((prevData) => {
         const updatedData = [...prevData];
@@ -64,7 +58,7 @@ const MainComponent = () => {
         return updatedData;
       });
     });
-    
+
   } catch (error) {
     console.error('Error deleting entries:', error);
   }
@@ -72,7 +66,9 @@ const MainComponent = () => {
 
 
   useEffect(() => {
+    
     handleRetrieveAll();
+    
   }, []);
 
 
@@ -104,10 +100,7 @@ const MainComponent = () => {
 
   const handleAddAllItems = async () => {
     try {
-      // Use forEach instead of map to sequentially add items
-      await inputData.reduce(async (previousPromise, item) => {
-        await previousPromise;
-  
+      for (const item of inputData) {
         if (item.question || item.answer) {
           const response = await axios.post(baseURL, {
             question: item.question,
@@ -115,15 +108,20 @@ const MainComponent = () => {
           });
           console.log('Item added successfully:', response.data);
         }
-      }, Promise.resolve());
+      }
   
-      // After all items are added, handle duplicates
-      
+      // Fetch the final updated data after additions
+      const addedDataResponse = await axios.get(baseURL);
+      const addedData = addedDataResponse.data;
+  
+      // Update the input data with the added array
+      setInputData(addedData);
     } catch (error) {
       console.error('Error adding items:', error);
       // Handle the error as needed
     }
   };
+  
 
 
 
