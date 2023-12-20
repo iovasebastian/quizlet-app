@@ -4,7 +4,7 @@ import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = "https://server-quizlet.onrender.com/api/items";
+const baseURL = "https://server-quizlet.onrender.com/api/items"; 
 
 const MainComponent = () => {
   const navigate = useNavigate();
@@ -17,28 +17,39 @@ const MainComponent = () => {
   };
 
   const handleDuplicates = async (inputData) => {
-    console.log('Items before deletion', inputData);
-      const updatedData = [...inputData];
-      for (let i = 0; i < updatedData.length; i++) {
-        for (let j = i + 1; j < updatedData.length; j++) {
-          if (
-            updatedData[i].question === updatedData[j].question &&
-            updatedData[i].answer === updatedData[j].answer
-          ) {
-            updatedData.splice(j, 1);
-
-            j--;
+    const updatedData = [...inputData];
+  
+    for (let i = 0; i < updatedData.length; i++) {
+      for (let j = i + 1; j < updatedData.length; j++) {
+        if (
+          updatedData[i].question === updatedData[j].question &&
+          updatedData[i].answer === updatedData[j].answer
+        ) {
+          const itemIdToDelete = updatedData[i]._id; // Assuming the item has an "_id" property
+  
+          // Send DELETE request to your API endpoint with the item's ID
+          try {
+            await axios.delete(`'https://server-quizlet.onrender.com/api/items/'${itemIdToDelete}`)
+            console.log(`Item with id ${itemIdToDelete} deleted successfully from the database.`);
+          } catch (error) {
+            console.error(`Error deleting item with id ${itemIdToDelete}:`, error);
+            // Handle the error as needed
           }
+  
+          // Remove the item from the local state
+          updatedData.splice(j, 1);
+          j--;
         }
       }
-      setInputData(updatedData);
-      console.log('items after deletion', inputData)
-  }
+    }
+    
+    setInputData(updatedData);
+  };
+  
   const handleRetrieveAll = async () => {
   try {
     // Get the existing data from the database and update the input data accordingly
     const existingData = await getExistingData();
-    await handleDuplicates(existingData);
     existingData.forEach((item, index) => {
       setInputData((prevData) => {
         const updatedData = [...prevData];
@@ -86,8 +97,10 @@ const MainComponent = () => {
 
   const handleAddAllItems = async () => {
     try {
-      await Promise.all(inputData.map(async (item) => {
-
+      // Use forEach instead of map to sequentially add items
+      await inputData.reduce(async (previousPromise, item) => {
+        await previousPromise;
+  
         if (item.question || item.answer) {
           const response = await axios.post(baseURL, {
             question: item.question,
@@ -95,7 +108,10 @@ const MainComponent = () => {
           });
           console.log('Item added successfully:', response.data);
         }
-      }));
+      }, Promise.resolve());
+  
+      // After all items are added, handle duplicates
+      
     } catch (error) {
       console.error('Error adding items:', error);
       // Handle the error as needed
@@ -114,9 +130,8 @@ const MainComponent = () => {
   ));
 
   const navigateToFinal = async () => {
-    console.log("Input data before navigation:", inputData);
-    await handleDuplicates(inputData);
     await handleAddAllItems();
+    await handleDuplicates(inputData);
     navigate('/final', { state: { inputData } });
   };
 
