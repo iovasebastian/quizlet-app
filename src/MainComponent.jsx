@@ -50,6 +50,7 @@ const MainComponent = () => {
   try {
     // Get the existing data from the database and update the input data accordingly
     const existingData = await getExistingData();
+    await handleDuplicates(inputData);
     existingData.forEach((item, index) => {
       setInputData((prevData) => {
         const updatedData = [...prevData];
