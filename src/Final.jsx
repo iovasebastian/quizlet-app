@@ -14,6 +14,7 @@ const Final = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://server-quizlet.onrender.com/api/items');
+        console.log(response.data);
         setInputData(response.data);
 
       } catch (error) {
