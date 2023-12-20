@@ -20,15 +20,8 @@ const Final = () => {
       }
     };
 
-    if (!inputDataWrapper) {
-      // If the state is not provided, fetch data from the database
       fetchData();
-      
-    } else {
-      // If the state is provided, use it
-      setInputData(inputDataWrapper.inputData || []);
-    }
-  }, [inputDataWrapper]); // Dependency array ensures this effect runs when the component mounts or when inputDataWrapper changes
+  }, []); // Dependency array ensures this effect runs when the component mounts or when inputDataWrapper changes
 
   const currentItem = inputData[number];
   const style = state ? currentItem?.answer : currentItem?.question;
