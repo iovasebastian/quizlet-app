@@ -5,6 +5,10 @@
     min-height: 100vh;
     background-color: pink;
 }
+.loading_text{
+    text-align:center;
+    font-weight: 700;
+}
 .container-main{
     margin-top: 25vh;
     border:1px solid black;

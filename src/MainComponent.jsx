@@ -10,6 +10,7 @@ const baseURL = "https://server-quizlet.onrender.com/api/items/";
 const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getExistingData = async () => {
     const response = await axios.get(baseURL);
@@ -31,37 +32,35 @@ const MainComponent = () => {
           });
         } catch (error) {
           console.error(`Error inserting item with question ${item.question} and answer ${item.answer}`, error);
-          // Handle the error as needed
         }
       }
     } catch (error) {
       console.error('Error handling duplicates:', error);
-      // Handle the error as needed
     }
   };
 
   const handleRetrieveAll = async () => {
-    try {
-      // Get the existing data from the database and update the input data accordingly
-      const existingData = await getExistingData();
-      existingData.forEach((item, index) => {
-        setInputData((prevData) => {
-          const updatedData = [...prevData];
-          updatedData[index] = item;
-          return updatedData;
+    setLoading(true);
+      try {
+        const existingData = await getExistingData();
+        existingData.forEach((item, index) => {
+          setInputData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData[index] = item;
+            return updatedData;
+          });
         });
-      });
-
-    } catch (error) {
-      console.error('Error deleting entries:', error);
-    }
+  
+        setLoading(false);
+      } catch (error) {
+        console.error('Error retrieving data:', error);
+        setLoading(false);
+      }
   };
 
-
   useEffect(() => {
-    handleRetrieveAll();
+      handleRetrieveAll();  
   }, []);
-
 
   const addLine = () => {
     setInputData((prevData) => [...prevData, { question: '', answer: '' }]);
@@ -87,7 +86,8 @@ const MainComponent = () => {
     });
   };
 
-  const elements = inputData.map((data, index) => (
+  let elements;
+  {loading ? elements = <p className='loading_text'>Loading...</p> : elements = inputData.map((data, index) => (
     <LineComp
       key={index}
       initialQuestion={data.question}
@@ -95,6 +95,7 @@ const MainComponent = () => {
       onInputComplete={(newData) => handleInputComplete(index, newData)}
     />
   ));
+  }
 
   const saveItems = async () => {
     await handleSaveItems(inputData);
@@ -111,7 +112,7 @@ const MainComponent = () => {
         {elements}
         <button className='buttonAdd' onClick={addLine}>ADD</button>
         <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
-        <button className='buttonRemove' onClick={saveItems}>Save</button>
+        <button className='buttonRemove' onClick={saveItems}>SAVE</button>
         {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
     </div>
