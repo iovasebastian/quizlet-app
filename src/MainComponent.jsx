@@ -4,7 +4,7 @@ import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
-const baseURL = "https://server-quizlet.onrender.com/api/items/"; 
+const baseURL = "https://server-quizlet.onrender.com/api/items/";
 
 
 const MainComponent = () => {
@@ -17,11 +17,11 @@ const MainComponent = () => {
     return response.data;
   };
 
-  const handleDuplicates = async (inputData) => {
+  const handleSaveItems = async (inputData) => {
     try {
       // Delete all of the existing items from the database
       await axios.delete(`${baseURL}`);
-  
+
       // Insert the new items into the database
       for (const item of inputData) {
         try {
@@ -39,33 +39,26 @@ const MainComponent = () => {
       // Handle the error as needed
     }
   };
-  
-  
-  
-  
-  
-  
-  
-  
+
   const handleRetrieveAll = async () => {
-  try {
-    // Get the existing data from the database and update the input data accordingly
-    const existingData = await getExistingData();
-    existingData.forEach((item, index) => {
-      setInputData((prevData) => {
-        const updatedData = [...prevData];
-        updatedData[index] = item;
-        return updatedData;
+    try {
+      // Get the existing data from the database and update the input data accordingly
+      const existingData = await getExistingData();
+      existingData.forEach((item, index) => {
+        setInputData((prevData) => {
+          const updatedData = [...prevData];
+          updatedData[index] = item;
+          return updatedData;
+        });
       });
-    });
 
-  } catch (error) {
-    console.error('Error deleting entries:', error);
-  }
-};
+    } catch (error) {
+      console.error('Error deleting entries:', error);
+    }
+  };
 
 
-  useEffect(() => { 
+  useEffect(() => {
     handleRetrieveAll();
   }, []);
 
@@ -94,35 +87,6 @@ const MainComponent = () => {
     });
   };
 
-  
-
-  const handleAddAllItems = async () => {
-    try {
-      for (const item of inputData) {
-        if (item.question || item.answer) {
-          const response = await axios.post(baseURL, {
-            question: item.question,
-            answer: item.answer,
-          });
-          console.log('Item added successfully:', response.data);
-        }
-      }
-  
-      // Fetch the final updated data after additions
-      const addedDataResponse = await axios.get(baseURL);
-      const addedData = addedDataResponse.data;
-  
-      // Update the input data with the added array
-      setInputData(addedData);
-    } catch (error) {
-      console.error('Error adding items:', error);
-      // Handle the error as needed
-    }
-  };
-  
-
-
-
   const elements = inputData.map((data, index) => (
     <LineComp
       key={index}
@@ -133,7 +97,7 @@ const MainComponent = () => {
   ));
 
   const saveItems = async () => {
-    await handleDuplicates(inputData);
+    await handleSaveItems(inputData);
     alert("Data has been saved");
   }
 
