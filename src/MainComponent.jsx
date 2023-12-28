@@ -65,10 +65,8 @@ const MainComponent = () => {
 };
 
 
-  useEffect(() => {
-    
+  useEffect(() => { 
     handleRetrieveAll();
-    
   }, []);
 
 
@@ -134,9 +132,12 @@ const MainComponent = () => {
     />
   ));
 
-  const navigateToFinal = async () => {
-    await handleAddAllItems();
+  const saveItems = async () => {
     await handleDuplicates(inputData);
+    alert("Data has been saved");
+  }
+
+  const navigateToFinal = async () => {
     navigate('/final', { state: { inputData } });
   };
 
@@ -146,6 +147,7 @@ const MainComponent = () => {
         {elements}
         <button className='buttonAdd' onClick={addLine}>ADD</button>
         <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
+        <button className='buttonRemove' onClick={saveItems}>Save</button>
         {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
     </div>
