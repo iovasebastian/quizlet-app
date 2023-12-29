@@ -4,6 +4,7 @@ import LineComp from './LineComp';
 import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
+import loadingAnimation from './Rolling-1s-200px.svg';
 const baseURL = "https://server-quizlet.onrender.com/api/items/";
 
 
@@ -87,7 +88,7 @@ const MainComponent = () => {
   };
 
   let elements;
-  {loading ? elements = <p className='loading_text'>Loading...</p> : elements = inputData.map((data, index) => (
+  {loading ? elements = <img src = {loadingAnimation} alt = 'loading-image'/> : elements = inputData.map((data, index) => (
     <LineComp
       key={index}
       initialQuestion={data.question}
