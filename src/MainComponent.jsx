@@ -111,9 +111,9 @@ const MainComponent = () => {
     <div className='background'>
       <div className='container-main'>
         {elements}
-        <button className='buttonAdd' onClick={addLine}>ADD</button>
-        <button className='buttonRemove' onClick={removeLine}>REMOVE</button>
-        <button className='buttonRemove' onClick={saveItems}>SAVE</button>
+        {!loading && <button className='buttonAdd' onClick={addLine}>ADD</button>}
+        {!loading && <button className='buttonRemove' onClick={removeLine}>REMOVE</button>}
+        {!loading && <button className='buttonRemove' onClick={saveItems}>SAVE</button>}
         {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
     </div>
