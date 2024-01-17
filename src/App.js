@@ -5,6 +5,9 @@ import Start from './Start.jsx';
 import MainComponent from './MainComponent.jsx';
 import Final from './Final.jsx';
 import './App.css';
+import Signin from './Signin.jsx';
+import Admin from './Admin.jsx';
+import SignUp from './SignUp.jsx';
 
 function App() {
 
@@ -12,9 +15,11 @@ function App() {
     <div className="App">
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Start />} />
+          <Route path="/" element={<Signin />} />
           <Route path="/main" element={<MainComponent />} />
           <Route path="/final" element={<Final/>}/>
+          <Route path="/admin" element ={<Admin/>}/>
+          <Route path="/signup" element={<SignUp/>}/>
         </Routes>
       </HashRouter>
     </div>

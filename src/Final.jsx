@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useMatch } from 'react-router-dom';
 import axios from 'axios';
 import './Final.css';
 
@@ -7,24 +7,47 @@ const Final = () => {
   const [state, setState] = useState(false);
   const [number, setNumber] = useState(0);
   const [inputData, setInputData] = useState([]);
+  const baseURL = "https://server-quizlet.onrender.com/api/items";
+  const fetchData = async (username) => {
+    try {
+      const response = await axios.get(`${baseURL}?username=${username}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const initializeData = async () => {
       try {
-        const response = await axios.get('https://server-quizlet.onrender.com/api/items');
-        console.log(response.data);
-        setInputData(response.data);
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+          return;
+        }
 
+        const data = await fetchData(user.username);
+
+        // Filter out invalid or empty objects from the data array
+        const filteredData = data.filter(item => Object.keys(item).length > 0);
+
+        setInputData(filteredData);
+        console.log('init', filteredData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error during initialization:', error);
       }
     };
 
-      fetchData();
+    initializeData();
   }, []); // Dependency array ensures this effect runs when the component mounts or when inputDataWrapper changes
-
-  const currentItem = inputData[number];
-  const style = state ? currentItem?.answer : currentItem?.question;
+  
+  
+  console.log('input', inputData);
+  const currentQuestion = inputData[number]?.questions?.[0] ?? '';
+  const currentAnswer = inputData[number]?.answers?.[0] ?? '';
+  
+  console.log(currentQuestion,currentAnswer);
+  const style = state ? currentAnswer : currentQuestion;
 
   function reverseState() {
     setState((prevState) => !prevState);
@@ -34,31 +57,27 @@ const Final = () => {
     setNumber((prevNumber) => (prevNumber < inputData.length - 1 ? prevNumber + 1 : 0));
     setState(false);
   }
-
+  
   function handlePrev() {
     setNumber((prevNumber) => (prevNumber > 0 ? prevNumber - 1 : inputData.length - 1));
     setState(false);
   }
+  
 
   function shuffle() {
-    const shuffledData = [...inputData];
+  const shuffledData = [...inputData];
 
-    let currentIndex = shuffledData.length, randomIndex;
-
-    while (currentIndex > 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      [shuffledData[currentIndex], shuffledData[randomIndex]] = [
-        shuffledData[randomIndex], shuffledData[currentIndex]
-      ];
-    }
-
-    setInputData(shuffledData);
-    for(let i = 0;i<shuffledData.length;i++){
-      console.log(shuffledData[i]);
-    }
+  for (let i = shuffledData.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
   }
+
+  setInputData(shuffledData);
+  setNumber(0); // Reset the number to start from the beginning
+}
+
+  
+  
 
   return (
     <div className="cover-final">

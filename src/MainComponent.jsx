@@ -5,59 +5,79 @@ import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
 import loadingAnimation from './Rolling-1s-200px.svg';
-const baseURL = "https://server-quizlet.onrender.com/api/items/";
+const baseURL = "https://server-quizlet.onrender.com/api/items";
 
 
 const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const role = JSON.parse(localStorage.getItem('role'));
 
   const getExistingData = async () => {
-    const response = await axios.get(baseURL);
-    console.log(response);
-    return response.data;
+    try{
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        return;
+      }
+      const response = await axios.get(`${baseURL}?username=${user.username}`);
+      console.log('data from the db', response.data);
+      return response.data;
+    }
+    catch(error){
+      console.log(error);
+    }
   };
 
   const handleSaveItems = async (inputData) => {
     try {
-      // Delete all of the existing items from the database
-      await axios.delete(`${baseURL}`);
-
-      // Insert the new items into the database
-      for (const item of inputData) {
-        try {
-          await axios.post(baseURL, {
-            question: item.question,
-            answer: item.answer,
-          });
-        } catch (error) {
-          console.error(`Error inserting item with question ${item.question} and answer ${item.answer}`, error);
-        }
+      const user = JSON.parse(localStorage.getItem('user'));
+      console.log('Data to be sent:', inputData);
+      if (!user) {
+        console.error('User not found.');
+        return;
       }
+  
+      const userItems = {
+        username: user.username,
+        questionSets: inputData.map(item => ({
+          questions: [item.question],
+          answers: [item.answer],
+        })),
+      };
+  
+      await axios.post(`${baseURL}/saveForUser`, { items: [userItems] });
+      alert("Data has been saved");
     } catch (error) {
-      console.error('Error handling duplicates:', error);
+      console.error('Error saving data:', error);
     }
   };
 
   const handleRetrieveAll = async () => {
     setLoading(true);
-      try {
-        const existingData = await getExistingData();
-        existingData.forEach((item, index) => {
-          setInputData((prevData) => {
-            const updatedData = [...prevData];
-            updatedData[index] = item;
-            return updatedData;
-          });
-        });
+    try {
+      const existingData = await getExistingData();
+      console.log('existing data', existingData);
   
-        setLoading(false);
-      } catch (error) {
-        console.error('Error retrieving data:', error);
-        setLoading(false);
+      if (existingData && Array.isArray(existingData)) {
+        const formattedData = existingData.map(item => ({
+          question: item.questions && item.questions.length > 0 ? item.questions[0] : '',
+          answer: item.answers && item.answers.length > 0 ? item.answers[0] : '',
+          _id: item._id || '',
+        }));
+  
+        setInputData(formattedData);
+        console.log('input data', formattedData);
       }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+      setLoading(false);
+    }
   };
+  
+  
+
 
   useEffect(() => {
       handleRetrieveAll();  
@@ -100,13 +120,17 @@ const MainComponent = () => {
 
   const saveItems = async () => {
     await handleSaveItems(inputData);
-    alert("Data has been saved");
   }
 
   const navigateToFinal = async () => {
     navigate('/final', { state: { inputData } });
   };
-
+  const adminDash = () => {
+    navigate('/admin');
+  }
+  const signOut = () => {
+    navigate('/');
+  }
   return (
     <div className='background'>
       <div className='container-main'>
@@ -114,6 +138,8 @@ const MainComponent = () => {
         {!loading && <button className='buttonAdd' onClick={addLine}>ADD</button>}
         {!loading && <button className='buttonRemove' onClick={removeLine}>REMOVE</button>}
         {!loading && <button className='buttonRemove' onClick={saveItems}>SAVE</button>}
+        {role==='admin'&&<button className='buttonRemove' onClick={adminDash}>ADMIN</button>}
+        {!loading && <button className='buttonRemove' onClick={signOut}>SIGN OUT</button>}
         {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
     </div>

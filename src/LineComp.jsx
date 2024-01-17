@@ -10,8 +10,8 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete })
     setQuestion(e.target.value);
     onInputComplete({ question: e.target.value, answer });
   };
+ 
   
-
   const handleAnswerChange = (e) => {
     setAnswer(e.target.value);
     onInputComplete({ question, answer: e.target.value });
