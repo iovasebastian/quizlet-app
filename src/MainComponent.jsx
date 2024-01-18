@@ -111,6 +111,7 @@ const MainComponent = () => {
   {loading ? elements = <img src = {loadingAnimation} alt = 'loading-image'/> : elements = inputData.map((data, index) => (
     <LineComp
       key={index}
+      index={index}
       initialQuestion={data.question}
       initialAnswer={data.answer}
       onInputComplete={(newData) => handleInputComplete(index, newData)}

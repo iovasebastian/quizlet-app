@@ -2,7 +2,7 @@
 import './lineComp.css';
 import React, { useState } from "react";
 
-const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete }) => {
+const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, index }) => {
   const [question, setQuestion] = useState(initialQuestion);
   const [answer, setAnswer] = useState(initialAnswer);
 
@@ -16,10 +16,11 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete })
     setAnswer(e.target.value);
     onInputComplete({ question, answer: e.target.value });
   };
+  console.log(index);
 
   return (
     <div className="lineComp">
-      <p>{props.key}</p>
+      <span>{index+1} :</span>
       <span>Question:</span>
       <input type="text" value={question} onChange={handleQuestionChange} required/>
       <span>Answer: </span>
