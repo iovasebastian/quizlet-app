@@ -19,6 +19,7 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete })
 
   return (
     <div className="lineComp">
+      <p>{props.key}</p>
       <span>Question:</span>
       <input type="text" value={question} onChange={handleQuestionChange} required/>
       <span>Answer: </span>
