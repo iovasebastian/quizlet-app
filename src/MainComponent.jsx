@@ -75,8 +75,6 @@ const MainComponent = () => {
       setLoading(false);
     }
   };
-  
-  
 
 
   useEffect(() => {
@@ -103,20 +101,38 @@ const MainComponent = () => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
+      console.log('Updated inputData:', updatedData);
       return updatedData;
     });
   };
 
-  let elements;
-  {loading ? elements = <img src = {loadingAnimation} alt = 'loading-image'/> : elements = inputData.map((data, index) => (
-    <LineComp
-      key={index}
-      initialQuestion={data.question}
-      initialAnswer={data.answer}
-      onInputComplete={(newData) => handleInputComplete(index, newData)}
-    />
+  const deleteLine = async (index) => {
+    setInputData((prevData) => {
+      const updatedData = prevData.slice();
+      updatedData.splice(index, 1);
+      console.log('deleted index:', index);
+      console.log('updatedData:', updatedData);
+      return updatedData;
+    });
+    console.log('inputData:', inputData);
+  };
+  useEffect(() => {
+    console.log('Updated inputData:', inputData);
+  }, [inputData]);  
+    
+  const elements = loading
+  ? <img src={loadingAnimation} alt='loading-image' />
+  : inputData.map((data, index) => (
+    <div key={index} className="line-container">
+      <LineComp
+        key={index} // Add key prop
+        index={index}
+        initialQuestion={data.question}
+        initialAnswer={data.answer}
+        onInputComplete={(newData) => handleInputComplete(index, newData)}
+      />
+    </div>
   ));
-  }
 
   const saveItems = async () => {
     await handleSaveItems(inputData);
