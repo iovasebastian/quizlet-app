@@ -7,12 +7,16 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
   const [answer, setAnswer] = useState(initialAnswer);
 
   const handleQuestionChange = (e) => {
+  const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
+    onInputComplete(index, { question: e.target.value, answer });
     onInputComplete(index, { question: e.target.value, answer });
   };
 
+
   const handleAnswerChange = (e) => {
     setAnswer(e.target.value);
+    onInputComplete(index, { question, answer: e.target.value });
     onInputComplete(index, { question, answer: e.target.value });
   };
 
@@ -21,12 +25,14 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
   return (
     <div className="lineComp">
       <span>{index+1} :</span>
+      <span>{index+1} :</span>
       <span>Question:</span>
       <input type="text" value={question} onChange={handleQuestionChange} required/>
       <span>Answer: </span>
       <input type="text" value={answer} onChange={handleAnswerChange} required/>
+      <button className = 'buttonDelete' onClick={handleDelete}>DELETE</button>
     </div>
   );
 };
 
-export default LineComp;
+export default React.memo(LineComp);

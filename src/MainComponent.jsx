@@ -76,6 +76,7 @@ const MainComponent = () => {
     }
   };
 
+
   useEffect(() => {
       handleRetrieveAll();  
   }, []);
@@ -100,6 +101,14 @@ const MainComponent = () => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
+      console.log('Updated inputData:', updatedData);
+      return updatedData;
+    });
+  };
+  const deleteLine = (index) => {
+    setInputData((prevData) => {
+      const updatedData = prevData.slice();
+      updatedData.splice(index, 1);
       return updatedData;
     });
   };
