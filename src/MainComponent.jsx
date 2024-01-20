@@ -77,6 +77,8 @@ const MainComponent = () => {
   };
 
 
+
+
   useEffect(() => {
       handleRetrieveAll();  
   }, []);
@@ -101,6 +103,7 @@ const MainComponent = () => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
+      console.log('Updated inputData:', updatedData);
       console.log('Updated inputData:', updatedData);
       return updatedData;
     });
