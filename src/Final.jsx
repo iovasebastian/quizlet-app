@@ -84,6 +84,7 @@ const Final = () => {
       <div className="all-card">
         <div className='quizCard' onClick={reverseState}>
           <p className="p-afisare">{style}</p>
+          <p className="p-numbering">{number+1}/{inputData.length}</p>
         </div>
         <div className="spread-apart">
           <button className='prevButton' onClick={handlePrev}>Previous</button>

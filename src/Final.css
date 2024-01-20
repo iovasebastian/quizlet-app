@@ -12,9 +12,16 @@
     overflow: scroll;
     max-width: 100%;
     box-sizing: border-box;
+    position: relative;
 }
 .all-card{
     max-width: 90vw;
+}
+.p-numbering{
+    font-size: 16px;
+    position: absolute;
+    top:1em;
+    left:1.2em;
 }
 .cover-final{
     display: flex;
