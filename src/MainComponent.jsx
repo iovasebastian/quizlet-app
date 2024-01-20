@@ -13,6 +13,7 @@ const MainComponent = () => {
   const [inputData, setInputData] = useState([]);
   const [loading, setLoading] = useState(true);
   const role = JSON.parse(localStorage.getItem('role'));
+  const [dataUpdated, setDataUpdated] = useState(false);
 
   const getExistingData = async () => {
     try{
@@ -76,15 +77,13 @@ const MainComponent = () => {
     }
   };
 
-
-
-
   useEffect(() => {
       handleRetrieveAll();  
   }, []);
 
   const addLine = () => {
     setInputData((prevData) => [...prevData, { question: '', answer: '' }]);
+    setDataUpdated(false);
   };
 
   const removeLine = () => {
@@ -97,6 +96,7 @@ const MainComponent = () => {
         return prevData;
       }
     });
+    setDataUpdated(false);
   };
 
   const handleInputComplete = (index, newData) => {
@@ -104,27 +104,44 @@ const MainComponent = () => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
       console.log('Updated inputData:', updatedData);
-      console.log('Updated inputData:', updatedData);
       return updatedData;
     });
   };
   useEffect(() => {
     console.log('Updated inputData:', inputData);
-  }, [inputData]);  
+  }, [inputData]); 
+
+  const deleteLine = async (index) => {
+    setInputData((prevData) => {
+      const updatedData = prevData.slice();
+      updatedData.splice(index, 1);
+      return updatedData;
+    });
+    setDataUpdated(false); // Reset dataUpdated state after modifying inputData
+  };
+
+  useEffect(() => {
+    // Check if dataUpdated is false and inputData has changed
+    if (!dataUpdated && inputData.length > 0) {
+      setDataUpdated(true); // Set dataUpdated to true to trigger rendering
+    }
+  }, [dataUpdated, inputData]);
     
   const elements = loading
   ? <img src={loadingAnimation} alt='loading-image' />
-  : inputData.map((data, index) => (
+  : dataUpdated && inputData.map((data, index) => (
     <div key={index} className="line-container">
       <LineComp
-        key={index} // Add key prop
+        key={index}
         index={index}
         initialQuestion={data.question}
         initialAnswer={data.answer}
         onInputComplete={(newData) => handleInputComplete(index, newData)}
+        deleteLine={() => deleteLine(index)}
       />
     </div>
   ));
+
 
   const saveItems = async () => {
     await handleSaveItems(inputData);
