@@ -7,7 +7,6 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
   const [answer, setAnswer] = useState(initialAnswer);
 
   const handleQuestionChange = (e) => {
-  const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
     onInputComplete(index, { question: e.target.value, answer });
     onInputComplete(index, { question: e.target.value, answer });
@@ -35,4 +34,4 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
   );
 };
 
-export default React.memo(LineComp);
+export default LineComp;

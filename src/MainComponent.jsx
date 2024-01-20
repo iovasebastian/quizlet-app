@@ -105,13 +105,6 @@ const MainComponent = () => {
       return updatedData;
     });
   };
-  const deleteLine = (index) => {
-    setInputData((prevData) => {
-      const updatedData = prevData.slice();
-      updatedData.splice(index, 1);
-      return updatedData;
-    });
-  };
 
   const deleteLine = async (index) => {
     setInputData((prevData) => {
