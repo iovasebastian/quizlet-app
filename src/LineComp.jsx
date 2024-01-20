@@ -29,6 +29,7 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
       <input type="text" value={question} onChange={handleQuestionChange} required/>
       <span>Answer: </span>
       <input type="text" value={answer} onChange={handleAnswerChange} required/>
+      <button className = 'buttonDelete' onClick={handleDelete}>DELETE</button>
     </div>
   );
 };
