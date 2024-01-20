@@ -86,19 +86,6 @@ const MainComponent = () => {
     setDataUpdated(false);
   };
 
-  const removeLine = () => {
-    setInputData((prevData) => {
-      if (prevData.length > 0) {
-        const updatedData = [...prevData];
-        updatedData.pop();
-        return updatedData;
-      } else {
-        return prevData;
-      }
-    });
-    setDataUpdated(false);
-  };
-
   const handleInputComplete = (index, newData) => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
@@ -161,7 +148,6 @@ const MainComponent = () => {
       <div className='container-main'>
         {elements}
         {!loading && <button className='buttonAdd' onClick={addLine}>ADD</button>}
-        {!loading && <button className='buttonRemove' onClick={removeLine}>REMOVE</button>}
         {!loading && <button className='buttonRemove' onClick={saveItems}>SAVE</button>}
         {role==='admin'&&<button className='buttonRemove' onClick={adminDash}>ADMIN</button>}
         {!loading && <button className='buttonRemove' onClick={signOut}>SIGN OUT</button>}
