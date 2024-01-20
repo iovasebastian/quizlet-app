@@ -12,6 +12,7 @@ const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dataUpdated, setDataUpdated] = useState(false);
   const role = JSON.parse(localStorage.getItem('role'));
 
   const getExistingData = async () => {
@@ -75,9 +76,6 @@ const MainComponent = () => {
       setLoading(false);
     }
   };
-  
-  
-
 
   useEffect(() => {
       handleRetrieveAll();  
@@ -85,18 +83,7 @@ const MainComponent = () => {
 
   const addLine = () => {
     setInputData((prevData) => [...prevData, { question: '', answer: '' }]);
-  };
-
-  const removeLine = () => {
-    setInputData((prevData) => {
-      if (prevData.length > 0) {
-        const updatedData = [...prevData];
-        updatedData.pop();
-        return updatedData;
-      } else {
-        return prevData;
-      }
-    });
+    setDataUpdated(false); // Reset dataUpdated state after modifying inputData
   };
 
   const handleInputComplete = (index, newData) => {
@@ -105,19 +92,40 @@ const MainComponent = () => {
       updatedData[index] = newData;
       return updatedData;
     });
+    setDataUpdated(false); // Reset dataUpdated state after modifying inputData
   };
-
-  let elements;
-  {loading ? elements = <img src = {loadingAnimation} alt = 'loading-image'/> : elements = inputData.map((data, index) => (
-    <LineComp
-      key={index}
-      index={index}
-      initialQuestion={data.question}
-      initialAnswer={data.answer}
-      onInputComplete={(newData) => handleInputComplete(index, newData)}
-    />
-  ));
-  }
+  const deleteLine = async (index) => {
+    setInputData((prevData) => {
+      const updatedData = prevData.slice();
+      updatedData.splice(index, 1);
+      return updatedData;
+    });
+    setDataUpdated(false); // Reset dataUpdated state after modifying inputData
+  };
+  useEffect(() => {
+    console.log('Updated inputData:', inputData);
+  }, [inputData]);  
+  useEffect(() => {
+    // Check if dataUpdated is false and inputData has changed
+    if (!dataUpdated && inputData.length > 0) {
+      setDataUpdated(true); // Set dataUpdated to true to trigger rendering
+    }
+  }, [dataUpdated, inputData]);
+    
+  const elements = loading
+    ? <img src={loadingAnimation} alt='loading-image' />
+    : dataUpdated && inputData.map((data, index) => (
+      <div key={index} className="line-container">
+        <LineComp
+          key={index}
+          index={index}
+          initialQuestion={data.question}
+          initialAnswer={data.answer}
+          onInputComplete={(newData) => handleInputComplete(index, newData)}
+          deleteLine={() => deleteLine(index)}
+        />
+      </div>
+    ));
 
   const saveItems = async () => {
     await handleSaveItems(inputData);
@@ -137,7 +145,6 @@ const MainComponent = () => {
       <div className='container-main'>
         {elements}
         {!loading && <button className='buttonAdd' onClick={addLine}>ADD</button>}
-        {!loading && <button className='buttonRemove' onClick={removeLine}>REMOVE</button>}
         {!loading && <button className='buttonRemove' onClick={saveItems}>SAVE</button>}
         {role==='admin'&&<button className='buttonRemove' onClick={adminDash}>ADMIN</button>}
         {!loading && <button className='buttonRemove' onClick={signOut}>SIGN OUT</button>}
