@@ -2,24 +2,29 @@
 import './lineComp.css';
 import React, { useState } from "react";
 
-const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete }) => {
+const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, index }) => {
   const [question, setQuestion] = useState(initialQuestion);
   const [answer, setAnswer] = useState(initialAnswer);
 
-  const handleQuestionChange =(e) => {
+  const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
-    onInputComplete({ question: e.target.value, answer });
+    onInputComplete(index, { question: e.target.value, answer });
+    onInputComplete(index, { question: e.target.value, answer });
   };
- 
-  
+
+
   const handleAnswerChange = (e) => {
     setAnswer(e.target.value);
-    onInputComplete({ question, answer: e.target.value });
+    onInputComplete(index, { question, answer: e.target.value });
+    onInputComplete(index, { question, answer: e.target.value });
   };
+
+  console.log(`LineComp ${index} rendered with question: ${question}, answer: ${answer}`);
 
   return (
     <div className="lineComp">
-      <p>{props.key}</p>
+      <span>{index+1} :</span>
+      <span>{index+1} :</span>
       <span>Question:</span>
       <input type="text" value={question} onChange={handleQuestionChange} required/>
       <span>Answer: </span>
