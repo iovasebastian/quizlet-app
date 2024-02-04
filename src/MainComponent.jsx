@@ -38,7 +38,7 @@ const MainComponent = () => {
         console.error('User not found.');
         return;
       }
-  
+
       const userItems = {
         username: user.username,
         questionSets: inputData.map(item => ({
@@ -94,29 +94,25 @@ const MainComponent = () => {
       return updatedData;
     });
   };
-  useEffect(() => {
-    console.log('Updated inputData:', inputData);
-  }, [inputData]); 
-
   const deleteLine = async (index) => {
     setInputData((prevData) => {
       const updatedData = prevData.slice();
       updatedData.splice(index, 1);
       return updatedData;
     });
-    setDataUpdated(false); // Reset dataUpdated state after modifying inputData
+    setDataUpdated(false);
   };
 
   useEffect(() => {
-    // Check if dataUpdated is false and inputData has changed
     if (!dataUpdated && inputData.length > 0) {
-      setDataUpdated(true); // Set dataUpdated to true to trigger rendering
+      setDataUpdated(true);
     }
-  }, [dataUpdated, inputData]);
+  }, [dataUpdated,inputData]);
+  
     
   const elements = loading
   ? <img src={loadingAnimation} alt='loading-image' />
-  : dataUpdated && inputData.map((data, index) => (
+  :inputData.map((data, index) => (
     <div key={index} className="line-container">
       <LineComp
         key={index}
