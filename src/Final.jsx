@@ -7,7 +7,7 @@ const Final = () => {
   const [state, setState] = useState(false);
   const [number, setNumber] = useState(0);
   const [inputData, setInputData] = useState([]);
-  const baseURL = "https://server-quizlet.vercel.app/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items/";
   const fetchData = async (username) => {
     try {
       const response = await axios.get(`${baseURL}?username=${username}`);

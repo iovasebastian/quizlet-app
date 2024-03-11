@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
 import loadingAnimation from './Rolling-1s-200px.svg';
-const baseURL = "https://server-quizlet.vercel.app/api/items";
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
 
 
 const MainComponent = () => {

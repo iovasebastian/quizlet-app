@@ -2,7 +2,7 @@ import AdminLine from "./AdminLine";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import './admin.css';
-const baseURL = "https://server-quizlet.vercel.app/api/items";
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
 
 
 const Admin = () => {
