@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-const baseURL = "https://server-quizlet.onrender.com/api/items/admin/";
+const baseURL = "https://server-three-taupe.vercel.app/api/items/admin/";
 const AdminLine = (props) => {
   const deleteUser = async (userId) => {
     try {

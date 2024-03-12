@@ -7,7 +7,7 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const baseURL = "https://server-quizlet.onrender.com/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items";
   const handleSignUp = async () => {
     try {
       const response = await axios.post(`${baseURL}/signup`, {
