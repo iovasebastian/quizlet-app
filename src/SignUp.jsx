@@ -7,7 +7,7 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const baseURL = "http://localhost:3000/api/items";
+  const baseURL = "https://quizlet-app-sooty.vercel.app/api/items";
   const handleSignUp = async () => {
     try {
       const response = await axios.post(`${baseURL}/signup`, {

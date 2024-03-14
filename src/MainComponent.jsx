@@ -7,7 +7,7 @@ import './MainComponent.css';
 import axios from 'axios';
 import loadingAnimation from './Rolling-1s-200px.svg';
 import { set } from 'mongoose';
-const baseURL = "http://localhost:3000/api/items";
+const baseURL = "https://quizlet-app-sooty.vercel.app/api/items";
 
 
 const MainComponent = () => {
