@@ -3,7 +3,7 @@ import axios from 'axios';
 import "./questionset.css";
 import { useState, useEffect } from 'react';
 import plusSvg from "./plus-svgrepo-com.svg";
-const baseURL = "https://quizlet-app-sooty.vercel.app/api/items";
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
 const QuestionSets = () => {
     const navigate = useNavigate();
     const [dataStored, setDataStored] = useState([]);
