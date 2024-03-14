@@ -7,44 +7,15 @@ const Final = () => {
   const [state, setState] = useState(false);
   const [number, setNumber] = useState(0);
   const [inputData, setInputData] = useState([]);
-  const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  const fetchData = async (username) => {
-    try {
-      const response = await axios.get(`${baseURL}?username=${username}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      throw error;
-    }
-  };
-
+  const location = useLocation();
   useEffect(() => {
-    const initializeData = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user) {
-          return;
-        }
-
-        const data = await fetchData(user.username);
-
-        // Filter out invalid or empty objects from the data array
-        const filteredData = data.filter(item => Object.keys(item).length > 0);
-
-        setInputData(filteredData);
-        console.log('init', filteredData);
-      } catch (error) {
-        console.error('Error during initialization:', error);
-      }
-    };
-
-    initializeData();
+   setInputData(location.state.inputData);
   }, []); // Dependency array ensures this effect runs when the component mounts or when inputDataWrapper changes
-  
+  console.log(location.state.inputData);
   
   console.log('input', inputData);
-  const currentQuestion = inputData[number]?.questions?.[0] ?? '';
-  const currentAnswer = inputData[number]?.answers?.[0] ?? '';
+  const currentQuestion = inputData[number]?.questions;
+  const currentAnswer = inputData[number]?.answers;
   
   console.log(currentQuestion,currentAnswer);
   const style = state ? currentAnswer : currentQuestion;

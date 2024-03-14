@@ -3,20 +3,20 @@ import './lineComp.css';
 import React, { useState } from "react";
 
 const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, index,deleteLine }) => {
-  const [question, setQuestion] = useState(initialQuestion);
-  const [answer, setAnswer] = useState(initialAnswer);
+  const [questions, setQuestion] = useState(initialQuestion);
+  const [answers, setAnswer] = useState(initialAnswer);
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
-    onInputComplete({ question: e.target.value, answer });
+    onInputComplete({ questions: e.target.value, answers });
   };
 
   const handleAnswerChange = (e) => {
     setAnswer(e.target.value);
-    onInputComplete({ question, answer: e.target.value });
+    onInputComplete({ questions, answers: e.target.value });
   };
 
-  console.log(`LineComp ${index} rendered with question: ${question}, answer: ${answer}`);
+  console.log(`LineComp ${index} rendered with question: ${questions}, answer: ${answers}`);
   const handleDelete = () => {
     deleteLine();
   };
@@ -27,14 +27,14 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
       <span>Question:</span>
       <input
         type="text"
-        value={question}
+        value={questions}
         onChange={handleQuestionChange}
         required
       />
       <span>Answer: </span>
       <input
         type="text"
-        value={answer}
+        value={answers}
         onChange={handleAnswerChange}
         required
       />
