@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
 import loadingAnimation from './Rolling-1s-200px.svg';
+import { set } from 'mongoose';
 const baseURL = "http://localhost:3000/api/items";
 
 
@@ -19,6 +20,7 @@ const MainComponent = () => {
   const location = useLocation();
   const handleSaveItems = async (inputData,questionSetTitle) => {
     try {
+      setLoading(true);
       const user = JSON.parse(localStorage.getItem('user'));
       console.log('Data to be sent:', inputData);
       if (!user) {
@@ -30,7 +32,9 @@ const MainComponent = () => {
       savedState.data.allQuestionSets = inputData;
       sessionStorage.setItem('myState', JSON.stringify(savedState));
       alert("Data has been saved");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Error saving data:', error);
     }
   };
