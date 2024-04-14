@@ -3,7 +3,8 @@ import axios from 'axios';
 import "./questionset.css";
 import { useState, useEffect } from 'react';
 import plusSvg from "./plus-svgrepo-com.svg";
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
+//const baseURL = "https://server-three-taupe.vercel.app/api/items";
+const baseURL = "http://localhost:3000/api/items";
 const QuestionSets = () => {
     const navigate = useNavigate();
     const [dataStored, setDataStored] = useState([]);
@@ -18,17 +19,16 @@ const QuestionSets = () => {
             }
             const response = await axios.get(`${baseURL}?username=${user.username}`);
             setUsername(user.username);
-            console.log('data from the db', response.data);
+
             return response.data;
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
     const handleRetrieveAll = async () => {
         try {
             const existingData = await getExistingData();
-            console.log('existing data', existingData);
             setDataStored(existingData);
         } catch (error) {
             console.error('Error retrieving data:', error);
@@ -55,21 +55,20 @@ const QuestionSets = () => {
             console.error('Error saving data:', error);
           }
     }
-    const deleteSet = async (username, title, event) =>{
+    const deleteSet = async (username, _id, event) =>{
         event.stopPropagation();
         try {
-            await axios.post(`${baseURL}/deleteQuestionSet`, {username, title});
+            await axios.post(`${baseURL}/deleteQuestionSet`, {username, _id});
             setEvent((prevState) => !prevState);
           } catch (error) {
             console.error('Error deleting data:', error);
           }
     }
 
-    
     const elements = dataStored.map((data, index) =>
         <div key={index} className='divSet' onClick={() => navigateSet(data)}>
             <h2>{data.title}</h2>
-            <button className = "butonSet" onClick = {(e) => deleteSet(username, data.title, e)}>Delete</button>
+            <button className = "butonSet" onClick = {(e) => deleteSet(username, data._id, e)}>Delete</button>
         </div>
     )
     return (
