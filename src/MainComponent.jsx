@@ -94,6 +94,9 @@ const MainComponent = () => {
   const navigateToFinal = async () => {
     navigate('/final', { state: { inputData } });
   };
+  const navigateTest = async () =>{
+    navigate('/test', {state: {inputData}});
+  }
   const adminDash = () => {
     navigate('/admin');
   }
@@ -104,11 +107,12 @@ const MainComponent = () => {
     <div className='background'>
       <div className='container-main'>
         {elements}
-        {!loading && <button className='buttonAdd' onClick={addLine}>ADD</button>}
-        {!loading && <button className='buttonRemove' onClick={saveItems}>SAVE</button>}
-        {role==='admin'&&<button className='buttonRemove' onClick={adminDash}>ADMIN</button>}
-        {!loading && <button className='buttonRemove' onClick={signOut}>SIGN OUT</button>}
-        {inputData.length > 0 && <button className='buttonFinish' onClick={navigateToFinal}>Finish</button>}
+        {!loading && <button className='activate buttonAdd' onClick={addLine}>ADD</button>}
+        {!loading && <button className='activate buttonRemove' onClick={saveItems}>SAVE</button>}
+        {role==='admin'&&<button className='activate buttonRemove' onClick={adminDash}>ADMIN</button>}
+        {!loading && <button className='activate buttonRemove' onClick={signOut}>SIGN OUT</button>}
+        {inputData.length > 0 && <button className='activate buttonFinish' onClick={navigateToFinal}>Finish</button>}
+        {!loading && <button className='activate buttonRemove' onClick={navigateTest}>Test</button>}
       </div>
     </div>
   );

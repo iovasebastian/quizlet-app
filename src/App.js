@@ -9,6 +9,8 @@ import Signin from './Signin.jsx';
 import Admin from './Admin.jsx';
 import SignUp from './SignUp.jsx';
 import QuestionSets from './QuestionSets.jsx';
+import Test from './Test.jsx';
+import Testresult from './Testresult.jsx';
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
           <Route path="/admin" element ={<Admin/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/sets" element={<QuestionSets/>}/>
+          <Route path='/test' element={<Test/>}/>
+          <Route path='/testresult' element={<Testresult/>}/>
         </Routes>
       </HashRouter>
     </div>

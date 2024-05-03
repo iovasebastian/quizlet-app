@@ -1,0 +1,29 @@
+.containerResult{
+    width:50%;
+    background-color: antiquewhite;
+    border-radius: 1em;
+}
+.backgroundResult{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.titluResult{
+    margin-top: 2em;
+    text-align: center;
+}
+.answerBox{
+    margin-left: 2em;
+    font-size: x-large;
+}
+.correctAnswer{
+    color:green;
+}
+.wrongAnswer{
+    color:red;
+}
+.percentResult{
+    text-align: center;
+    margin-bottom:2em;
+}
