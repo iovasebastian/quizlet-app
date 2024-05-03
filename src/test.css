@@ -109,10 +109,11 @@
     }
     .containerTest{
         min-height: 60%;
+        width:100%;
     }
     .buttonAnswer{
-        font-size: 2vw;
-        width: 70%;
+        font-size: 3vw;
+        width: 100%;
     }
     .backgroundTest{
         min-height: 100vh;
