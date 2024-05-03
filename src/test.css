@@ -6,15 +6,17 @@
     align-items: center;
 }
 .containerTest{
+    display: flex;
+    flex-direction: column;
     width: 50%;
-    height:60%;
+    min-height:60%;
     padding:2em;
     background-color: antiquewhite;
     border-radius: 1em;
 }
 .questionArea{
     position: relative;
-    height:50%;
+    flex:1;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -22,11 +24,12 @@
     border:2px solid pink;
 }
 .h1Question{
+    margin-top:1em;
     color:black;
     font-weight: 700;
 }
 .answersArea{
-    min-height: 50%;
+    flex:1;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -97,3 +100,20 @@
     top:0;
     right:1em;
 }
+@media only screen and (max-width: 600px) {
+    .answersArea{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .containerTest{
+        min-height: 60%;
+    }
+    .buttonAnswer{
+        width: 70%;
+    }
+    .backgroundTest{
+        min-height: 100vh;
+    }
+  }
