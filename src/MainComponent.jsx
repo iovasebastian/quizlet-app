@@ -106,6 +106,7 @@ const MainComponent = () => {
   return (
     <div className='background'>
       <div className='container-main'>
+        <h1 className='titleMain'>{questionSetTitle}</h1>
         {elements}
         {!loading && <button className='activate buttonAdd' onClick={addLine}>ADD</button>}
         {!loading && <button className='activate buttonRemove' onClick={saveItems}>SAVE</button>}
