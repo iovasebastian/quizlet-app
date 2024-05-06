@@ -5,6 +5,7 @@ import LineComp from './LineComp';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
+import downArrow from './downarrow.svg';
 import loadingAnimation from './Rolling-1s-200px.svg';
 import { set } from 'mongoose';
 const baseURL = "https://server-three-taupe.vercel.app/api/items";
@@ -15,6 +16,7 @@ const MainComponent = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const role = JSON.parse(localStorage.getItem('role'));
   const [dataUpdated, setDataUpdated] = useState(false);
   const [questionSetTitle, setQuestionSetTitle] = useState('');
@@ -69,7 +71,23 @@ const MainComponent = () => {
     setQuestionSetTitle(savedState.data.title);
     console.log('enterpage')
   }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log('Scroll Y:', window.scrollY);
+      console.log('Document Height:', document.body.scrollHeight);
+      if (window.scrollY > document.body.scrollHeight - 2000) {
+        setShowButton(false);
+      } else {
+        setShowButton(true);
+      }
+    };
   
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
     
   const elements = loading
   ? <img src={loadingAnimation} alt='loading-image' />
@@ -103,8 +121,12 @@ const MainComponent = () => {
   const signOut = () => {
     navigate('/');
   }
+  const goDown = () => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
   return (
     <div className='background'>
+      {showButton && <div className='buttonGoDown' onClick={goDown}><img className = 'arrowImg' src = {downArrow}/></div>}
       <div className='container-main'>
         <h1 className='titleMain'>{questionSetTitle}</h1>
         {elements}

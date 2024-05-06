@@ -79,3 +79,21 @@ img{
 .titleMain{
     text-align: center;
 }
+.buttonGoDown{
+    position:fixed;
+    top:3em;
+    right:1em;
+    width: 3em;
+    height: 3em;
+    background-color: antiquewhite;
+    border-radius: 50%;
+    border:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.arrowImg{
+    max-width: 70%;
+    max-height: 70%;
+}
