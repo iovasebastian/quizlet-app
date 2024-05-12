@@ -110,9 +110,12 @@ const MainComponent = () => {
   }
 
   const navigateToFinal = async () => {
+    saveItems();
     navigate('/final', { state: { inputData } });
+    
   };
   const navigateTest = async () =>{
+    saveItems();
     navigate('/test', {state: {inputData}});
   }
   const adminDash = () => {
