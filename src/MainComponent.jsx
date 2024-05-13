@@ -25,7 +25,6 @@ const MainComponent = () => {
     try {
       setLoading(true);
       const user = JSON.parse(localStorage.getItem('user'));
-      console.log('Data to be sent:', inputData);
       if (!user) {
         console.error('User not found.');
         return;
@@ -52,29 +51,28 @@ const MainComponent = () => {
     setInputData((prevData) => {
       const updatedData = [...prevData];
       updatedData[index] = newData;
-      console.log('Updated inputData:', updatedData);
       return updatedData;
     });
   };
   const deleteLine = async (index) => {
-    setInputData((prevData) => {
-      const updatedData = prevData.slice();
-      updatedData.splice(index, 1);
+  
+    // Use a functional update to ensure you're working with the most current state
+    setInputData(prevData => {
+      // Create a new array that filters out the item at the specified index
+      const updatedData = prevData.filter((item, idx) => idx !== index);
       return updatedData;
     });
-    setDataUpdated(!dataUpdated);
+  
+    // Toggle the update state to force a re-render or trigger effects
+    setDataUpdated(prev => !prev);
   };
-
   useEffect(() => {
     const savedState = JSON.parse(sessionStorage.getItem('myState'));
     setInputData(savedState.data.allQuestionSets);
     setQuestionSetTitle(savedState.data.title);
-    console.log('enterpage')
   }, []);
   useEffect(() => {
     const handleScroll = () => {
-      console.log('Scroll Y:', window.scrollY);
-      console.log('Document Height:', document.body.scrollHeight);
       if (window.scrollY > document.body.scrollHeight - 2000) {
         setShowButton(false);
       } else {
@@ -88,13 +86,12 @@ const MainComponent = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-    
   const elements = loading
   ? <img src={loadingAnimation} alt='loading-image' />
   :inputData.map((data, index) => (
     <div key={index} className="line-container">
       <LineComp
-        key={index}
+        key={data._id}
         index={index}
         initialQuestion={data.questions}
         initialAnswer={data.answers}

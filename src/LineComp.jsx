@@ -15,8 +15,6 @@ const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, i
     setAnswer(e.target.value);
     onInputComplete({ questions, answers: e.target.value });
   };
-
-  console.log(`LineComp ${index} rendered with question: ${questions}, answer: ${answers}`);
   const handleDelete = () => {
     deleteLine();
   };
