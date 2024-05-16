@@ -105,7 +105,7 @@ img{
     transform: translateX(-50%);
     width: 25rem;
     height: 10.2rem;
-    background: linear-gradient(to right, rgb(26, 193, 26), rgb(33, 222, 36));
+    background: linear-gradient(to right, rgb(254,153,169),rgb(244, 143, 159));
     color: white;
     border-radius: 0 0 2em 2em;
     display: flex;
