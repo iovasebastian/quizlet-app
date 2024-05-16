@@ -52,6 +52,7 @@ const Final = () => {
     console.log('editing');
     if (!editState) {
       setEditState(true);
+      setInputWord(style);
     } else {
       try {
         const response = await axios.post(`${baseURL}/saveEdit`, {
