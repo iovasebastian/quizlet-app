@@ -21,6 +21,7 @@ const MainComponent = () => {
   const [dataUpdated, setDataUpdated] = useState(false);
   const [questionSetTitle, setQuestionSetTitle] = useState('');
   const location = useLocation();
+  const [index, setIndex] = useState();
   const handleSaveItems = async (inputData,questionSetTitle) => {
     try {
       setLoading(true);
@@ -33,6 +34,7 @@ const MainComponent = () => {
       const savedState = JSON.parse(sessionStorage.getItem('myState')) || { data: {} };
       savedState.data.allQuestionSets = inputData;
       sessionStorage.setItem('myState', JSON.stringify(savedState));
+      setIndex(savedState.index);
       alert("Data has been saved");
       setLoading(false);
     } catch (error) {
@@ -70,6 +72,11 @@ const MainComponent = () => {
     const savedState = JSON.parse(sessionStorage.getItem('myState'));
     setInputData(savedState.data.allQuestionSets);
     setQuestionSetTitle(savedState.data.title);
+    console.log('savedState', savedState);
+    console.log('savedState._id', savedState.data._id);
+    const allQuestionId = savedState.data._id;
+    const allQuestionIdJSON = JSON.stringify(allQuestionId); 
+    localStorage.setItem('allQuestionId', allQuestionIdJSON);
   }, []);
   useEffect(() => {
     const handleScroll = () => {
@@ -108,7 +115,7 @@ const MainComponent = () => {
 
   const navigateToFinal = async () => {
     saveItems();
-    navigate('/final', { state: { inputData } });
+    navigate('/final', { state: { inputData, index} });
     
   };
   const navigateTest = async () =>{

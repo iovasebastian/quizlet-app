@@ -19,8 +19,8 @@ const QuestionSets = () => {
             }
             const response = await axios.get(`${baseURL}?username=${user.username}`);
             setUsername(user.username);
-
             return response.data;
+            
         }
         catch (error) {
             console.error(error);
@@ -35,8 +35,10 @@ const QuestionSets = () => {
         }
     };
 
-    const navigateSet = async (data) => {
-        const someState = { data };
+    const navigateSet = async (data, index) => {
+        const someState = {data};
+        const indexJSON = JSON.stringify(index);
+        localStorage.setItem('indexSet', indexJSON);
         sessionStorage.setItem('myState', JSON.stringify(someState));
         navigate('/main');
     };
@@ -51,6 +53,7 @@ const QuestionSets = () => {
         try {
             await axios.post(`${baseURL}/question-set`, {username, title});
             setEvent((prevState) => !prevState);
+            console.log(dataStored);
           } catch (error) {
             console.error('Error saving data:', error);
           }
@@ -66,7 +69,7 @@ const QuestionSets = () => {
     }
 
     const elements = dataStored.map((data, index) =>
-        <div key={index} className='divSet' onClick={() => navigateSet(data)}>
+        <div key={index} className='divSet' onClick={() => navigateSet(data, index)}>
             <h2>{data.title}</h2>
             <button className = "butonSet" onClick = {(e) => deleteSet(username, data._id, e)}>Delete</button>
         </div>
