@@ -107,7 +107,11 @@ const Final = () => {
 
   return (
     <div className="cover-final">
+      <div id = "saveBox" className='simpleBox'>
+          <p>Items saved!</p>
+      </div>
       <div className="all-card">
+        <button className="butonEdit" onClick={changeEditState}>{editState?"Done":"Edit"}</button>
         <div className='quizCard' onClick={reverseState}>
           {editState ? <input className="p-afisare" value = {inputWord} onChange={handleInputChange}/> : <p className="p-afisare">{style}</p>}
           <p className="p-numbering">{number+1}/{inputData.length}</p>
@@ -116,7 +120,6 @@ const Final = () => {
           <button className='prevButton' onClick={handlePrev}>Previous</button>
           <button className='shuffleButton' onClick={shuffle}>Shuffle</button>
           <button className='nextButton' onClick={handleNext}>Next</button>
-          <button className="nextButton" onClick={changeEditState}>Edit</button>
         </div>
       </div>
     </div>

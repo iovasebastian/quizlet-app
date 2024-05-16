@@ -14,8 +14,27 @@
     box-sizing: border-box;
     position: relative;
 }
+.butonEdit{
+    all: unset;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 0.3em;
+    width: 6em;
+    background-color: purple;
+    font-weight: 500;
+    display: inline-block;
+    color: white;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+    height: 1.5em;
+    display: inline-block;
+}
 .all-card{
     max-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .p-numbering{
     font-size: 16px;
@@ -62,6 +81,7 @@ p {
 .spread-apart {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .shuffleButton{
     all: unset;

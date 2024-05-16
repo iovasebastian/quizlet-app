@@ -82,6 +82,9 @@ const Test = () =>{
 
     return(
         <div className='backgroundTest'>
+            <div id = "saveBox" className='simpleBox'>
+                <p>Items saved!</p>
+            </div>
             <div className='containerTest'>
                 <div className='questionArea'>
                     <p className='questionNumber'>{questionNumer}/10</p>

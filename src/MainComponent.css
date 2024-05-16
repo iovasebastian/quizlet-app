@@ -1,4 +1,5 @@
 .background{
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -96,4 +97,30 @@ img{
 .arrowImg{
     max-width: 70%;
     max-height: 70%;
+}
+.simpleBox{
+    position: fixed;
+    top: -11rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25rem;
+    height: 10.2rem;
+    background: linear-gradient(to right, rgb(26, 193, 26), rgb(33, 222, 36));
+    color: white;
+    border-radius: 0 0 2em 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    border: 1px solid white;
+    z-index: 1000;
+}
+.animatedBox{
+    animation: slideDownUp 3s ease-in-out;
+}
+@keyframes slideDownUp {
+    0% { top: -10rem; }
+    30% { top: 0; }
+    70% { top: 0; }
+    100% { top: -10rem; }
 }

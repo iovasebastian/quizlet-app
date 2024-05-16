@@ -35,7 +35,6 @@ const MainComponent = () => {
       savedState.data.allQuestionSets = inputData;
       sessionStorage.setItem('myState', JSON.stringify(savedState));
       setIndex(savedState.index);
-      alert("Data has been saved");
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -111,8 +110,15 @@ const MainComponent = () => {
 
   const saveItems = async () => {
     await handleSaveItems(inputData,questionSetTitle);
+    triggerAnimation();
   }
 
+  function triggerAnimation() {
+    let saveBox = document.getElementById("saveBox");
+    saveBox.classList.remove('animatedBox');
+    void saveBox.offsetWidth;
+    saveBox.classList.add('animatedBox');
+  }
   const navigateToFinal = async () => {
     saveItems();
     navigate('/final', { state: { inputData, index} });
@@ -133,6 +139,9 @@ const MainComponent = () => {
   }
   return (
     <div className='background'>
+      <div id = "saveBox" className='simpleBox'>
+          <p>Items saved!</p>
+      </div>
       {showButton && <div className='buttonGoDown' onClick={goDown}><img className = 'arrowImg' src = {downArrow}/></div>}
       <div className='container-main'>
         <h1 className='titleMain'>{questionSetTitle}</h1>
