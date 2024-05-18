@@ -1,16 +1,13 @@
-// MainComponent.jsx
 import React, { useState, useEffect } from 'react';
 import LineComp from './LineComp';
-
 import { useNavigate, useLocation } from 'react-router-dom';
 import './MainComponent.css';
 import axios from 'axios';
 import downArrow from './downarrow.svg';
 import loadingAnimation from './Rolling-1s-200px.svg';
-import { set } from 'mongoose';
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
-//const baseURL = "http://localhost:3000/api/items";
 
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
+// const baseURL = "http://localhost:3000/api/items";
 
 const MainComponent = () => {
   const navigate = useNavigate();
@@ -18,23 +15,21 @@ const MainComponent = () => {
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const role = JSON.parse(localStorage.getItem('role'));
-  const [dataUpdated, setDataUpdated] = useState(false);
   const [questionSetTitle, setQuestionSetTitle] = useState('');
   const location = useLocation();
-  const [index, setIndex] = useState();
-  const handleSaveItems = async (inputData,questionSetTitle) => {
+
+  const handleSaveItems = async (inputData, questionSetTitle) => {
     try {
       setLoading(true);
       const user = JSON.parse(localStorage.getItem('user'));
       if (!user) {
         console.error('User not found.');
         return;
-      }  
-      await axios.post(`${baseURL}/saveForUser`, { inputData, questionSetTitle,user });
+      }
+      await axios.post(`${baseURL}/saveForUser`, { inputData, questionSetTitle, user });
       const savedState = JSON.parse(sessionStorage.getItem('myState')) || { data: {} };
       savedState.data.allQuestionSets = inputData;
       sessionStorage.setItem('myState', JSON.stringify(savedState));
-      setIndex(savedState.index);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -42,41 +37,29 @@ const MainComponent = () => {
     }
   };
 
-
   const addLine = () => {
-    setInputData((prevData) => [...prevData, { questions: '', answers: '' }]);
-    setDataUpdated(false);
+    setInputData((prevData) => [...prevData, { _id: Date.now().toString(), questions: '', answers: '' }]);
   };
 
-  const handleInputComplete = (index, newData) => {
-    setInputData((prevData) => {
-      const updatedData = [...prevData];
-      updatedData[index] = newData;
-      return updatedData;
-    });
+  const handleInputComplete = (id, newData) => {
+    setInputData((prevData) => prevData.map(item => item._id === id ? newData : item));
   };
-  const deleteLine = async (index) => {
-  
-    // Use a functional update to ensure you're working with the most current state
-    setInputData(prevData => {
-      // Create a new array that filters out the item at the specified index
-      const updatedData = prevData.filter((item, idx) => idx !== index);
-      return updatedData;
-    });
-  
-    // Toggle the update state to force a re-render or trigger effects
-    setDataUpdated(prev => !prev);
+
+  const deleteLine = (id) => {
+    setInputData((prevData) => prevData.filter(item => item._id !== id));
   };
+
   useEffect(() => {
     const savedState = JSON.parse(sessionStorage.getItem('myState'));
-    setInputData(savedState.data.allQuestionSets);
-    setQuestionSetTitle(savedState.data.title);
-    console.log('savedState', savedState);
-    console.log('savedState._id', savedState.data._id);
-    const allQuestionId = savedState.data._id;
-    const allQuestionIdJSON = JSON.stringify(allQuestionId); 
-    localStorage.setItem('allQuestionId', allQuestionIdJSON);
+    if (savedState && savedState.data) {
+      setInputData(savedState.data.allQuestionSets || []);
+      setQuestionSetTitle(savedState.data.title || '');
+      const allQuestionId = savedState.data._id;
+      const allQuestionIdJSON = JSON.stringify(allQuestionId);
+      localStorage.setItem('allQuestionId', allQuestionIdJSON);
+    }
   }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > document.body.scrollHeight - 2000) {
@@ -85,70 +68,80 @@ const MainComponent = () => {
         setShowButton(true);
       }
     };
-  
+
     window.addEventListener('scroll', handleScroll);
-  
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const elements = loading
-  ? <img src={loadingAnimation} alt='loading-image' />
-  :inputData.map((data, index) => (
-    <div key={index} className="line-container">
-      <LineComp
-        key={data._id}
-        index={index}
-        initialQuestion={data.questions}
-        initialAnswer={data.answers}
-        onInputComplete={(newData) => handleInputComplete(index, newData)}
-        deleteLine={() => deleteLine(index)}
-      />
-    </div>
-  ));
 
+  const elements = loading
+    ? <img src={loadingAnimation} alt='loading' />
+    : inputData.map((data, index) => (
+        <div key={data._id} className="line-container">
+          <LineComp
+            key={data._id}
+            id={data._id}
+            index={index}
+            initialQuestion={data.questions}
+            initialAnswer={data.answers}
+            onInputComplete={(newData) => handleInputComplete(data._id, newData)}
+            deleteLine={() => deleteLine(data._id)}
+          />
+        </div>
+      ));
 
   const saveItems = async () => {
-    await handleSaveItems(inputData,questionSetTitle);
+    await handleSaveItems(inputData, questionSetTitle);
     triggerAnimation();
-  }
-
-  function triggerAnimation() {
-    let saveBox = document.getElementById("saveBox");
-    saveBox.classList.remove('animatedBox');
-    void saveBox.offsetWidth;
-    saveBox.classList.add('animatedBox');
-  }
-  const navigateToFinal = async () => {
-    saveItems();
-    navigate('/final', { state: { inputData, index} });
-    
   };
-  const navigateTest = async () =>{
-    saveItems();
-    navigate('/test', {state: {inputData}});
-  }
+
+  const triggerAnimation = () => {
+    const saveBox = document.getElementById('saveBox');
+    if (saveBox) {
+      saveBox.classList.remove('simpleBox');
+      void saveBox.offsetWidth; // Trigger reflow to restart animation
+      saveBox.classList.add('simpleBox');
+    } else {
+      console.error("saveBox doesn't exist.");
+    }
+  };
+
+  const navigateToFinal = async () => {
+    await saveItems();
+    navigate('/final', { state: { inputData } });
+  };
+
+  const navigateTest = async () => {
+    await saveItems();
+    navigate('/test', { state: { inputData } });
+  };
+
   const adminDash = () => {
     navigate('/admin');
-  }
+  };
+
   const signOut = () => {
     navigate('/');
-  }
+  };
+
   const goDown = () => {
     window.scrollTo(0, document.body.scrollHeight);
-  }
+  };
+
   return (
     <div className='background'>
-      <div id = "saveBox" className='simpleBox'>
-          <p>Items saved!</p>
+      <div id="saveBox" className='simpleBox'>
+        <p>Items saved!</p>
       </div>
-      {showButton && <div className='buttonGoDown' onClick={goDown}><img className = 'arrowImg' src = {downArrow}/></div>}
+      {showButton && <div className='buttonGoDown' onClick={goDown}><img className='arrowImg' src={downArrow} alt="Go Down" /></div>}
       <div className='container-main'>
         <h1 className='titleMain'>{questionSetTitle}</h1>
         {elements}
         {!loading && <button className='activate buttonAdd' onClick={addLine}>ADD</button>}
         {!loading && <button className='activate buttonRemove' onClick={saveItems}>SAVE</button>}
-        {role==='admin'&&<button className='activate buttonRemove' onClick={adminDash}>ADMIN</button>}
+        {role === 'admin' && <button className='activate buttonRemove' onClick={adminDash}>ADMIN</button>}
         {!loading && <button className='activate buttonRemove' onClick={signOut}>SIGN OUT</button>}
         {inputData.length > 0 && <button className='activate buttonFinish' onClick={navigateToFinal}>Finish</button>}
         {!loading && <button className='activate buttonRemove' onClick={navigateTest}>Test</button>}
