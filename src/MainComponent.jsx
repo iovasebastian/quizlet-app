@@ -100,9 +100,9 @@ const MainComponent = () => {
   const triggerAnimation = () => {
     const saveBox = document.getElementById('saveBox');
     if (saveBox) {
-      saveBox.classList.remove('simpleBox');
-      void saveBox.offsetWidth; // Trigger reflow to restart animation
-      saveBox.classList.add('simpleBox');
+      saveBox.classList.remove('animatedBox');
+      void saveBox.offsetWidth; // Reflow for restarting animation
+      saveBox.classList.add('animatedBox');
     } else {
       console.error("saveBox doesn't exist.");
     }
