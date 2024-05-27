@@ -7,7 +7,7 @@ import downArrow from './downarrow.svg';
 import loadingAnimation from './Rolling-1s-200px.svg';
 
 const baseURL = "https://server-three-taupe.vercel.app/api/items";
-// const baseURL = "http://localhost:3000/api/items";
+//const baseURL = "http://localhost:3000/api/items";
 
 const MainComponent = () => {
   const navigate = useNavigate();
