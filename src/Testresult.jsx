@@ -25,7 +25,7 @@ const Testresult = () =>{
                     <p className='correctAnswer'>Correct answers : {correctAnswer}</p>
                     <p className='wrongAnswer'>Wrong answers : {wrongAnswer}</p>
                 </div>
-                <h1 className='percentResult'>That's {(correctAnswer/questionNumber)*100}%</h1>
+                <h1 className='percentResult'>That's {((correctAnswer / questionNumber) * 100).toFixed(2)}%</h1>
                 <button onClick = {()=>goBack()} className='buttonBack'>Go back</button>
             </div>
         </div>
