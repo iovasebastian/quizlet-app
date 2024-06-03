@@ -36,7 +36,7 @@ const QuestionNumberPicker = () =>{
                     <div className = "buttonNumberPicker" onClick={() => setNumberOfQuestions(Math.min(20,inputData.length))}>20</div>
                     <div className = "buttonNumberPicker" onClick={() => setNumberOfQuestions(inputData.length)}>All</div>
                 </div>
-                <p>Number of questions that will appear in the test : {numberOfQuestions}</p>
+                <p className="textQuestionPicker">Number of questions that will appear in the test : {numberOfQuestions}</p>
                 <button className = "buttonNumberPicker marginBottom" onClick={navigateTest}>Go to test</button>
             </div>
         </div>
