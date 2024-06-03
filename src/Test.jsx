@@ -5,29 +5,50 @@ const Test = () =>{
     const [inputData, setInputData] = useState([]);
     const [randomQuestion, setRandomQuestion] = useState("");
     const [randomQuestionAnswer, setRandomQuestionAnswer] = useState("");
+    const [copyArray, setCopyArray] = useState([]);
     const [questionNumer, setQuestionNumber] = useState(1);
     const [correctQuestions, setCorrectQuestions] = useState(0);
     const [wrongQuestions, setWrongQuestions] = useState(0);
     const [answer, setAnswer] = useState([]);
     const [rightQuestionPos, setRightQuestionPos] = useState(0);
+    const [numberOfQuestions, setNumberOfQuestions] = useState(100);
     const [buttonStyles, setButtonStyles] = useState({});
     const location = useLocation();
     const navigate = useNavigate();
     let randomQuestionIndex;
     useEffect(() => {
         setInputData(location.state.inputData);
-        
-    }, []);
+        setNumberOfQuestions(location.state.numberOfQuestions);
+    }, [location.state.inputData, location.state.numberOfQuestions]);
     useEffect(() => {
-        setRightQuestionPos(getRandomIntInclusive(1, 4));  // This updates asynchronously
-        setButtonStyles({});
         if (inputData.length > 0) {
+            const checkedNumbers = new Set();
+            const newCopyArray = [];
+
+            while (newCopyArray.length < numberOfQuestions) {
+                const newPosition = getRandomIntInclusive(0, inputData.length - 1);
+                if (!checkedNumbers.has(newPosition)) {
+                    checkedNumbers.add(newPosition);
+                    newCopyArray.push(newPosition);
+                }
+            }
+            newCopyArray.push(0);
+            setCopyArray(newCopyArray);
+        }
+    }, [inputData]);
+    
+    useEffect(() => {
+        setRightQuestionPos(getRandomIntInclusive(1, 4));
+        setButtonStyles({});
+        if (inputData.length > 0 && copyArray.length > 0) {
             let arrayLength = inputData.length;
-            randomQuestionIndex = getRandomIntInclusive(0, arrayLength - 1);  // Adjusted index for zero-based
+            console.log('number', questionNumer, 'copy', copyArray, 'copyIndex', copyArray[questionNumer], inputData);
+            randomQuestionIndex = copyArray[questionNumer-1];
+            console.log(inputData[copyArray[questionNumer-1]]);
             setRandomQuestion(inputData[randomQuestionIndex].questions);
             setRandomQuestionAnswer(inputData[randomQuestionIndex].answers);
-    
-            let newAnswers = new Array(4).fill("");  // Create a new array for answers
+            
+            let newAnswers = new Array(4).fill("");
     
             // Populate the new answers array
             newAnswers.forEach((_, i) => {
@@ -39,7 +60,6 @@ const Test = () =>{
                         position = getRandomIntInclusive(0, arrayLength - 1);  // Correctly adjusted to avoid the same index
                     } while (position === randomQuestionIndex);  // Ensure different question
                     newAnswers[i] = inputData[position].answers;
-                    console.log(newAnswers);
                 }
             });
     
@@ -48,7 +68,7 @@ const Test = () =>{
         }
     }, [inputData, questionNumer, rightQuestionPos]);
     useEffect(() => {
-        if(questionNumer === 11)navigateResult();
+        if(questionNumer === numberOfQuestions + 1)navigateResult();
     },[questionNumer]);
     
     function getRandomIntInclusive(min, max) {
@@ -59,6 +79,7 @@ const Test = () =>{
 
     function validateAnswer(number) {
         const isCorrect = number === rightQuestionPos;
+        console.log('inputdata', inputData, 'copy', copyArray)
         setButtonStyles({
             ...buttonStyles,
             [rightQuestionPos]: 'green',
@@ -77,7 +98,7 @@ const Test = () =>{
     
     
     const navigateResult = () =>{
-        navigate('/testresult', {state:{correctQuestions,wrongQuestions}});
+        navigate('/testresult', {state:{correctQuestions,wrongQuestions, numberOfQuestions}});
     }
 
     return(
@@ -87,7 +108,7 @@ const Test = () =>{
             </div>
             <div className='containerTest'>
                 <div className='questionArea'>
-                    <p className='questionNumber'>{questionNumer}/10</p>
+                    <p className='questionNumber'>{questionNumer}/{numberOfQuestions}</p>
                     <p className='correctQuestion'>{correctQuestions}</p>
                     <p className='wrongQuestion'>{wrongQuestions}</p>
                     <h1 className='h1Question'>{randomQuestion}</h1>

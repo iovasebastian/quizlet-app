@@ -11,6 +11,7 @@ import SignUp from './SignUp.jsx';
 import QuestionSets from './QuestionSets.jsx';
 import Test from './Test.jsx';
 import Testresult from './Testresult.jsx';
+import QuestionNumberPicker from './QuestionNumberPicker.jsx';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/sets" element={<QuestionSets/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/testresult' element={<Testresult/>}/>
+          <Route path='/numberpicker' element={<QuestionNumberPicker/>}/>
         </Routes>
       </HashRouter>
     </div>

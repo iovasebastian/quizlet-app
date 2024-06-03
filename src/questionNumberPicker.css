@@ -1,0 +1,68 @@
+.sliderContainer {
+    width:50%
+}
+
+.horizontalSlider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 1em;
+    background: hotpink;
+    border-radius: 1em;
+}
+
+.exampleThumb {
+    height:1.2em;
+    width:1.2em;
+    background: #000;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.exampleTrack {
+    background: #FF00FF;
+}
+.bodyQuestionPicker{
+    min-height: 100vh;
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerQuestionPicker{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap:2em;
+    width:70%;
+    height:30%;
+    background-color: antiquewhite;
+    border-radius: 1em;
+}
+.titluCentru{
+    text-align: center;
+}
+.buttonsPicker{
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+}
+.buttonNumberPicker{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:6em;
+    height:3em;
+    border:3px solid white;
+    cursor: pointer;
+    color:white;
+    text-align: center;
+    border-radius: 1em;
+    background-color: purple;  
+}
+.buttonNumberPicker:hover{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.marginBottom{
+    margin-bottom: 2em;
+}

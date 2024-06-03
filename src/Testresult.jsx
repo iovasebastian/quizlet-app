@@ -7,9 +7,11 @@ const Testresult = () =>{
     const navigate = useNavigate();
     const [correctAnswer, setCorrectAnswer] = useState(0);
     const [wrongAnswer, setWrongAnswer] = useState(0);
+    const [questionNumber, setQuestionNumber] = useState(0);
     useEffect(() => {
         setCorrectAnswer(location.state.correctQuestions);
         setWrongAnswer(location.state.wrongQuestions);
+        setQuestionNumber(location.state.numberOfQuestions);
     }, []);
     const goBack = () =>{
         navigate('/main');
@@ -23,7 +25,7 @@ const Testresult = () =>{
                     <p className='correctAnswer'>Correct answers : {correctAnswer}</p>
                     <p className='wrongAnswer'>Wrong answers : {wrongAnswer}</p>
                 </div>
-                <h1 className='percentResult'>That's {(correctAnswer/10)*100}%</h1>
+                <h1 className='percentResult'>That's {(correctAnswer/questionNumber)*100}%</h1>
                 <button onClick = {()=>goBack()} className='buttonBack'>Go back</button>
             </div>
         </div>

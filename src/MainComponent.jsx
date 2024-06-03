@@ -115,7 +115,8 @@ const MainComponent = () => {
 
   const navigateTest = async () => {
     await saveItems();
-    navigate('/test', { state: { inputData } });
+    navigate('/numberpicker', { state: { inputData } });
+    //navigate('/test', { state: { inputData } });
   };
 
   const adminDash = () => {
