@@ -36,15 +36,12 @@ const Test = () =>{
             setCopyArray(newCopyArray);
         }
     }, [inputData]);
-    
     useEffect(() => {
         setRightQuestionPos(getRandomIntInclusive(1, 4));
         setButtonStyles({});
         if (inputData.length > 0 && copyArray.length > 0) {
             let arrayLength = inputData.length;
-            console.log('number', questionNumer, 'copy', copyArray, 'copyIndex', copyArray[questionNumer], inputData);
             randomQuestionIndex = copyArray[questionNumer-1];
-            console.log(inputData[copyArray[questionNumer-1]]);
             setRandomQuestion(inputData[randomQuestionIndex].questions);
             setRandomQuestionAnswer(inputData[randomQuestionIndex].answers);
             
@@ -66,7 +63,7 @@ const Test = () =>{
             setAnswer(newAnswers);  // Update the state to trigger re-render
             
         }
-    }, [inputData, questionNumer, rightQuestionPos]);
+    }, [inputData,copyArray, questionNumer, rightQuestionPos]);
     useEffect(() => {
         if(questionNumer === numberOfQuestions + 1)navigateResult();
     },[questionNumer]);
@@ -79,7 +76,6 @@ const Test = () =>{
 
     function validateAnswer(number) {
         const isCorrect = number === rightQuestionPos;
-        console.log('inputdata', inputData, 'copy', copyArray)
         setButtonStyles({
             ...buttonStyles,
             [rightQuestionPos]: 'green',
