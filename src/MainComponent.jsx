@@ -18,6 +18,15 @@ const MainComponent = () => {
   const [questionSetTitle, setQuestionSetTitle] = useState('');
   const location = useLocation();
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      saveItems();
+    }, 600000);
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, [inputData]);
+
   const handleSaveItems = async (inputData, questionSetTitle) => {
     try {
       setLoading(true);
@@ -116,7 +125,6 @@ const MainComponent = () => {
   const navigateTest = async () => {
     await saveItems();
     navigate('/numberpicker', { state: { inputData } });
-    //navigate('/test', { state: { inputData } });
   };
 
   const adminDash = () => {
