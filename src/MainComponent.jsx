@@ -21,7 +21,7 @@ const MainComponent = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       saveItems();
-    }, 60000);
+    }, 300000);
 
     // Clear the interval when the component unmounts
     return () => clearInterval(interval);
