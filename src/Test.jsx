@@ -111,14 +111,14 @@ const Test = () =>{
                 </div>
                 <div className='answersArea'>
                 {[1, 2, 3, 4].map((index) => (
-                        <button 
+                        <div
                             key={index}
                             className='buttonAnswer'
                             onClick={() => validateAnswer(index)}
                             style={{ backgroundColor: buttonStyles[index] }}
                         >
                             {answer[index-1] || "Loading..."}
-                        </button>
+                        </div>
                     ))}
                 </div>
                 
