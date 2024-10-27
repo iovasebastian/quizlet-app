@@ -53,6 +53,7 @@ const QuestionSets = () => {
         try {
             await axios.post(`${baseURL}/question-set`, {username, title});
             setEvent((prevState) => !prevState);
+            setNewTitle("");
             console.log(dataStored);
           } catch (error) {
             console.error('Error saving data:', error);

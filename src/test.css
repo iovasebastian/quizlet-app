@@ -37,6 +37,9 @@
 }
 .buttonAnswer {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin:1em;
     font-size: 17px;
     text-transform: uppercase;
@@ -51,7 +54,7 @@
     color: black;
     background-color: white;
     border:1px solid black;
-    max-height: 20vh;
+    height: 20vh;
     width: auto;
     overflow-x: hidden;
     overflow-y: scroll;
