@@ -10,12 +10,14 @@ const Test = () =>{
     const [correctQuestions, setCorrectQuestions] = useState(0);
     const [wrongQuestions, setWrongQuestions] = useState(0);
     const [answer, setAnswer] = useState([]);
+    const [longTextBool, setLongTextBool] = useState(false);
     const [rightQuestionPos, setRightQuestionPos] = useState(0);
     const [numberOfQuestions, setNumberOfQuestions] = useState(100);
     const [buttonStyles, setButtonStyles] = useState({});
     const location = useLocation();
     const navigate = useNavigate();
     let randomQuestionIndex;
+
     useEffect(() => {
         setInputData(location.state.inputData);
         setNumberOfQuestions(location.state.numberOfQuestions);
@@ -117,7 +119,13 @@ const Test = () =>{
                             onClick={() => validateAnswer(index)}
                             style={{ backgroundColor: buttonStyles[index] }}
                         >
-                            {answer[index-1] || "Loading..."}
+                            {answer[index - 1] ? (
+                                <div className={answer[index - 1].length > 50 ? "answerTextLong" : "answerText"}>
+                                    {answer[index - 1]}
+                                </div>
+                            ) : (
+                                <div>Loading...</div>
+                            )}
                         </div>
                     ))}
                 </div>
