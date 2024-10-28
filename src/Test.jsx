@@ -120,11 +120,11 @@ const Test = () =>{
                             style={{ backgroundColor: buttonStyles[index] }}
                         >
                             {answer[index - 1] ? (
-                                <div className={answer[index - 1][0].length > 50 ? "answerTextLong" : "answerText"}>
-                                    {answer[index - 1]}
+                                <div className={(answer[index - 1][0].length > 50 || answer[index - 1].length) ? "answerTextLong" : "answerText"}>
+                                    {answer[index-1]}
                                 </div>
                             ) : (
-                                <div>Loading...</div>
+                                <div>Empty</div>
                             )}
                         </div>
                     ))}
