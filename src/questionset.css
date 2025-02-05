@@ -56,3 +56,21 @@
     padding: 0.5em;
     max-width: 80%;
 }
+.pendingDeleteDiv{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    width:35em;
+    height:40em;
+    border: 1px solid black;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: antiquewhite;
+    margin:1em;
+    text-align: center;
+}
