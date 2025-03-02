@@ -12,6 +12,8 @@ const QuestionSets = () => {
     const [username, setUsername] = useState("");
     const [event, setEvent] = useState(false);
     const [deletePending, setDeletePending] = useState(false);
+    const [deleteId, setDeleteId] = useState('');
+    const [deleteTitle, setDeleteTitle] = useState('');
     const getExistingData = async () => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
@@ -77,11 +79,13 @@ const QuestionSets = () => {
             <button className = "butonSet" onClick={(e) => {
                 e.stopPropagation(); // Prevents click from propagating to div
                 setDeletePending(true);
+                setDeleteId(data._id);
+                setDeleteTitle(data.title);
             }}>Delete</button>
             {deletePending&&<div className='pendingDeleteDiv'>
-                <h1>Are you sure you want to delete the question set "{data.title}"?</h1>
+                <h1>Are you sure you want to delete the question set "{deleteTitle}"?</h1>
                 <button className = "butonSet" onClick={(e) => {e.stopPropagation(); setDeletePending(false);}}>Cancel</button>
-                <button className = "butonSet" onClick={(e) => {e.stopPropagation(); deleteSet(username, data._id, e); setDeletePending(false)}}>Delete</button>
+                <button className = "butonSet" onClick={(e) => {e.stopPropagation(); deleteSet(username, deleteId, e); setDeletePending(false)}}>Delete</button>
             </div>}
         </div>
         
