@@ -56,9 +56,9 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="mobile-menu-icon" onClick={() => setMenuOpen(true)}>
+      {!menuOpen&&<div className="mobile-menu-icon" onClick={() => setMenuOpen(true)}>
         <FiMenu size={24} />
-      </div>
+      </div>}
 
       {menuOpen && (
         <div className="mobile-menu">
