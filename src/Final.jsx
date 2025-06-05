@@ -14,8 +14,8 @@ const Final = () => {
   const userId = localStorage.getItem("userId");
   const questionSetId = localStorage.getItem("questionSetId");
   console.log('USERID', userId);
-  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  const baseURL = "http://localhost:3000/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  //const baseURL = "http://localhost:3000/api/items";
   useEffect(() => {
    setInputData(location.state.inputData);  
    setIndex(localStorage.getItem('indexSet'));

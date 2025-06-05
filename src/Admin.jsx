@@ -2,8 +2,8 @@ import AdminLine from "./AdminLine";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import './admin.css';
-//const baseURL = "https://server-three-taupe.vercel.app/api/items";
-const baseURL = "http://localhost:3000/api/items"
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
+//const baseURL = "http://localhost:3000/api/items"
 
 
 const Admin = () => {
