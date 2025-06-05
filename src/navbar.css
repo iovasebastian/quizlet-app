@@ -86,13 +86,14 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    background: rgba(255, 255, 255, 0.07);
     backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.1); /* fallback color */
+    -webkit-backdrop-filter: blur(20px); /* for Safari/iOS */
   }
   
   .mobile-menu ul {

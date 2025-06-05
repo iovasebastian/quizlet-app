@@ -66,8 +66,8 @@ const Navbar = () => {
             <FiX color="white" size={24} />
           </div>
           <ul>
-            {role === "admin" && <li className='nav-item' onClick={adminDash}>Admin</li>}
-            <li className="nav-item" onClick={loggedIn ? signOut : goToLogin}>
+            {role === "admin" && <li className='nav-item' onClick={() => {adminDash(); setMenuOpen(false);}}>Admin</li>}
+            <li className="nav-item" onClick={() => {setMenuOpen(false); loggedIn ? signOut() : goToLogin()}}>
               {loggedIn ? "Log Out" : "Log In"}
             </li>
           </ul>
