@@ -106,19 +106,32 @@ img {
 
 .buttonGoDown {
     position: fixed;
-    top: 3em;
+    top: 5em;
     right: 1em;
     width: 3em;
     height: 3em;
-    background-color: antiquewhite;
+    background: linear-gradient(135deg, #a100a1, #d6336c);
+    color: white;
     border-radius: 50%;
-    border: 1px solid black;
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     z-index: 999;
-}
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .buttonGoDown:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .buttonGoDown:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
 
 .arrowImg {
     max-width: 70%;
