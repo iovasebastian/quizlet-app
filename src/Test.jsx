@@ -124,13 +124,15 @@ const Test = () =>{
                             onClick={() => validateAnswer(index)}
                             style={{ backgroundColor: buttonStyles[index] }}
                         >
-                            {answer[index - 1] ? (
-                                <div>
-                                    {answer[index-1]}
-                                </div>
-                            ) : (
-                                <div>Empty</div>
-                            )}
+                            <div className="answerText">
+                                {answer[index - 1] ? (
+                                    <div>
+                                        {answer[index-1]}
+                                    </div>
+                                ) : (
+                                    <div>Empty</div>
+                                )}
+                            </div> 
                         </div>
                     ))}
                 </div>
