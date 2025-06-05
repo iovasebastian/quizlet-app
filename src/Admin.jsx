@@ -2,7 +2,8 @@ import AdminLine from "./AdminLine";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import './admin.css';
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
+//const baseURL = "https://server-three-taupe.vercel.app/api/items";
+const baseURL = "http://localhost:3000/api/items"
 
 
 const Admin = () => {
@@ -18,7 +19,7 @@ const Admin = () => {
     }
     useEffect(() => {
         getUsers();  
-    }, [users]);
+    }, []);
     useEffect(() => {
         console.log('users',users);  
     }, [users]);
@@ -28,12 +29,13 @@ const Admin = () => {
           username={data.username}
           password={data.password}
           role={data.role}
-          id={data._id}
+          id={data.userId}
+          onUserDeleted = {getUsers}
         />
       ));
     console.log(elements);
     return (
-        <div className="center">
+        <div className="adminPage">
             <h1>This is the admin Dashboard</h1>
             {elements}
         </div>

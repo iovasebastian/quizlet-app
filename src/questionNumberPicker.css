@@ -7,8 +7,9 @@
     align-items: center;
     width: 100%;
     height: 1em;
-    background: hotpink;
+    background: linear-gradient(135deg, #a100a1, #d6336c);
     border-radius: 1em;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 }
 
 .exampleThumb {
@@ -28,6 +29,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url('/public/backgroundGlass.png');
+    background-size: cover;
 }
 .containerQuestionPicker{
     display: flex;
@@ -36,8 +39,11 @@
     gap:2em;
     width:70%;
     height:30%;
-    background-color: antiquewhite;
     border-radius: 1em;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 .titluCentru{
     text-align: center;
@@ -47,22 +53,31 @@
     display: flex;
     justify-content: space-around;
 }
+
 .buttonNumberPicker{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:6em;
-    height:3em;
-    border:3px solid white;
-    cursor: pointer;
-    color:white;
+    all: unset;
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #a100a1, #d6336c);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
     text-align: center;
-    border-radius: 1em;
-    background-color: purple;  
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
-.buttonNumberPicker:hover{
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+.buttonNumberPicker:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
+  
+.buttonNumberPicker:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
 .marginBottom{
     margin-bottom: 2em;
 }

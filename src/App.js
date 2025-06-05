@@ -12,12 +12,14 @@ import QuestionSets from './QuestionSets.jsx';
 import Test from './Test.jsx';
 import Testresult from './Testresult.jsx';
 import QuestionNumberPicker from './QuestionNumberPicker.jsx';
+import Navbar from './Navbar.jsx';
 
 function App() {
 
   return (
     <div className="App">
       <HashRouter>
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Signin />} />
           <Route path="/main" element={<MainComponent />} />

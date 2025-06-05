@@ -7,7 +7,8 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  const baseURL = "http://localhost:3000/api/items";
   const handleSignUp = async () => {
     try {
       const response = await axios.post(`${baseURL}/signup`, {
@@ -15,8 +16,8 @@ const SignUp = () => {
         password,
       });
       if (response.status === 200) {
-        localStorage.setItem('user', JSON.stringify(response.data.username));
-        localStorage.setItem('role', JSON.stringify(response.data.username.role));
+        localStorage.setItem('userId', JSON.stringify(response.data.userId));
+        localStorage.setItem('role', JSON.stringify(response.data.role));
         navigate('/');
       }
     } catch (error) {
@@ -27,10 +28,12 @@ const SignUp = () => {
 
   return (
     <div className='center'>
-      <h1>Sign up</h1>
-      <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <button className = 'buttonSignin' onClick={handleSignUp}>Sign Up</button>
+      <div className='glass'>
+        <h1>Sign up</h1>
+        <input className = "usernameSignin" type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+        <input className = "passwordSignin" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+        <button className = 'buttonSignin' onClick={handleSignUp}>Sign Up</button>
+      </div>
     </div>
   );
 };

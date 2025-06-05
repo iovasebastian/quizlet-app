@@ -1,18 +1,19 @@
 import './lineComp.css';
 import React, { useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
 
-const LineComp = ({ id, initialQuestion = '', initialAnswer = '', onInputComplete, index, deleteLine }) => {
-  const [questions, setQuestion] = useState(initialQuestion);
-  const [answers, setAnswer] = useState(initialAnswer);
+const LineComp = ({ initialQuestion = '', initialAnswer = '', onInputComplete, index, deleteLine }) => {
+  const [questionText, setQuestionText] = useState(initialQuestion);
+  const [answerText, setAnswerText] = useState(initialAnswer);
 
   const handleQuestionChange = (e) => {
-    setQuestion(e.target.value);
-    onInputComplete({ _id: id, questions: e.target.value, answers });
+    setQuestionText(e.target.value);
+    onInputComplete({ questionText: e.target.value, answerText });
   };
 
   const handleAnswerChange = (e) => {
-    setAnswer(e.target.value);
-    onInputComplete({ _id: id, questions, answers: e.target.value });
+    setAnswerText(e.target.value);
+    onInputComplete({ questionText, answerText: e.target.value });
   };
 
   const handleDelete = () => {
@@ -21,22 +22,30 @@ const LineComp = ({ id, initialQuestion = '', initialAnswer = '', onInputComplet
 
   return (
     <div className="lineComp">
-      <span>{index + 1} :</span>
-      <span>Question:</span>
-      <input
-        type="text"
-        value={questions}
-        onChange={handleQuestionChange}
-        required
-      />
-      <span>Answer: </span>
-      <input
-        type="text"
-        value={answers}
-        onChange={handleAnswerChange}
-        required
-      />
-      <button className='buttonDelete' onClick={handleDelete}>DELETE</button>
+      <div className="lineHeader">
+        <span className="lineIndex">{index + 1}:</span>
+        <FiTrash2 size={20} className="deleteIcon" onClick={handleDelete} />
+      </div>
+      <div className="lineField">
+        <label>Question:</label>
+        <input
+          type="text"
+          className='inputLineComp'
+          value={questionText}
+          onChange={handleQuestionChange}
+          required
+        />
+      </div>
+      <div className="lineField">
+        <label>Answer:</label>
+        <input
+          type="text"
+          className='inputLineComp'
+          value={answerText}
+          onChange={handleAnswerChange}
+          required
+        />
+      </div>
     </div>
   );
 };

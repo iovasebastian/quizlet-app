@@ -19,7 +19,7 @@ const QuestionNumberPicker = () =>{
     return(
         <div className="bodyQuestionPicker">
             <div className="containerQuestionPicker">
-                <h1 className="titluCentru">Pick how many question do u want the test to have</h1>
+                <h1 className="titluCentru">Pick how many questions do u want the test to have</h1>
                 <div className="sliderContainer">
                     <ReactSlider
                         className="horizontalSlider"
@@ -36,7 +36,7 @@ const QuestionNumberPicker = () =>{
                     <div className = "buttonNumberPicker" onClick={() => setNumberOfQuestions(Math.min(20,inputData.length))}>20</div>
                     <div className = "buttonNumberPicker" onClick={() => setNumberOfQuestions(inputData.length)}>All</div>
                 </div>
-                <p className="textQuestionPicker">Number of questions that will appear in the test : {numberOfQuestions}</p>
+                <h3 className="textQuestionPicker">Number of questions that will appear in the test : {numberOfQuestions}</h3>
                 <button className = "buttonNumberPicker marginBottom" onClick={navigateTest}>Go to test</button>
             </div>
         </div>

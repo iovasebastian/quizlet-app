@@ -5,158 +5,151 @@ import './MainComponent.css';
 import axios from 'axios';
 import downArrow from './downarrow.svg';
 import loadingAnimation from './Rolling-1s-200px.svg';
+import { FiPlus } from "react-icons/fi";
 
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
-//const baseURL = "http://localhost:3000/api/items";
+const baseURL = "http://localhost:3000/api/items";
 
 const MainComponent = () => {
-  const navigate = useNavigate();
-  const [inputData, setInputData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [showButton, setShowButton] = useState(true);
-  const role = JSON.parse(localStorage.getItem('role'));
-  const [questionSetTitle, setQuestionSetTitle] = useState('');
-  const location = useLocation();
+const navigate = useNavigate();
+const [inputData, setInputData] = useState([]);
+const [loading, setLoading] = useState(false);
+const [showButton, setShowButton] = useState(false);
+const role = JSON.parse(localStorage.getItem('role'));
+const location = useLocation();
+const questionSetId = localStorage.getItem("questionSetId");
+const questionSetTitle = location?.state?.questionSetTitle;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      saveItems();
-    }, 300000);
+useEffect(() => {
+  const interval = setInterval(() => {
+    saveItems();
+  }, 300000);
+  return () => clearInterval(interval);
+}, [inputData]);
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(interval);
-  }, [inputData]);
+const handleSaveItems = async (inputData, questionSetId) => {
+  try {
+    const userId = JSON.parse(localStorage.getItem('userId'));
+    if (!userId) return;
+    const response = await axios.post(`${baseURL}/saveForUser`, {
+      inputData,
+      questionSetId,
+      userId
+    });
 
-  const handleSaveItems = async (inputData, questionSetTitle) => {
-    try {
-      setLoading(true);
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) {
-        console.error('User not found.');
-        return;
-      }
-      await axios.post(`${baseURL}/saveForUser`, { inputData, questionSetTitle, user });
-      const savedState = JSON.parse(sessionStorage.getItem('myState')) || { data: {} };
-      savedState.data.allQuestionSets = inputData;
-      sessionStorage.setItem('myState', JSON.stringify(savedState));
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Error saving data:', error);
-    }
-  };
-
-  const addLine = () => {
-    setInputData((prevData) => [...prevData, { _id: Date.now().toString(), questions: '', answers: '' }]);
-  };
-
-  const handleInputComplete = (id, newData) => {
-    setInputData((prevData) => prevData.map(item => item._id === id ? newData : item));
-  };
-
-  const deleteLine = (id) => {
-    setInputData((prevData) => prevData.filter(item => item._id !== id));
-  };
-
-  useEffect(() => {
-    const savedState = JSON.parse(sessionStorage.getItem('myState'));
-    if (savedState && savedState.data) {
-      setInputData(savedState.data.allQuestionSets || []);
-      setQuestionSetTitle(savedState.data.title || '');
-      const allQuestionId = savedState.data._id;
-      const allQuestionIdJSON = JSON.stringify(allQuestionId);
-      localStorage.setItem('allQuestionId', allQuestionIdJSON);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > document.body.scrollHeight - 2000) {
-        setShowButton(false);
-      } else {
-        setShowButton(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const elements = loading
-    ? <img src={loadingAnimation} alt='loading' />
-    : inputData.map((data, index) => (
-        <div key={data._id} className="line-container">
-          <LineComp
-            key={data._id}
-            id={data._id}
-            index={index}
-            initialQuestion={data.questions}
-            initialAnswer={data.answers}
-            onInputComplete={(newData) => handleInputComplete(data._id, newData)}
-            deleteLine={() => deleteLine(data._id)}
-          />
-        </div>
-      ));
-
-  const saveItems = async () => {
-    await handleSaveItems(inputData, questionSetTitle);
+    setInputData(response.data);
     triggerAnimation();
-  };
+  } catch (error) {
+    console.error('Error saving data:', error);
+  }
+};
 
-  const triggerAnimation = () => {
-    const saveBox = document.getElementById('saveBox');
-    if (saveBox) {
-      saveBox.classList.remove('animatedBox');
-      void saveBox.offsetWidth; // Reflow for restarting animation
-      saveBox.classList.add('animatedBox');
-    } else {
-      console.error("saveBox doesn't exist.");
-    }
-  };
+const handleRetreiveData = async (questionSetId) => {
+  try {
+    const response = await axios.get(`${baseURL}/retreiveQuestions`, {
+      params: { questionSetId }
+    });
+    setInputData(response.data);
+  } catch (e) {
+    console.error(e);
+  }
+};
 
-  const navigateToFinal = async () => {
-    await saveItems();
-    navigate('/final', { state: { inputData } });
-  };
+useEffect(() => {
+  handleRetreiveData(questionSetId);
+}, []);
 
-  const navigateTest = async () => {
-    await saveItems();
-    navigate('/numberpicker', { state: { inputData } });
+useEffect(() => {
+  const handleScroll = () => {
+    setShowButton(window.scrollY <= document.body.scrollHeight - 2000);
   };
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
 
-  const adminDash = () => {
-    navigate('/admin');
-  };
+const addLine = () => {
+  setInputData(prevData => [...prevData, { answerText: '', questionSetId: Number(questionSetId), questionText: '' }]);
+};
 
-  const signOut = () => {
-    navigate('/');
-  };
+const handleInputComplete = (index, newData) => {
+  setInputData(prevData => prevData.map((item, i) => i === index ? { ...item, ...newData } : item));
+};
 
-  const goDown = () => {
-    window.scrollTo(0, document.body.scrollHeight);
-  };
+const deleteLine = (indexToDelete) => {
+  setInputData(prevData => prevData.filter((_, idx) => idx !== indexToDelete));
+};
 
-  return (
-    <div className='background'>
-      <div id="saveBox" className='simpleBox'>
-        <p>Items saved!</p>
-      </div>
-      {showButton && <div className='buttonGoDown' onClick={goDown}><img className='arrowImg' src={downArrow} alt="Go Down" /></div>}
-      <div className='container-main'>
-        <h1 className='titleMain'>{questionSetTitle}</h1>
-        {elements}
-        {!loading && <button className='activate buttonAdd' onClick={addLine}>ADD</button>}
-        {!loading && <button className='activate buttonRemove' onClick={saveItems}>SAVE</button>}
-        {role === 'admin' && <button className='activate buttonRemove' onClick={adminDash}>ADMIN</button>}
-        {!loading && <button className='activate buttonRemove' onClick={signOut}>SIGN OUT</button>}
-        {inputData.length > 0 && <button className='activate buttonFinish' onClick={navigateToFinal}>Finish</button>}
+const elements = inputData.map((data, index) => (
+  <LineComp
+    key={data.questionId || `new-${index}`}
+    index={index}
+    initialQuestion={data.questionText}
+    initialAnswer={data.answerText}
+    onInputComplete={(newData) => handleInputComplete(index, newData)}
+    deleteLine={() => deleteLine(index)}
+  />
+));
+
+const saveItems = async () => {
+  await handleSaveItems(inputData, questionSetId);
+};
+
+const triggerAnimation = () => {
+  const saveBox = document.getElementById('saveBox');
+  if (saveBox) {
+    saveBox.classList.remove('animatedBox');
+    void saveBox.offsetWidth;
+    saveBox.classList.add('animatedBox');
+  }
+};
+
+const navigateToFinal = async () => {
+  try {
+    await saveItems(); // still saves everything
+
+    // Immediately fetch fresh data
+    const response = await axios.get(`${baseURL}/retreiveQuestions`, {
+      params: { questionSetId }
+    });
+
+    const refreshedData = response.data;
+    navigate('/final', { state: { inputData: refreshedData } });
+
+  } catch (err) {
+    console.error("Save or fetch failed", err);
+  }
+};
+
+const navigateTest = async () => {
+  await saveItems();
+  navigate('/numberpicker', { state: { inputData } });
+};
+
+const goDown = () => {
+  window.scrollTo(0, document.body.scrollHeight);
+};
+
+return (
+  <div className='background'>
+    <div id="saveBox" className='simpleBox'>
+      <p>Items saved!</p>
+    </div>
+    {showButton && <div className='buttonGoDown' onClick={goDown}><img className='arrowImg' src={downArrow} alt="Go Down" /></div>}
+    <div className='container-main'>
+      <h1 className='titleMain'>{questionSetTitle}</h1>
+      {elements}
+      {!loading && (
+        <button className="activate buttonAdd" onClick={addLine}>
+          <FiPlus size={24} />
+        </button>
+      )}
+      <div className='buttonsDivMain'>
+        {!loading && <button className='activate buttonRemove' onClick={saveItems}>Save</button>}
         {!loading && <button className='activate buttonRemove' onClick={navigateTest}>Test</button>}
+        {inputData.length > 0 && <button className='activate buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default MainComponent;

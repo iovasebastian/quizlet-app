@@ -10,24 +10,21 @@ const Final = () => {
   const [editState, setEditState] = useState(false);
   const [inputWord, setInputWord] = useState('');
   const [index, setIndex] = useState();
-  const username = JSON.parse(localStorage.getItem('user'));
-  const savedState = JSON.parse(sessionStorage.getItem('myState'));
-  const userId = username._id;
-  const allQuestionId = savedState.data._id;
-  console.log('USERID', userId);
-  const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  //const baseURL = "http://localhost:3000/api/items";
   const location = useLocation();
+  const userId = localStorage.getItem("userId");
+  const questionSetId = localStorage.getItem("questionSetId");
+  console.log('USERID', userId);
+  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  const baseURL = "http://localhost:3000/api/items";
   useEffect(() => {
    setInputData(location.state.inputData);  
    setIndex(localStorage.getItem('indexSet'));
   }, []);
-  
-  console.log('input', inputData);
-  const currentQuestion = inputData[number]?.questions;
-  const currentAnswer = inputData[number]?.answers;
-  const _id = inputData[number]?._id;
-  console.log('ID',_id);
+
+  const currentQuestion = inputData[number]?.questionText;
+  const currentAnswer = inputData[number]?.answerText;
+  const questionId = inputData[number]?.questionId;
+  console.log('ID',questionId);
   console.log(currentQuestion,currentAnswer);
   const style = state ? currentAnswer : currentQuestion;
 
@@ -48,7 +45,8 @@ const Final = () => {
     setNumber((prevNumber) => (prevNumber > 0 ? prevNumber - 1 : inputData.length - 1));
     setState(false);
   }
-  const changeEditState = async () => {
+  const changeEditState = async (e) => {
+    e.stopPropagation();
     console.log('editing');
     if (!editState) {
       setEditState(true);
@@ -56,10 +54,9 @@ const Final = () => {
     } else {
       try {
         const response = await axios.post(`${baseURL}/saveEdit`, {
-          _id: userId,
+          userId: userId,
           item: inputWord,
-          questionSetId: _id,
-          allQuestionId: allQuestionId,
+          questionId: questionId,
           state: state
         });
   
@@ -68,8 +65,8 @@ const Final = () => {
 
           const updatedData = inputData.map((item, index) => {
             if(index === number){
-              console.log('item question', item.questions);
-              state ? item.answers = inputWord : item.questions = inputWord;
+              console.log('item question', item.questionText);
+              state ? item.answerText = inputWord : item.questionText = inputWord;
             } 
             return item;
           });
@@ -102,24 +99,30 @@ const Final = () => {
   setNumber(0);
 }
 
-  
-  
-
   return (
     <div className="cover-final">
       <div id = "saveBox" className='simpleBox'>
           <p>Items saved!</p>
       </div>
       <div className="all-card">
-        <button className="butonEdit" onClick={changeEditState}>{editState?"Done":"Edit"}</button>
         <div className='quizCard' onClick={reverseState}>
-          {editState ? <input className="p-afisare" value = {inputWord} onChange={handleInputChange}/> : <p className="p-afisare">{style}</p>}
-          <p className="p-numbering">{number+1}/{inputData.length}</p>
+          <div className="topDivFinal">
+            <p className="p-numbering">{number+1}/{inputData.length}</p>
+            <button className="buttonEdit" onClick={changeEditState}>{editState?"Done":"Edit"}</button>   
+          </div>
+          <div
+            className="textDivFinal"
+            style={{
+              alignItems: style?.length < 100 ? "center" : "flex-start"
+            }}
+          >
+            {editState ? <input className="p-afisare" value = {inputWord} onChange={handleInputChange}/> : <p>{style}</p>}
+          </div>
         </div>
         <div className="spread-apart">
-          <button className='prevButton' onClick={handlePrev}>Previous</button>
-          <button className='shuffleButton' onClick={shuffle}>Shuffle</button>
-          <button className='nextButton' onClick={handleNext}>Next</button>
+          <button className='buttonFinal' onClick={handlePrev}>Previous</button>
+          <button className='buttonFinal' onClick={shuffle}>Shuffle</button>
+          <button className='buttonFinal' onClick={handleNext}>Next</button>
         </div>
       </div>
     </div>

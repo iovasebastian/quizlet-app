@@ -1,22 +1,72 @@
 .center{
     display: flex;
     flex-direction: column;
-    gap:1em;
     height:100vh;
     align-items: center;
     justify-content: center;
+    background: url(/public/backgroundGlass.png);
+    background-size:cover;
 }
 .buttonSignin{
-    all:unset;
-    margin:0;
-    border:1px solid black;
+    all: unset;
+    padding: 0.75rem 2rem;
+    margin-top: 0.75rem;
+    background: linear-gradient(135deg, #a100a1, #d6336c);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
     text-align: center;
-    border-radius: 0.3em;
-    width:6em;
-    background-color: purple;
-    font-weight: 500;
-    display:block;
-    color:white;
     cursor: pointer;
-    height:1.5em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.buttonSignin:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+  
+.buttonSignin:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.usernameSignin {
+    all: unset;
+    background-color: white;
+    padding: 0.9em 1.2em;
+    width: 60%;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1);
+    font-size: 1rem;
+    color: black;
+}
+.passwordSignin{
+    all: unset;
+    background-color: white;
+    padding: 0.9em 1.2em;
+    width: 60%;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1);
+    font-size: 1rem;
+    color: black;
+}
+.glass{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:30em;
+    width:20em;
+    flex-direction: column;
+    border: 1px solid black;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* for Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    color: #000;
+    gap:1em;
 }

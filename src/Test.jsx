@@ -22,6 +22,11 @@ const Test = () =>{
         setInputData(location.state.inputData);
         setNumberOfQuestions(location.state.numberOfQuestions);
     }, [location.state.inputData, location.state.numberOfQuestions]);
+
+    useEffect(()=>{
+        console.log('inputdata', inputData)
+    }, [inputData])
+
     useEffect(() => {
         if (inputData.length > 0) {
             const checkedNumbers = new Set();
@@ -44,21 +49,21 @@ const Test = () =>{
         if (inputData.length > 0 && copyArray.length > 0) {
             let arrayLength = inputData.length;
             randomQuestionIndex = copyArray[questionNumer-1];
-            setRandomQuestion(inputData[randomQuestionIndex].questions);
-            setRandomQuestionAnswer(inputData[randomQuestionIndex].answers);
+            setRandomQuestion(inputData[randomQuestionIndex].questionText);
+            setRandomQuestionAnswer(inputData[randomQuestionIndex].answerText);
             
             let newAnswers = new Array(4).fill("");
     
             // Populate the new answers array
             newAnswers.forEach((_, i) => {
                 if (i + 1 === rightQuestionPos) {
-                    newAnswers[i] = inputData[randomQuestionIndex].answers;  // Direct assignment for correct position
+                    newAnswers[i] = inputData[randomQuestionIndex].answerText;  // Direct assignment for correct position
                 } else {
                     let position;
                     do {
                         position = getRandomIntInclusive(0, arrayLength - 1);  // Correctly adjusted to avoid the same index
                     } while (position === randomQuestionIndex);  // Ensure different question
-                    newAnswers[i] = inputData[position].answers;
+                    newAnswers[i] = inputData[position].answerText;
                 }
             });
     
@@ -120,7 +125,7 @@ const Test = () =>{
                             style={{ backgroundColor: buttonStyles[index] }}
                         >
                             {answer[index - 1] ? (
-                                <div className={(answer[index - 1][0].length > 50 || answer[index - 1].length) ? "answerTextLong" : "answerText"}>
+                                <div>
                                     {answer[index-1]}
                                 </div>
                             ) : (
