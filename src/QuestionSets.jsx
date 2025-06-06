@@ -14,7 +14,16 @@ const QuestionSets = () => {
     const [deletePending, setDeletePending] = useState(false);
     const [deleteId, setDeleteId] = useState('');
     const [deleteTitle, setDeleteTitle] = useState('');
+    const [editTitleToggle, setEditTitleToggle] = useState(false);
+    const [editTitleId, setEditTitleId] = useState(null);
     const userId = JSON.parse(localStorage.getItem('userId'));
+    const [editTitle, setEditTitle] = useState("");
+
+
+    useEffect(()=>{
+        console.log(editTitle);
+    },[editTitle])
+
     const getExistingData = async () => {
         try {
             if (!userId) {
@@ -37,6 +46,38 @@ const QuestionSets = () => {
             console.error('Error retrieving data:', error);
         }
     };
+
+    const startEdit = (e, title, questionSetId) =>{
+        e.stopPropagation();
+        setEditTitleToggle(true);
+        setEditTitle(title);
+        setEditTitleId(questionSetId);
+    }
+
+    const saveEditTitle = async (e, questionSetId) =>{
+        e.stopPropagation();
+        setEditTitleToggle(false);
+        console.log(questionSetId);
+        try{
+            const response = await axios.post(`http://localhost:3000/api/items/editTitle`, {
+                questionSetId: questionSetId,
+                title: editTitle
+            })
+            console.log('edit title response', response);
+        }catch(e){
+            console.log(e);
+        } 
+        setDataStored(prev =>
+            prev.map(item =>
+              item.questionSetId === questionSetId ? { ...item, title: editTitle } : item
+            )
+        );
+       
+    }
+
+    const handleEditTitleChange = (e) =>{
+        setEditTitle(e.target.value);
+    }
 
     const navigateSet = async (data, index) => {
         localStorage.setItem('questionSetId', Number(data.questionSetId))
@@ -73,7 +114,20 @@ const QuestionSets = () => {
 
     const elements = dataStored?.map((data, index) =>
         <div key={index} className='divSet' onClick={() => navigateSet(data, index)}>
-          <h2>{data.title}</h2>
+          {editTitleToggle && editTitleId === data.questionSetId ? <input className = "inputSet edit" onClick = {(e) => e.stopPropagation()} value={editTitle} onChange={handleEditTitleChange}/> : <h2>{data.title}</h2>}
+          {editTitleToggle && editTitleId === data.questionSetId?
+          <button
+            className="butonSet"
+            onClick={(e) => saveEditTitle(e, data.questionSetId)}
+          >
+            Done
+          </button>:
+          <button
+            className="butonSet"
+            onClick={(e) => startEdit(e, data.title, data.questionSetId)}
+            >
+            Edit title
+          </button>}
           <button
             className="butonSet"
             onClick={(e) => {
