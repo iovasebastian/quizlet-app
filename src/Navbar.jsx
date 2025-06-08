@@ -86,7 +86,7 @@ const Navbar = () => {
           </div>
           <ul>
             {role === "admin" && <li className='nav-item' onClick={() => {adminDash(); setMenuOpen(false);}}>Admin</li>}
-            {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
+            {token && <li className='nav-item' onClick={() => {navigateQuestionSet(); setMenuOpen(false)}}>Question Sets</li>}
             <li className="nav-item" onClick={() => {setMenuOpen(false); loggedIn ? signOut() : goToLogin()}}>
               {loggedIn ? "Log Out" : "Log In"}
             </li>
