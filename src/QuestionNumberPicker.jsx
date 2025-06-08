@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReactSlider from 'react-slider';
 import './questionNumberPicker.css';
+import RequireAuth from "./RequireAuth";
 const QuestionNumberPicker = () =>{
     const location = useLocation();
     const [numberOfQuestions, setNumberOfQuestions] = useState(1);
@@ -17,6 +18,8 @@ const QuestionNumberPicker = () =>{
         navigate("/test",  { state: { inputData, numberOfQuestions } });
     }
     return(
+        <>
+        <RequireAuth />
         <div className="bodyQuestionPicker">
             <div className="containerQuestionPicker">
                 <h1 className="titluCentru">Pick how many questions do u want the test to have</h1>
@@ -40,8 +43,7 @@ const QuestionNumberPicker = () =>{
                 <button className = "buttonNumberPicker marginBottom" onClick={navigateTest}>Go to test</button>
             </div>
         </div>
-        
-        
+        </>
     )
 }
 export default QuestionNumberPicker;

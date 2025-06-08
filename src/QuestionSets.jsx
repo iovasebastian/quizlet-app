@@ -2,9 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./questionset.css";
 import { useState, useEffect } from 'react';
+import RequireAuth from './RequireAuth';
 import plusSvg from "./plus-svgrepo-com.svg";
 const baseURL = "https://server-three-taupe.vercel.app/api/items";
 //const baseURL = "http://localhost:3000/api/items";
+
+
 const QuestionSets = () => {
     const navigate = useNavigate();
     const [dataStored, setDataStored] = useState([]);
@@ -18,6 +21,7 @@ const QuestionSets = () => {
     const [editTitleId, setEditTitleId] = useState(null);
     const userId = JSON.parse(localStorage.getItem('userId'));
     const [editTitle, setEditTitle] = useState("");
+    const token = localStorage.getItem("token");
 
 
     useEffect(()=>{
@@ -26,10 +30,9 @@ const QuestionSets = () => {
 
     const getExistingData = async () => {
         try {
-            if (!userId) {
-                return;
-            }
-            const response = await axios.get(`${baseURL}?userId=${userId}`);
+            const response = await axios.get(`${baseURL}`,{
+                headers: {Authorization: `Bearer ${token}`}
+            });
             //setUsername(user.username);
             return response.data;
         }
@@ -62,6 +65,8 @@ const QuestionSets = () => {
             const response = await axios.post(`http://localhost:3000/api/items/editTitle`, {
                 questionSetId: questionSetId,
                 title: editTitle
+            },{
+                headers: {Authorization : `Bearer ${token}`}
             })
             console.log('edit title response', response);
         }catch(e){
@@ -94,7 +99,10 @@ const QuestionSets = () => {
 
     const addNewSet = async (userId, title) => {
         try {
-            await axios.post(`${baseURL}/question-set`, {userId, title});
+            await axios.post(`${baseURL}/question-set`,
+                { title },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
             setEvent((prevState) => !prevState);
             setNewTitle("");
             console.log(dataStored);
@@ -105,7 +113,10 @@ const QuestionSets = () => {
     const deleteSet = async (questionSetId, event) =>{
         event.stopPropagation();
         try {
-            await axios.post(`${baseURL}/deleteQuestionSet`, {questionSetId});
+            await axios.post(`${baseURL}/deleteQuestionSet`, 
+                {questionSetId},
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
             setEvent((prevState) => !prevState);
           } catch (error) {
             console.error('Error deleting data:', error);
@@ -142,6 +153,8 @@ const QuestionSets = () => {
         </div>
       );
     return (
+        <>
+        <RequireAuth />
         <div className='backgroundSets'>
             {elements}
             {deletePending && (
@@ -164,7 +177,7 @@ const QuestionSets = () => {
                 <button className = "butonSet" onClick={() => addNewSet(userId, newTitle)}>Add set</button>
             </div>
         </div>
-
+        </>
     )
 }
 export default QuestionSets;

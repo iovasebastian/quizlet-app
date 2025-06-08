@@ -6,6 +6,7 @@ import axios from 'axios';
 import downArrow from './downarrow.svg';
 import loadingAnimation from './Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
+import RequireAuth from './RequireAuth';
 
 //const baseURL = "http://localhost:3000/api/items";
 const baseURL = "https://server-three-taupe.vercel.app/api/items";
@@ -17,6 +18,7 @@ const [loading, setLoading] = useState(false);
 const [showButton, setShowButton] = useState(false);
 const role = JSON.parse(localStorage.getItem('role'));
 const location = useLocation();
+const token = localStorage.getItem("token");
 const questionSetId = localStorage.getItem("questionSetId");
 const questionSetTitle = location?.state?.questionSetTitle;
 
@@ -35,6 +37,8 @@ const handleSaveItems = async (inputData, questionSetId) => {
       inputData,
       questionSetId,
       userId
+    },{
+      headers: {Authorization : `Bearer ${token}`}
     });
 
     setInputData(response.data);
@@ -47,6 +51,7 @@ const handleSaveItems = async (inputData, questionSetId) => {
 const handleRetreiveData = async (questionSetId) => {
   try {
     const response = await axios.get(`${baseURL}/retreiveQuestions`, {
+      headers: {Authorization : `Bearer ${token}`},
       params: { questionSetId }
     });
     setInputData(response.data);
@@ -128,6 +133,7 @@ const navigateToFinal = async () => {
 
     // Immediately fetch fresh data
     const response = await axios.get(`${baseURL}/retreiveQuestions`, {
+      headers: {Authorization : `Bearer ${token}`},
       params: { questionSetId }
     });
 
@@ -149,6 +155,8 @@ const goDown = () => {
 };
 
 return (
+  <>
+  <RequireAuth />
   <div className='background'>
     <div id="saveBox" className='simpleBox'>
       <p>Items saved!</p>
@@ -169,6 +177,7 @@ return (
       </div>
     </div>
   </div>
+  </>
 );
 };
 

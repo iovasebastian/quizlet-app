@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import RequireAuth from './RequireAuth';
 import './test.css';
 const Test = () =>{
     const [inputData, setInputData] = useState([]);
@@ -105,6 +106,8 @@ const Test = () =>{
     }
 
     return(
+        <>
+        <RequireAuth />
         <div className='backgroundTest'>
             <div id = "saveBox" className='simpleBox'>
                 <p>Items saved!</p>
@@ -140,6 +143,7 @@ const Test = () =>{
 
             </div>
         </div>
+        </>
     )
 }
 export default Test;

@@ -1,0 +1,56 @@
+.notfound-background {
+    background: url(/public/backgroundGlass.png);
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .notfound-container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 3rem 4rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: black;
+    max-width: 90%;
+  }
+  
+  .notfound-container h1 {
+    font-size: 4rem;
+    margin-bottom: 0.5em;
+    color: #a100a1;
+  }
+  
+  .notfound-container p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .notfound-button {
+    all: unset;
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #a100a1, #d6336c);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .notfound-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .notfound-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+  

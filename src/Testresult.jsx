@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import RequireAuth from './RequireAuth';
 import './testresult.css';
 
 const Testresult = () =>{
@@ -18,6 +19,8 @@ const Testresult = () =>{
     }
     
     return(
+        <>
+        <RequireAuth />
         <div className='backgroundResult'>
             <div className='containerResult'>
                 <h1 className='titluResult'>Test Results</h1>
@@ -29,6 +32,7 @@ const Testresult = () =>{
                 <button onClick = {()=>goBack()} className='buttonBack'>Go back</button>
             </div>
         </div>
+        </>
     )
 }
 export default Testresult;

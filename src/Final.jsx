@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useMatch } from 'react-router-dom';
 import axios from 'axios';
 import './Final.css';
+import RequireAuth from "./RequireAuth";
 
 const Final = () => {
   const [state, setState] = useState(false);
@@ -11,6 +12,7 @@ const Final = () => {
   const [inputWord, setInputWord] = useState('');
   const [index, setIndex] = useState();
   const location = useLocation();
+  const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const questionSetId = localStorage.getItem("questionSetId");
   console.log('USERID', userId);
@@ -58,6 +60,8 @@ const Final = () => {
           item: inputWord,
           questionId: questionId,
           state: state
+        },{
+          headers: {Authorization : `Bearer ${token}`}
         });
   
         if (response.status === 200) {
@@ -100,6 +104,8 @@ const Final = () => {
 }
 
   return (
+    <>
+    <RequireAuth />
     <div className="cover-final">
       <div id = "saveBox" className='simpleBox'>
           <p>Items saved!</p>
@@ -126,6 +132,7 @@ const Final = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

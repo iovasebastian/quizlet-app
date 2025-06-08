@@ -13,6 +13,8 @@ import Test from './Test.jsx';
 import Testresult from './Testresult.jsx';
 import QuestionNumberPicker from './QuestionNumberPicker.jsx';
 import Navbar from './Navbar.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
+import NotFound from './NotFound.jsx';
 
 function App() {
 
@@ -24,12 +26,20 @@ function App() {
           <Route path="/" element={<Signin />} />
           <Route path="/main" element={<MainComponent />} />
           <Route path="/final" element={<Final/>}/>
-          <Route path="/admin" element ={<Admin/>}/>
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/sets" element={<QuestionSets/>}/>
           <Route path='/test' element={<Test/>}/>
           <Route path='/testresult' element={<Testresult/>}/>
           <Route path='/numberpicker' element={<QuestionNumberPicker/>}/>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>
     </div>

@@ -21,8 +21,7 @@ const Signin = () => {
       });
       if (response.status === 200) {
         console.log(response);
-        localStorage.setItem('userId', JSON.stringify(response.data.userId));
-        localStorage.setItem('role', JSON.stringify(response.data.role));
+        localStorage.setItem('token', response.data.token);
         navigate('/sets');
         setLoading(false);
       }

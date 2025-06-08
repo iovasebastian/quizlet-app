@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { FiMenu, FiX } from "react-icons/fi";
 import {useNavigate, useLocation } from "react-router-dom";
 import "./navbar.css";
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
+//const baseURL = "http://localhost:3000/api/items";
+const token = localStorage.getItem("token");
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,34 +13,48 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [role, setRole] = useState("");
+  const token = localStorage.getItem("token");
 
   const adminDash = () => {
     navigate('/admin');
   };
 
   useEffect(() => {
-    setLoggedIn(!!localStorage.getItem("userId"));
+    setLoggedIn(!!localStorage.getItem("token"));
   }, [location]);
-
-  useEffect(()=>{
-    console.log('loggedIn', loggedIn)
-  },[loggedIn])
 
   useEffect(() => {
-    const storedRole = JSON.parse(localStorage.getItem("role"));
-    setRole(storedRole);
-    console.log(role);
-  }, [location]);
+    if(token){
+      console.log('getRole', token)
+      const fetchRole = async () => {
+        const fetchedRole = await getRole();
+        setRole(fetchedRole);
+      };
+      fetchRole();
+    }
+  }, [location, loggedIn]);
 
   const signOut = () => {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
     setMenuOpen(false);
+    setRole("");
     navigate('/');
   };
 
   const goToLogin = () => {
     navigate('/');
   };
+
+  const navigateQuestionSet = () =>{
+    navigate('/sets')
+  }
+
+  const getRole = async () =>{
+    const response = await axios.get(`${baseURL}/getRole`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return response.data.role;
+  }
 
   return (
     <nav className="navbar">
@@ -46,8 +64,9 @@ const Navbar = () => {
 
       <ul className="navbar-links desktop-only">
         {role === "admin" && (
-            <li className='nav-item' onClick={adminDash}>Admin</li>
+          <li className='nav-item' onClick={adminDash}>Admin</li>
         )}
+        {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
       </ul>
 
       <div className="navbar-right desktop-only">
@@ -67,6 +86,7 @@ const Navbar = () => {
           </div>
           <ul>
             {role === "admin" && <li className='nav-item' onClick={() => {adminDash(); setMenuOpen(false);}}>Admin</li>}
+            {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
             <li className="nav-item" onClick={() => {setMenuOpen(false); loggedIn ? signOut() : goToLogin()}}>
               {loggedIn ? "Log Out" : "Log In"}
             </li>

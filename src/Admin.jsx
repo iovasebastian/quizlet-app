@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import './admin.css';
 const baseURL = "https://server-three-taupe.vercel.app/api/items";
 //const baseURL = "http://localhost:3000/api/items"
+const token = localStorage.getItem("token");
 
 
 const Admin = () => {
     const [users,setUsers] = useState([]);
     const getUsers = async () =>{
         try{
-            const response = await axios.get(`${baseURL}/getUser`);
+            const response = await axios.get(`${baseURL}/getUser`,{
+                headers: {Authorization : `Bearer ${token}`}
+            });
             setUsers(response.data);
 
         }catch(error){
