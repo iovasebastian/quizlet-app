@@ -68,25 +68,44 @@ useEffect(() => {
 }, []);
 
 const addLine = () => {
-  setInputData(prevData => [...prevData, { answerText: '', questionSetId: Number(questionSetId), questionText: '' }]);
+  const newLine = {
+    questionText: '',
+    answerText: '',
+    questionSetId: Number(questionSetId),
+    tempId: Date.now()
+  };
+  setInputData(prevData => [...prevData, newLine]);
+  console.log('newLine', newLine)
 };
 
 const handleInputComplete = (index, newData) => {
   setInputData(prevData => prevData.map((item, i) => i === index ? { ...item, ...newData } : item));
 };
 
-const deleteLine = (indexToDelete) => {
-  setInputData(prevData => prevData.filter((_, idx) => idx !== indexToDelete));
+const deleteLine = (id) => {
+  console.log('id', id)
+  setInputData(prev => {
+    const hasQuestionId = prev.some(item => item.questionId === id);
+    const hasTempId = prev.some(item => item.tempId === id);
+
+    if (hasQuestionId) {
+      return prev.filter(item => item.questionId !== id);
+    } else if (hasTempId) {
+      return prev.filter(item => item.tempId !== id);
+    }
+
+    return prev;
+  });
 };
 
 const elements = inputData.map((data, index) => (
   <LineComp
-    key={data.questionId || `new-${index}`}
+    key={data.questionId || data.tempId}
     index={index}
     initialQuestion={data.questionText}
     initialAnswer={data.answerText}
     onInputComplete={(newData) => handleInputComplete(index, newData)}
-    deleteLine={() => deleteLine(index)}
+    deleteLine={() => deleteLine(data.questionId || data.tempId)}
   />
 ));
 
