@@ -30,16 +30,7 @@ useEffect(() => {
 }, [inputData]);
 
 const handleSaveItems = async (inputData, questionSetId) => {
-  console.log("handleSaveItems triggered");
   try {
-    const userId = JSON.parse(localStorage.getItem('userId'));
-    console.log("userId from localStorage:", userId);
-
-    if (!userId) return;
-
-    const token = localStorage.getItem("token");
-    console.log("token:", token);
-
     const response = await axios.post(`${baseURL}/saveForUser`, {
       inputData,
       questionSetId,
@@ -48,14 +39,12 @@ const handleSaveItems = async (inputData, questionSetId) => {
       headers: {Authorization : `Bearer ${token}`}
     });
 
-    console.log("Response received:", response.data);
     setInputData(response.data);
     triggerAnimation();
   } catch (error) {
     console.error('Error saving data:', error);
   }
 };
-
 
 const handleRetreiveData = async (questionSetId) => {
   try {
@@ -124,7 +113,6 @@ const elements = inputData.map((data, index) => (
 ));
 
 const saveItems = async () => {
-  console.log("Save button clicked");
   await handleSaveItems(inputData, questionSetId);
 };
 
