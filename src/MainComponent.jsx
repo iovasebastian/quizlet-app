@@ -33,8 +33,7 @@ const handleSaveItems = async (inputData, questionSetId) => {
   try {
     const response = await axios.post(`${baseURL}/saveForUser`, {
       inputData,
-      questionSetId,
-      userId
+      questionSetId
     },{
       headers: {Authorization : `Bearer ${token}`}
     });
