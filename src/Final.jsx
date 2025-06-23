@@ -13,9 +13,8 @@ const Final = () => {
   const [index, setIndex] = useState();
   const location = useLocation();
   const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
   const questionSetId = localStorage.getItem("questionSetId");
-  console.log('USERID', userId);
+
   const baseURL = "https://server-three-taupe.vercel.app/api/items";
   //const baseURL = "http://localhost:3000/api/items";
   useEffect(() => {
@@ -56,7 +55,6 @@ const Final = () => {
     } else {
       try {
         const response = await axios.post(`${baseURL}/saveEdit`, {
-          userId: userId,
           item: inputWord,
           questionId: questionId,
           state: state

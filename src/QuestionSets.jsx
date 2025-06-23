@@ -19,7 +19,6 @@ const QuestionSets = () => {
     const [deleteTitle, setDeleteTitle] = useState('');
     const [editTitleToggle, setEditTitleToggle] = useState(false);
     const [editTitleId, setEditTitleId] = useState(null);
-    const userId = JSON.parse(localStorage.getItem('userId'));
     const [editTitle, setEditTitle] = useState("");
     const token = localStorage.getItem("token");
 
@@ -97,7 +96,7 @@ const QuestionSets = () => {
         handleRetrieveAll();
     }, [event]);
 
-    const addNewSet = async (userId, title) => {
+    const addNewSet = async (title) => {
         try {
             await axios.post(`${baseURL}/question-set`,
                 { title },
@@ -174,7 +173,7 @@ const QuestionSets = () => {
             <div className='divSetAdd'>
                 <h2>Choose a title: </h2>
                 <input className = "inputSet" placeholder = "Title..." type='text' value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-                <button className = "butonSet" onClick={() => addNewSet(userId, newTitle)}>Add set</button>
+                <button className = "butonSet" onClick={() => addNewSet(newTitle)}>Add set</button>
             </div>
         </div>
         </>
