@@ -17,8 +17,8 @@ const Img2Text = () =>{
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
-    //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    const baseURL = "http://localhost:3000/api/items";
+    const baseURL = "https://server-three-taupe.vercel.app/api/items";
+    //const baseURL = "http://localhost:3000/api/items";
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
