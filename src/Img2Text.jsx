@@ -3,6 +3,7 @@ import RequireAuth from './RequireAuth';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "./utils/axiosInstance"; 
+import { createWorker } from 'tesseract.js';
 const Img2Text = () =>{
     const [file, setFile] = useState(null);
     const [ocrText, setOcrText] = useState('');
@@ -16,14 +17,25 @@ const Img2Text = () =>{
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
-    const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    //const baseURL = "http://localhost:3000/api/items";
+    //const baseURL = "https://server-three-taupe.vercel.app/api/items";
+    const baseURL = "http://localhost:3000/api/items";
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
         setOcrText('');
         setQaPairs([]);
         setError(null);
+    };
+
+    const runOCR = async (file) => {
+        const worker = await createWorker('eng');
+
+        const {
+            data: { text }
+        } = await worker.recognize(file);
+
+        await worker.terminate();
+        return text;
     };
 
     const handleNumberOfQuestions = (e) => {
@@ -45,7 +57,7 @@ const Img2Text = () =>{
 
     const handleUpload = async () => {
         if (!file) return;
-        if(numberOfQuestions > MAX_NUMBER_QUESTIONS){
+        if (numberOfQuestions > MAX_NUMBER_QUESTIONS) {
             setError(`Max number of questions exceeded (${MAX_NUMBER_QUESTIONS})`);
             return;
         }
@@ -53,25 +65,30 @@ const Img2Text = () =>{
         setLoading(true);
         setError(null);
 
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('numberOfQuestions', numberOfQuestions);
-        console.log(formData);
         try {
-        const res = await axios.post(`${baseURL}/ocr-file`, formData, {
-            headers:{ 'Content-Type': 'multipart/form-data', 
-                        Authorization : `Bearer ${token}` 
-                    },
-        });
+            // OCR in frontend
+            const extractedText = await runOCR(file);
+            console.log('OCR Result:', extractedText);
 
-        setQaPairs(res.data.questionsAndAnswers || []);
+            // Send text to Gemini backend route
+            const res = await axios.post(`${baseURL}/gemini`, {
+            text: extractedText,
+            numberOfQuestions
+            }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+            });
+
+            setQaPairs(res.data.questionsAndAnswers || []);
         } catch (err) {
-        setError('Failed to process image.');
-        console.error(err);
+            setError('Failed to process image.');
+            console.error(err);
         }
 
         setLoading(false);
     };
+
     return(
         
         <>
