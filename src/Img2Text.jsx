@@ -58,7 +58,7 @@ const Img2Text = () =>{
         formData.append('numberOfQuestions', numberOfQuestions);
         console.log(formData);
         try {
-        const res = await axios.post('`${baseURL}/ocr-file`', formData, {
+        const res = await axios.post(`${baseURL}/ocr-file`, formData, {
             headers:{ 'Content-Type': 'multipart/form-data', 
                         Authorization : `Bearer ${token}` 
                     },
