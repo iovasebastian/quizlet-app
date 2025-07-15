@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LineComp from './LineComp';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './MainComponent.css';
-import axios from 'axios';
+import axios from "./utils/axiosInstance";
 import downArrow from './downarrow.svg';
 import loadingAnimation from './Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
@@ -147,6 +147,11 @@ const navigateTest = async () => {
   navigate('/numberpicker', { state: { inputData } });
 };
 
+const navigateImg2Text = async () =>{
+  await saveItems();
+  navigate('/img2text', { state: { questionSetId }})
+}
+
 const goDown = () => {
   window.scrollTo(0, document.body.scrollHeight);
 };
@@ -170,6 +175,7 @@ return (
       <div className='buttonsDivMain'>
         {!loading && <button className='activate buttonRemove' onClick={saveItems}>Save</button>}
         {!loading && <button className='activate buttonRemove' onClick={navigateTest}>Test</button>}
+        {!loading && <button className='activate buttonRemove' onClick={navigateImg2Text}>Get questions from image</button>}
         {inputData.length > 0 && <button className='activate buttonFinish' onClick={navigateToFinal}>Finish</button>}
       </div>
     </div>

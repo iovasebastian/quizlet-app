@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from "./utils/axiosInstance";
 import "./questionset.css";
 import { useState, useEffect } from 'react';
 import RequireAuth from './RequireAuth';

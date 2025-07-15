@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useMatch } from 'react-router-dom';
-import axios from 'axios';
+import axios from "./utils/axiosInstance"; 
 import './Final.css';
 import RequireAuth from "./RequireAuth";
 

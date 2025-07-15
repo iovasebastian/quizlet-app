@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "./utils/axiosInstance";
 import { FiMenu, FiX } from "react-icons/fi";
 import {useNavigate, useLocation } from "react-router-dom";
 import "./navbar.css";

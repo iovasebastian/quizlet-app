@@ -70,3 +70,39 @@
     color: #000;
     gap:1em;
 }
+.errorBox {
+  position: fixed;
+  top: -100px; /* Start off screen */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  background-color: #ffdada;
+  border-radius: 8px;
+  color: #a10000;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  text-align: center;
+
+  animation: slideDownAndUp 3s ease-in-out forwards;
+}
+
+/* Keyframes for slide down and back up */
+@keyframes slideDownAndUp {
+  0% {
+    top: -100px;
+    opacity: 0;
+  }
+  10% {
+    top: 20px;
+    opacity: 1;
+  }
+  85% {
+    top: 20px;
+    opacity: 1;
+  }
+  100% {
+    top: -100px;
+    opacity: 0;
+  }
+}

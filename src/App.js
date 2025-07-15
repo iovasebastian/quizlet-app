@@ -15,6 +15,7 @@ import QuestionNumberPicker from './QuestionNumberPicker.jsx';
 import Navbar from './Navbar.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import NotFound from './NotFound.jsx';
+import Img2Text from './Img2Text.jsx';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
           <Route path='/test' element={<Test/>}/>
           <Route path='/testresult' element={<Testresult/>}/>
           <Route path='/numberpicker' element={<QuestionNumberPicker/>}/>
+          <Route path='/img2text' element={<Img2Text/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>

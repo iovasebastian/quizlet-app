@@ -1,0 +1,92 @@
+.cover-img2text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height:100vh;
+    background: url(/public/backgroundGlass.png);
+    background-size: cover;
+}
+
+.inputNumber{
+  all: unset;
+  width: 6em;
+  padding: 0.5em 0.75em;
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: center;
+  color: black;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 1em;
+  box-shadow: rgba(50, 50, 93, 0.1) 0px 2px 8px, rgba(0, 0, 0, 0.1) 0px 2px 4px;
+  margin-bottom:1em;
+  /* Optional to remove browser arrows in number input */
+  --moz-appearance: textfield;
+}
+
+.inputFileWrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 1em;
+  background: linear-gradient(135deg, #a100a1, #d6336c);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.75em 2em;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 0.5em;
+}
+
+.inputFileWrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.inputFileWrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.buttonGradient {
+  all: unset;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #a100a1, #d6336c);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.buttonGradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.buttonGradient:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* 👇 Grayed out when disabled */
+.buttonGradient:disabled {
+  background: linear-gradient(135deg, #ccc, #eee); /* subtle gray gradient */
+  color: #666;               /* muted text */
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 0.8;
+}
+
