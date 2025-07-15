@@ -16,6 +16,9 @@ const Img2Text = () =>{
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
+    const baseURL = "https://server-three-taupe.vercel.app/api/items";
+    //const baseURL = "http://localhost:3000/api/items";
+
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
         setOcrText('');
@@ -29,7 +32,7 @@ const Img2Text = () =>{
 
     const saveQuestionsToSet = async () => {
         try{
-            const response = await axios.post('http://localhost:3000/api/items/ocr-upload', 
+            const response = await axios.post(`${baseURL}/ocr-upload`, 
             {qaPairs, questionSetId},{
             headers: {Authorization : `Bearer ${token}`}
         });
@@ -55,7 +58,7 @@ const Img2Text = () =>{
         formData.append('numberOfQuestions', numberOfQuestions);
         console.log(formData);
         try {
-        const res = await axios.post('http://localhost:3000/api/items/ocr-file', formData, {
+        const res = await axios.post('`${baseURL}/ocr-file`', formData, {
             headers:{ 'Content-Type': 'multipart/form-data', 
                         Authorization : `Bearer ${token}` 
                     },
