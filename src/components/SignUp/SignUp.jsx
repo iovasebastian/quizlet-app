@@ -9,8 +9,8 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const navigate = useNavigate();
-  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  const baseURL = "http://localhost:3000/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  //const baseURL = "http://localhost:3000/api/items";
 
   const checkEmail = (email) =>{
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
