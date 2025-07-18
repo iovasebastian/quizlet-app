@@ -1,8 +1,8 @@
 import './img2text.css';
-import RequireAuth from './RequireAuth';
+import RequireAuth from '../RequireAuth/RequireAuth';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from "./utils/axiosInstance"; 
+import axios from "../../utils/axiosInstance"; 
 import { createWorker } from 'tesseract.js';
 const Img2Text = () =>{
     const [file, setFile] = useState(null);

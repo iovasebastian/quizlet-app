@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import RequireAuth from './RequireAuth';
+import RequireAuth from '../RequireAuth/RequireAuth';
 import './testresult.css';
 
 const Testresult = () =>{

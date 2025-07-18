@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import LineComp from './LineComp';
+import LineComp from '../LineComp/LineComp';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './MainComponent.css';
-import axios from "./utils/axiosInstance";
-import downArrow from './downarrow.svg';
-import loadingAnimation from './Rolling-1s-200px.svg';
+import axios from "../../utils/axiosInstance";
+import downArrow from '../../Svgs/downarrow.svg';
+import loadingAnimation from '../../Svgs/Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
-import RequireAuth from './RequireAuth';
+import RequireAuth from '../RequireAuth/RequireAuth';
 
 //const baseURL = "http://localhost:3000/api/items";
 const baseURL = "https://server-three-taupe.vercel.app/api/items";

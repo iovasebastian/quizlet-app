@@ -1,21 +1,22 @@
 import React from 'react';
 import {Route, Routes } from 'react-router-dom';
 import {HashRouter} from 'react-router-dom';
-import Start from './Start.jsx';
-import MainComponent from './MainComponent.jsx';
-import Final from './Final.jsx';
+import MainComponent from './components/MainComponent/MainComponent.jsx';
+import Final from './components/Final/Final.jsx';
 import './App.css';
-import Signin from './Signin.jsx';
-import Admin from './Admin.jsx';
-import SignUp from './SignUp.jsx';
-import QuestionSets from './QuestionSets.jsx';
-import Test from './Test.jsx';
-import Testresult from './Testresult.jsx';
-import QuestionNumberPicker from './QuestionNumberPicker.jsx';
-import Navbar from './Navbar.jsx';
-import ProtectedRoute from './ProtectedRoute.jsx';
-import NotFound from './NotFound.jsx';
-import Img2Text from './Img2Text.jsx';
+import Signin from './components/SignIn/Signin.jsx';
+import Admin from './components/Admin/Admin.jsx';
+import SignUp from './components/SignUp/SignUp.jsx';
+import QuestionSets from './components/QuestionSets/QuestionSets.jsx';
+import Test from './components/TestComp/Test.jsx';
+import Testresult from './components/TestResult/Testresult.jsx';
+import QuestionNumberPicker from './components/QuestionNumberPicker/QuestionNumberPicker.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx';
+import NotFound from './components/Notfound/NotFound.jsx';
+import Img2Text from './components/Img2Text/Img2Text.jsx';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
+import ForgotPasswordStep2 from './components/ForgotPassword/ForgotPasswordStep2.jsx';
 
 function App() {
 
@@ -41,6 +42,8 @@ function App() {
           <Route path='/testresult' element={<Testresult/>}/>
           <Route path='/numberpicker' element={<QuestionNumberPicker/>}/>
           <Route path='/img2text' element={<Img2Text/>}/>
+          <Route path='/forgotPassword' element={<ForgotPassword/>}/>
+          <Route path='/forgotPasswordStep2' element={<ForgotPasswordStep2/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>

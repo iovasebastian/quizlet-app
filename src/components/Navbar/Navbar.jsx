@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "./utils/axiosInstance";
+import axios from "../../utils/axiosInstance";
 import { FiMenu, FiX } from "react-icons/fi";
 import {useNavigate, useLocation } from "react-router-dom";
 import "./navbar.css";
@@ -59,7 +59,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <span className="navbar-logo">Quizlet App</span>
+        <span className="navbar-logo">Quiz-Ez</span>
       </div>
 
       <ul className="navbar-links desktop-only">

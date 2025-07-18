@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReactSlider from 'react-slider';
 import './questionNumberPicker.css';
-import RequireAuth from "./RequireAuth";
+import RequireAuth from "../RequireAuth/RequireAuth";
 const QuestionNumberPicker = () =>{
     const location = useLocation();
     const [numberOfQuestions, setNumberOfQuestions] = useState(1);

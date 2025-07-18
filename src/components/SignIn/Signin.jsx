@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import loadingAnimation from './Rolling-1s-200px-signin.svg';
+import loadingAnimation from '../../Svgs/Rolling-1s-200px-signin.svg';
 import './signin.css';
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
-//const baseURL = "http://localhost:3000/api/items";
+//const baseURL = "https://server-three-taupe.vercel.app/api/items";
+const baseURL = "http://localhost:3000/api/items";
 const Signin = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Signin = () => {
     try {
       setLoading(true);
       const response = await axios.post(`${baseURL}/signin`, {
-        username,
+        email,
         password,
       });
       if (response.status === 200) {
@@ -39,7 +40,9 @@ const Signin = () => {
   const handleSignUp = () =>{
     navigate('/signup');
   }
-
+  const navigateForgotPassword = () =>{
+    navigate('/forgotPassword')
+  }
 
   return (
     <>
@@ -47,10 +50,11 @@ const Signin = () => {
     <div className='center'>
       <div className='glass'>
         <h1>Sign in</h1>
-        <input className = 'usernameSignin' type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+        <input className = 'usernameSignin' type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
         <input className = 'passwordSignin' type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
         {loading?<img src = {loadingAnimation}/>:<button className = 'buttonSignin' onClick={handleSignIn}>Sign In</button>}
         {!loading&&<button className = 'buttonSignin' onClick={handleSignUp}>Sign Up</button>}
+        <button onClick = {navigateForgotPassword} className='forgotLink'>Forgot Password?</button>
       </div>
     </div>
     </>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import RequireAuth from './RequireAuth';
+import RequireAuth from '../RequireAuth/RequireAuth';
 import './test.css';
 const Test = () =>{
     const [inputData, setInputData] = useState([]);
