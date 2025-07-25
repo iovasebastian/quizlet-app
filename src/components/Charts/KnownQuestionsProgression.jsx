@@ -12,7 +12,7 @@ import axios from 'axios';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-export default function KnownQuestionsProgression() {
+export default function KnownQuestionsProgression({visible}) {
   const [graphData, setGraphData] = useState([]);
   const token = localStorage.getItem("token");
   const noCompletions = localStorage.getItem("NoCompletions");
@@ -101,7 +101,7 @@ export default function KnownQuestionsProgression() {
   }
 };
 
-  return noCompletions
+  return !visible
       ? <p className='numberStats'>No Completions yet!</p>
       : <Line data={data} options={options} />;
 }

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip);
 
-export default function SetsCompletedDailyChart() {
+export default function SetsCompletedDailyChart({visible}) {
   const [graphData, setGraphData] = useState([]);
   const token = localStorage.getItem("token");
   const baseURL = "https://server-three-taupe.vercel.app/api/items";
@@ -28,6 +28,7 @@ export default function SetsCompletedDailyChart() {
 
   useEffect(()=>{
     getDataDaily();
+    console.log('visible',visible);
   },[])
 
   const data = {
@@ -60,7 +61,7 @@ export default function SetsCompletedDailyChart() {
     }
   };
 
-  return noCompletions
+  return !visible
     ? <p className='numberStats'>No Completions yet!</p>
     : <Bar data={data} options={options} />;
 }

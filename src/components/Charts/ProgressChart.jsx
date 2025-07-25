@@ -7,7 +7,7 @@ import axios from 'axios';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler);
 
-export default function ProgressChart() {
+export default function ProgressChart({visible}) {
 
   //const baseURL = "http://localhost:3000/api/items";
   const baseURL = "https://server-three-taupe.vercel.app/api/items";
@@ -96,7 +96,7 @@ export default function ProgressChart() {
     }
   };
 
-  return noCompletions
+  return !visible
     ? <p className='numberStats'>No Completions yet!</p>
     : <Bar data={data} options={options} />;
 }

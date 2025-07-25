@@ -7,7 +7,7 @@ import axios from 'axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function CorrectWrongChart() {
+export default function CorrectWrongChart({visible}) {
   const [questionsCorrectPercentage, setQuestionsCorrectPercentage] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const token = localStorage.getItem("token");
@@ -68,7 +68,7 @@ export default function CorrectWrongChart() {
     }
   };
 
-  return noCompletions
+  return !visible
     ? <p className='numberStats'>No Completions yet!</p>
     : <Doughnut data={data} options={options} />;
 }

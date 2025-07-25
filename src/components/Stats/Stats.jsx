@@ -9,6 +9,7 @@ import KnownQuestionsProgression from '../Charts/KnownQuestionsProgression';
 const Stats = () => {
     const [totalSets, setTotalSets] = useState(0);
     const [questionsCorrectPercentage, setQuestionsCorrectPercentage] = useState(0);
+    const [completion, setCompletion] = useState(true);
     const token = localStorage.getItem("token");
     const baseURL = "https://server-three-taupe.vercel.app/api/items";
     //const baseURL = "http://localhost:3000/api/items";
@@ -16,7 +17,7 @@ const Stats = () => {
     useEffect(()=>{
         getTotalSets();
         getPercentOfCorrectQuestions();
-    },[])
+    },[]);
 
     const getTotalSets = async () =>{
         try{
@@ -40,11 +41,9 @@ const Stats = () => {
         }
     }
     const noCompletions = () =>{
-        localStorage.setItem("NoCompletions", true);
-        return "No completions yet!"
+        return "No completions yet!";
     }
     const completions = () =>{
-        localStorage.setItem("NoCompletions", false);
         return questionsCorrectPercentage + " %";
     }
 
@@ -65,25 +64,25 @@ const Stats = () => {
                         <div className='gridChild progress'>
                             <h3>Sets accessed per week</h3>
                             <div className='chart'>
-                                <ProgressChart/>
+                                <ProgressChart visible = {!isNaN(questionsCorrectPercentage)}/>
                             </div>
                         </div>
                         <div className='gridChild correctVWrong'>
                             <h3>Pie chart of correct questions</h3>
                             <div className='chart'>
-                                <CorrectWrongChart/>
+                                <CorrectWrongChart visible = {!isNaN(questionsCorrectPercentage)}/>
                             </div>
                         </div>
                         <div className='gridChild setsCompleted'>
                             <h3>Total sets completed daily</h3>
                             <div className='chart'>
-                                <SetsCompletedDailyChart/>
+                                <SetsCompletedDailyChart visible = {!isNaN(questionsCorrectPercentage)}/>
                             </div>
                         </div>
                         <div className='gridChild timeSpent'>
                             <h3>Percentage of correct questions daily</h3>
                             <div className='chart'>
-                                <KnownQuestionsProgression/>
+                                <KnownQuestionsProgression visible = {!isNaN(questionsCorrectPercentage)}/>
                             </div>
                         </div>
                     </div>
