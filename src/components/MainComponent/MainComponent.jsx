@@ -8,8 +8,8 @@ import loadingAnimation from '../../Svgs/Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
 import RequireAuth from '../RequireAuth/RequireAuth';
 
-const baseURL = "http://localhost:3000/api/items";
-//const baseURL = "https://server-three-taupe.vercel.app/api/items";
+//const baseURL = "http://localhost:3000/api/items";
+const baseURL = "https://server-three-taupe.vercel.app/api/items";
 
 const MainComponent = () => {
 const navigate = useNavigate();

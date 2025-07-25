@@ -16,8 +16,8 @@ export default function KnownQuestionsProgression() {
   const [graphData, setGraphData] = useState([]);
   const token = localStorage.getItem("token");
   const noCompletions = localStorage.getItem("NoCompletions");
-  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  const baseURL = "http://localhost:3000/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  //const baseURL = "http://localhost:3000/api/items";
 
   function getWeekNumber(date = new Date()) {
     const currentDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));

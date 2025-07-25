@@ -12,8 +12,8 @@ export default function CorrectWrongChart() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const token = localStorage.getItem("token");
   const noCompletions = localStorage.getItem("NoCompletions");
-  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  const baseURL = "http://localhost:3000/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  //const baseURL = "http://localhost:3000/api/items";
 
   const getPercentOfCorrectQuestions = async () =>{
         try{

@@ -9,8 +9,8 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 export default function ProgressChart() {
 
-  const baseURL = "http://localhost:3000/api/items";
-  //const baseURL = "https://server-three-taupe.vercel.app/api/items";
+  //const baseURL = "http://localhost:3000/api/items";
+  const baseURL = "https://server-three-taupe.vercel.app/api/items";
   const [graphData, setGraphData] = useState([]);
   const token = localStorage.getItem("token");
   const noCompletions = localStorage.getItem("NoCompletions")

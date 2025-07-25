@@ -10,8 +10,8 @@ const Stats = () => {
     const [totalSets, setTotalSets] = useState(0);
     const [questionsCorrectPercentage, setQuestionsCorrectPercentage] = useState(0);
     const token = localStorage.getItem("token");
-    //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    const baseURL = "http://localhost:3000/api/items";
+    const baseURL = "https://server-three-taupe.vercel.app/api/items";
+    //const baseURL = "http://localhost:3000/api/items";
 
     useEffect(()=>{
         getTotalSets();
