@@ -17,6 +17,7 @@ import NotFound from './components/Notfound/NotFound.jsx';
 import Img2Text from './components/Img2Text/Img2Text.jsx';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
 import ForgotPasswordStep2 from './components/ForgotPassword/ForgotPasswordStep2.jsx';
+import Stats from './components/Stats/Stats.jsx';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
           <Route path='/img2text' element={<Img2Text/>}/>
           <Route path='/forgotPassword' element={<ForgotPassword/>}/>
           <Route path='/forgotPasswordStep2' element={<ForgotPasswordStep2/>}/>
+          <Route path='/stats' element={<Stats/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>

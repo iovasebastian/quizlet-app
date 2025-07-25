@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import LineComp from '../LineComp/LineComp';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './MainComponent.css';
@@ -8,19 +8,20 @@ import loadingAnimation from '../../Svgs/Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
 import RequireAuth from '../RequireAuth/RequireAuth';
 
-//const baseURL = "http://localhost:3000/api/items";
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
+const baseURL = "http://localhost:3000/api/items";
+//const baseURL = "https://server-three-taupe.vercel.app/api/items";
 
 const MainComponent = () => {
 const navigate = useNavigate();
 const [inputData, setInputData] = useState([]);
 const [loading, setLoading] = useState(false);
 const [showButton, setShowButton] = useState(false);
-const role = JSON.parse(localStorage.getItem('role'));
+const role = localStorage.getItem('role');
 const location = useLocation();
 const token = localStorage.getItem("token");
 const questionSetId = localStorage.getItem("questionSetId");
 const questionSetTitle = location?.state?.questionSetTitle;
+const incrementedEntry = useRef(false);
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -28,6 +29,27 @@ useEffect(() => {
   }, 300000);
   return () => clearInterval(interval);
 }, [inputData]);
+
+
+
+useEffect(()=>{
+  if(!incrementedEntry.current){
+    incrementEntryInDb();
+  }
+  incrementedEntry.current = true;
+},[])
+
+const incrementEntryInDb = async () =>{
+  try{
+    await axios.post(`${baseURL}/addEntryToDb`,{
+      questionSetId:questionSetId
+    },{
+      headers: {Authorization : `Bearer ${token}`}
+    })
+  }catch(error){
+    console.error(error);
+  }
+}
 
 const handleSaveItems = async (inputData, questionSetId) => {
   try {

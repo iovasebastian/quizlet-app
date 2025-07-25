@@ -49,11 +49,20 @@ const Navbar = () => {
     navigate('/sets')
   }
 
+  const navigateStats = () =>{
+    navigate('/stats')
+  }
+
   const getRole = async () =>{
-    const response = await axios.get(`${baseURL}/getRole`,
+    try{
+      const response = await axios.get(`${baseURL}/getRole`,
       { headers: { Authorization: `Bearer ${token}` } }
-    );
-    return response.data.role;
+      );
+      return response.data.role;
+    }catch(error){
+      console.error(error);
+      navigate('/');
+    }
   }
 
   return (
@@ -67,6 +76,7 @@ const Navbar = () => {
           <li className='nav-item' onClick={adminDash}>Admin</li>
         )}
         {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
+        {token && <li className='nav-item' onClick={navigateStats}>Stats</li>}
       </ul>
 
       <div className="navbar-right desktop-only">
