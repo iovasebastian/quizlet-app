@@ -11,8 +11,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip);
 export default function SetsCompletedDailyChart({visible}) {
   const [graphData, setGraphData] = useState([]);
   const token = localStorage.getItem("token");
-  const baseURL = "https://server-three-taupe.vercel.app/api/items";
-  //const baseURL = "http://localhost:3000/api/items";
+  const baseURL = process.env.REACT_APP_BASE_URL
   const noCompletions = localStorage.getItem("NoCompletions");
 
   const getDataDaily = async () =>{

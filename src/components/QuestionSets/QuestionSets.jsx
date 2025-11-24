@@ -96,7 +96,7 @@ const QuestionSets = () => {
         setEditTitleToggle(false);
         console.log(questionSetId);
         try{
-            const response = await axios.post(`http://localhost:3000/api/items/editTitle`, {
+            const response = await axios.post(`${baseURL}/editTitle`, {
                 questionSetId: questionSetId,
                 title: editTitle
             },{
