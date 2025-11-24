@@ -9,3 +9,5 @@ test/
 coverage/
 logs/
 connection.json
+.env.*
+

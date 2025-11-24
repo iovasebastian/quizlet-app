@@ -4,8 +4,7 @@ import "./questionset.css";
 import { useState, useEffect } from 'react';
 import RequireAuth from '../RequireAuth/RequireAuth';
 import plusSvg from "../../Svgs/plus-svgrepo-com.svg";
-//const baseURL = "https://server-three-taupe.vercel.app/api/items";
-const baseURL = "http://localhost:3000/api/items";
+const baseURL = process.env.REACT_APP_BASE_URL
 
 
 const QuestionSets = () => {

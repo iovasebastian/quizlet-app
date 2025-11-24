@@ -3,8 +3,7 @@ import axios from "../../utils/axiosInstance";
 import { FiMenu, FiX } from "react-icons/fi";
 import {useNavigate, useLocation } from "react-router-dom";
 import "./navbar.css";
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
-//const baseURL = "http://localhost:3000/api/items";
+const baseURL = process.env.REACT_APP_BASE_URL
 const token = localStorage.getItem("token");
 
 const Navbar = () => {

@@ -9,8 +9,7 @@ import { motion } from "framer-motion";
 const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numberOfReviews, items, onPreview, publicSetId, originalSetId}) =>{
 
     const [setAquired, setSetAquired] = useState(false);
-    //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    const baseURL = "http://localhost:3000/api/items";
+    const baseURL = process.env.REACT_APP_BASE_URL
     const token = localStorage.getItem("token");
     const [privateArray, setPrivateArray] = useState([]);
     const [publicArray, setPublicArray] = useState([]);

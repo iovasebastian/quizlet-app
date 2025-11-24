@@ -6,8 +6,7 @@ import { useSearchParams } from "react-router-dom";
 const PreviewSet = ({onClose, setId}) =>{
     const [previewQA, setPreviewQA] = useState([]);
     const token = localStorage.getItem("token");
-    //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    const baseURL = "http://localhost:3000/api/items";
+    const baseURL = process.env.REACT_APP_BASE_URL
     
     const fetchQuestions = async (setId) =>{
         try{

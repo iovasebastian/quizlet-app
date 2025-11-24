@@ -9,8 +9,7 @@ const ForgotPassword = () =>{
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
-    const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    //const baseURL = "http://localhost:3000/api/items";
+    const baseURL = process.env.REACT_APP_BASE_URL
 
     const handleEmail = async () =>{
         setError(false);

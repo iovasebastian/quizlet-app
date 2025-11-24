@@ -12,8 +12,7 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
     const [errorValue, setErrorValue] = useState("");
     const token = localStorage.getItem("token");
 
-    //const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    const baseURL = "http://localhost:3000/api/items";
+    const baseURL = process.env.REACT_APP_BASE_URL
 
     const handleNextPageUpload = () =>{
         setMenuPage(prev => prev + 1)

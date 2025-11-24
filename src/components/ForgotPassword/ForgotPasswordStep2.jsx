@@ -11,8 +11,7 @@ const ForgotPasswordStep2 = () =>{
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const baseURL = "https://server-three-taupe.vercel.app/api/items";
-    //const baseURL = "http://localhost:3000/api/items";
+    const baseURL = process.env.REACT_APP_BASE_URL
     const location = useLocation();
     const email = location?.state?.email;
 
