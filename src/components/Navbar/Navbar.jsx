@@ -53,6 +53,10 @@ const Navbar = () => {
     navigate('/stats')
   }
 
+  const navigateMarketplace = () =>{
+    navigate('/marketplace')
+  }
+
   const getRole = async () =>{
     try{
       const response = await axios.get(`${baseURL}/getRole`,
@@ -77,6 +81,7 @@ const Navbar = () => {
         )}
         {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
         {token && <li className='nav-item' onClick={navigateStats}>Stats</li>}
+        {token && <li className='nav-item' onClick={navigateMarketplace}>Marketplace</li>}
       </ul>
 
       <div className="navbar-right desktop-only">
@@ -97,6 +102,8 @@ const Navbar = () => {
           <ul>
             {role === "admin" && <li className='nav-item' onClick={() => {adminDash(); setMenuOpen(false);}}>Admin</li>}
             {token && <li className='nav-item' onClick={() => {navigateQuestionSet(); setMenuOpen(false)}}>Question Sets</li>}
+            {token && <li className='nav-item' onClick={() => {navigateStats(); setMenuOpen(false)}}>Stats</li>}
+            {token && <li className='nav-item' onClick={() => {navigateMarketplace(); setMenuOpen(false)}}>Marketplace</li>}
             <li className="nav-item" onClick={() => {setMenuOpen(false); loggedIn ? signOut() : goToLogin()}}>
               {loggedIn ? "Log Out" : "Log In"}
             </li>

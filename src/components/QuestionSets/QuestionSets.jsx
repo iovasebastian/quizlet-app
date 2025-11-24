@@ -4,8 +4,8 @@ import "./questionset.css";
 import { useState, useEffect } from 'react';
 import RequireAuth from '../RequireAuth/RequireAuth';
 import plusSvg from "../../Svgs/plus-svgrepo-com.svg";
-const baseURL = "https://server-three-taupe.vercel.app/api/items";
-//const baseURL = "http://localhost:3000/api/items";
+//const baseURL = "https://server-three-taupe.vercel.app/api/items";
+const baseURL = "http://localhost:3000/api/items";
 
 
 const QuestionSets = () => {
@@ -18,20 +18,55 @@ const QuestionSets = () => {
     const [deleteId, setDeleteId] = useState('');
     const [deleteTitle, setDeleteTitle] = useState('');
     const [editTitleToggle, setEditTitleToggle] = useState(false);
+    const [setType, setSetType] = useState("personal");
     const [editTitleId, setEditTitleId] = useState(null);
     const [editTitle, setEditTitle] = useState("");
     const token = localStorage.getItem("token");
 
+    const urlMap = {
+        personal: `${baseURL}`,
+        public: `${baseURL}/public`,
+        manageSets: `${baseURL}/getManageSets`
+    }
 
-    useEffect(()=>{
-        console.log(editTitle);
-    },[editTitle])
+    const styleMap = {
+        personal: "personal-active",
+        public: "public-active",
+        manageSets: "manageSets-active"
+    }
+
+    const urlDeleteMap = {
+        personal: `${baseURL}/deleteQuestionSet`,
+        public: `${baseURL}/deleteQuestionSetBaught`,
+        manageSets: `${baseURL}/deleteQuestionFromPublic`
+    }
+
+    const restorePurcheases = async () =>{
+        try{
+            await axios.post(`${baseURL}/restorePurcheases`,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setEvent((prev)=>!prev)
+        }catch(error){
+            console.error(error);
+        }
+        
+    }
 
     const getExistingData = async () => {
         try {
-            const response = await axios.get(`${baseURL}`,{
-                headers: {Authorization: `Bearer ${token}`}
-            });
+            const response = await axios.get(
+                `${urlMap[setType]}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    Pragma: 'no-cache',
+                    Expires: '0'
+                }
+            }
+            );
             //setUsername(user.username);
             return response.data;
         }
@@ -39,7 +74,8 @@ const QuestionSets = () => {
             console.error(error);
         }
     };
-    const handleRetrieveAll = async () => {
+
+    const handleRetrieve = async () => {
         try {
             const existingData = await getExistingData();
             setDataStored(existingData);
@@ -90,11 +126,11 @@ const QuestionSets = () => {
         });
     };
     useEffect(() => {
-        handleRetrieveAll();
+        handleRetrieve();
     }, []);
     useEffect(() => {
-        handleRetrieveAll();
-    }, [event]);
+        handleRetrieve();
+    }, [event, setType]);
 
     const addNewSet = async (title) => {
         try {
@@ -111,8 +147,9 @@ const QuestionSets = () => {
     }
     const deleteSet = async (questionSetId, event) =>{
         event.stopPropagation();
+        console.log('deleteSetId', questionSetId)
         try {
-            await axios.post(`${baseURL}/deleteQuestionSet`, 
+            await axios.post(urlDeleteMap[setType], 
                 {questionSetId},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -123,9 +160,12 @@ const QuestionSets = () => {
     }
 
     const elements = dataStored?.map((data, index) =>
-        <div key={index} className='divSet' onClick={() => navigateSet(data, index)}>
+        <div key={index} className='divSet' onClick={setType!=="manageSets"?() => navigateSet(data, index):null}>
           {editTitleToggle && editTitleId === data.questionSetId ? <input className = "inputSet edit" onClick = {(e) => e.stopPropagation()} value={editTitle} onChange={handleEditTitleChange}/> : <h2>{data.title}</h2>}
-          {editTitleToggle && editTitleId === data.questionSetId?
+          {
+          setType !== "manageSets"
+          ?
+          editTitleToggle && editTitleId === data.questionSetId?
           <button
             className="butonSet"
             onClick={(e) => saveEditTitle(e, data.questionSetId)}
@@ -137,13 +177,14 @@ const QuestionSets = () => {
             onClick={(e) => startEdit(e, data.title, data.questionSetId)}
             >
             Edit title
-          </button>}
+          </button>
+          :null}
           <button
             className="butonSet"
             onClick={(e) => {
               e.stopPropagation();
               setDeletePending(true);
-              setDeleteId(data.questionSetId);
+              setDeleteId(setType!=="manageSets"? data.questionSetId: data.publicSetId);
               setDeleteTitle(data.title);
             }}
           >
@@ -155,7 +196,34 @@ const QuestionSets = () => {
         <>
         <RequireAuth />
         <div className='backgroundSets'>
-            {elements}
+            <div
+                className={`selectSetType ${styleMap[setType]}`}
+            >
+                <button
+                    className="buttonSelectSetType"
+                    onClick={() => setSetType("personal")}
+                    type="button"
+                >
+                    Personal sets
+                </button>
+                <button
+                    className="buttonSelectSetType"
+                    onClick={() => setSetType("public")}
+                    type="button"
+                >
+                    Public sets
+                </button>
+                <button
+                    className="buttonSelectSetType"
+                    onClick={() => setSetType("manageSets")}
+                    type="button"
+                >
+                    Manage Public Sets
+                </button>
+            </div>
+            <div className='elements'>
+                {elements}
+            </div>
             {deletePending && (
             <>
                 <div className="deleteOverlay" onClick={() => setDeletePending(false)} />
@@ -170,11 +238,12 @@ const QuestionSets = () => {
                 </div>
             </>
             )}
-            <div className='divSetAdd'>
+            {setType==="personal"&&<div className='divSetAdd'>
                 <h2>Choose a title: </h2>
                 <input className = "inputSet" placeholder = "Title..." type='text' value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
                 <button className = "butonSet" onClick={() => addNewSet(newTitle)}>Add set</button>
-            </div>
+            </div>}
+            {setType === "public"&&<button className='butonSet' onClick={restorePurcheases}>Restore purcheases</button>}
         </div>
         </>
     )

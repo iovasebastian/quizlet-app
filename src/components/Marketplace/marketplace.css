@@ -1,0 +1,365 @@
+.marketplaceDiv{
+    margin-top: 5em;
+    width:80%;
+    height:auto;
+}
+
+.titleMarketplace{
+    flex:1
+}
+
+.topMarketPlace{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.buttonMarketplace{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:2px;
+    width:auto;
+    height: auto;
+    padding: 0.75em;
+}
+.buttonSection{
+    display: flex;
+    gap:1em;
+}
+
+.filterBar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.inputDiv{
+    width: 30%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+.inputDiv > input{
+    all:unset;
+    flex:1 1 auto;
+    min-width: 0; 
+}
+.iconSearch{
+    display: flex;
+    padding:0.5em;
+}
+
+.filtersDiv{
+    display: flex;
+    gap:1em;
+}
+
+.filter{
+    display: flex;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* for Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5em;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.individualFilterDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.marketplaceCardsSpace{
+    display: flex;
+    gap:2em;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.marketplaceCardDiv{
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* for Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width:20em;
+    height:15em;
+    padding: 1.5em;
+}
+
+.cardTag{
+    background-color: rgba(255, 255, 255, 0.65);
+    padding: 0.5em;
+    margin: auto;
+    border-radius: 12px;
+}
+.marketplaceCardTopLine{
+    margin-top:0.5em;
+    display: flex;
+    width: 100%;
+    font-size: 0.8rem;
+    justify-content: space-around;
+}
+
+.price{
+    background-color: purple;
+    color:white;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+.free{
+    background-color: green;
+    color:white;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.titleCard{
+    font-weight:700;
+}
+
+.cardDivDetails{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.cardDivDetails svg {
+    margin-right: 0.2em;
+}
+
+.cardDivButtons{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    margin:0.5em;
+    justify-content: space-around;
+}
+
+.buttonPreview{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font-size: large;
+    font-weight: 600;
+}
+.buttonBuy{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    font-size: large;
+    font-weight: 600;
+}
+.uploadMenu{
+    width:80vw;
+    height:80vh;
+    position:absolute;
+    background-image: url('/public/backgroundGlassBlurred.png');
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px); 
+    background-size: cover;
+    background-position: center;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+}
+
+.previewSetSpace{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex: 1;
+    width: 100%;
+    gap: 1em;
+}
+
+.questionLinePreview{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;     
+    flex-direction: column;  
+    border-radius: 1em;
+    padding: 0em 0.5em;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.65);
+    box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    flex-wrap: wrap;
+}
+
+.setSelectionZone{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    box-shadow: inset 0px 0px 3px rgba(0,0,0,0.10);
+    flex: 1;
+}
+
+.userQuestionSetLine{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    padding: 0 0.5em;
+}
+
+.radio-entity {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 2px solid #666;
+    background: transparent;
+    display: inline-block;
+    cursor: pointer;
+    margin:0.5em;
+}
+
+.radio-entity.selected {
+    border-color: #9333ea; 
+    background: radial-gradient(circle at center, #9333ea 60%, transparent 61%);
+    box-shadow: 0 0 6px rgba(147, 51, 234, 0.5);
+}
+
+
+.closeButton{
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    top:1em;
+    right:1em;
+    display: flex;         
+    justify-content: center; 
+    align-items: center;         
+    font-size: 2rem;           
+    cursor: pointer;           
+
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3); 
+    backdrop-filter: blur(10px);  
+    -webkit-backdrop-filter: blur(10px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.titleUploadMenu{
+    text-align: center;
+}
+
+.selected{
+    border-color: #9333ea;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.buttonDivUpload{
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+.buttonDivUploadPage1{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    padding: 1em;
+}
+
+.spacePage2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.spacePage2 div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 60%;
+}
+
+.spacePage2 label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.spacePage2 input,
+.spacePage2 select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 2px solid rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.7);
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.spacePage2 input:hover,
+.spacePage2 select:hover {
+    border-color: rgba(0,0,0,0.3);
+}
+
+.spacePage2 input:focus,
+.spacePage2 select:focus {
+    border-color: #9333ea; 
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.25);
+}
+
+.inputUpload{
+    max-width:100%;
+}
+
+@media (max-width: 800px) {
+    .filterBar{
+        flex-direction: column;
+    }
+   .inputDiv{
+        width:70%;
+        margin-bottom: 1em;
+   }
+}
+
+
