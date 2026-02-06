@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
+import Popup from "./Popup";
 
 const UploadMenu = ({onClose, idOfQuestionSets}) =>{
     const [itemId, setItemId] = useState();
@@ -10,6 +11,8 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
     const [subject, setSubject] = useState("");
     const [userQuestionSets, setUserQuestionSets] = useState([]);
     const [errorValue, setErrorValue] = useState("");
+    const [stripeId, setStripeId] = useState("");
+    const [stripeError, setStripeError] = useState(false);
     const token = localStorage.getItem("token");
 
     const baseURL = process.env.REACT_APP_BASE_URL
@@ -21,14 +24,28 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
         setMenuPage(prev => prev - 1)
     }
 
+    const fetchUserStripeId = async () =>{
+        try{
+            const response = await axios.get(`${baseURL}/getStripeId`,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            setStripeId(response.data[0].stripeId)
+        }catch(error){
+            console.error(error);
+        }
+
+    }
+
     useEffect(()=>{
         fetchUserSets();
+        fetchUserStripeId();
         console.log('inside', idOfQuestionSets)
     },[]);
 
+
     useEffect(()=>{
-        console.log(userQuestionSets)
-    },[userQuestionSets])
+        console.log(stripeId)
+    },[stripeId])
 
     const fetchUserSets = async () =>{
         try{
@@ -54,12 +71,17 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
             setErrorValue("Difficulty is empty");
             return;
         }
+        if (price !=0 && !stripeId){
+            setStripeError(true);
+            return;
+        }
         try{
             const publicSetId = await axios.post(`${baseURL}/uploadPublicSet`,{
                 price: price,
                 subject: subject,
                 difficulty: difficulty,
-                questionSetId : itemId
+                questionSetId : itemId,
+                ownerStripeId: stripeId
             },{
                 headers: {Authorization : `Bearer ${token}`}
             })
@@ -121,6 +143,7 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
                 </div>
                 }
             </div>
+            <Popup show={stripeError} onClose={() => setStripeError(false)} />
         </div>
     )
 }

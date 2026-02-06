@@ -19,6 +19,8 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
 import ForgotPasswordStep2 from './components/ForgotPassword/ForgotPasswordStep2.jsx';
 import Stats from './components/Stats/Stats.jsx';
 import Marketplace from './components/Marketplace/Marketplace.jsx';
+import Profile from './components/profile/profile.jsx';
+import Homepage from './components/Homepage/Homepage.jsx';
 
 function App() {
 
@@ -27,7 +29,8 @@ function App() {
       <HashRouter>
         <Navbar/>
         <Routes>
-          <Route path="/" element={<Signin />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/signin" element={<Signin/>} />
           <Route path="/main" element={<MainComponent />} />
           <Route path="/final" element={<Final/>}/>
           <Route
@@ -48,6 +51,7 @@ function App() {
           <Route path='/forgotPasswordStep2' element={<ForgotPasswordStep2/>}/>
           <Route path='/stats' element={<Stats/>}/>
           <Route path='/marketplace' element={<Marketplace/>}/>
+          <Route path='/profile' element={<Profile/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>

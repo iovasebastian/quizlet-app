@@ -37,11 +37,11 @@ const Navbar = () => {
     localStorage.removeItem("token");
     setMenuOpen(false);
     setRole("");
-    navigate('/');
+    navigate('/signin');
   };
 
   const goToLogin = () => {
-    navigate('/');
+    navigate('/signin');
   };
 
   const navigateQuestionSet = () =>{
@@ -55,6 +55,12 @@ const Navbar = () => {
   const navigateMarketplace = () =>{
     navigate('/marketplace')
   }
+  const navigateProfile = () =>{
+    navigate('/profile')
+  }
+  const navigateHomepage = () =>{
+    navigate('/')
+  }
 
   const getRole = async () =>{
     try{
@@ -64,7 +70,7 @@ const Navbar = () => {
       return response.data.role;
     }catch(error){
       console.error(error);
-      navigate('/');
+      navigate('/signin');
     }
   }
 
@@ -75,12 +81,14 @@ const Navbar = () => {
       </div>
 
       <ul className="navbar-links desktop-only">
+        {token && <li className='nav-item' onClick={navigateHomepage}>Homepage</li>}
         {role === "admin" && (
           <li className='nav-item' onClick={adminDash}>Admin</li>
         )}
         {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
         {token && <li className='nav-item' onClick={navigateStats}>Stats</li>}
         {token && <li className='nav-item' onClick={navigateMarketplace}>Marketplace</li>}
+        {token && <li className='nav-item' onClick={navigateProfile}>Profile</li>}
       </ul>
 
       <div className="navbar-right desktop-only">
@@ -99,10 +107,12 @@ const Navbar = () => {
             <FiX color="white" size={24} />
           </div>
           <ul>
+            {token && <li className='nav-item' onClick={() => {navigateHomepage(); setMenuOpen(false)}}>Homepage</li>}
             {role === "admin" && <li className='nav-item' onClick={() => {adminDash(); setMenuOpen(false);}}>Admin</li>}
             {token && <li className='nav-item' onClick={() => {navigateQuestionSet(); setMenuOpen(false)}}>Question Sets</li>}
             {token && <li className='nav-item' onClick={() => {navigateStats(); setMenuOpen(false)}}>Stats</li>}
             {token && <li className='nav-item' onClick={() => {navigateMarketplace(); setMenuOpen(false)}}>Marketplace</li>}
+            {token && <li className='nav-item' onClick={() => {navigateProfile(); setMenuOpen(false)}}>Profile</li>}
             <li className="nav-item" onClick={() => {setMenuOpen(false); loggedIn ? signOut() : goToLogin()}}>
               {loggedIn ? "Log Out" : "Log In"}
             </li>

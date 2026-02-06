@@ -10,7 +10,7 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    background: url(/public/backgroundGlass.png);
+    background: url(/public/backgroundGlass.webp);
     background-size: cover;
     align-items: center;
 }

@@ -76,6 +76,7 @@ const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numbe
         try{
             const session = await axios.post(`${baseURL}/create-checkout-session`,{
                 setId: publicSetId,
+                setName: title,
             },{
                 headers: {Authorization : `Bearer ${token}`}
             })

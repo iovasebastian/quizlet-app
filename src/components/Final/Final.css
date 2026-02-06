@@ -124,7 +124,7 @@
     align-items: center;
     flex-direction: column;
     height:100vh;
-    background: url(/public/backgroundGlass.png);
+    background: url(/public/backgroundGlass.webp);
     background-size: cover;
 }
 

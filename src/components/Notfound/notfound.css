@@ -1,5 +1,5 @@
 .notfound-background {
-    background: url(/public/backgroundGlass.png);
+    background: url(/public/backgroundGlass.webp);
     background-size: cover;
     min-height: 100vh;
     display: flex;
