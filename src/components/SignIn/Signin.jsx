@@ -23,7 +23,14 @@ const Signin = () => {
       const response = await axios.post(`${baseURL}/signin`, {
         email,
         password,
+      },{
+        timeout:1000
       });
+      console.log(response)
+      if(!response){
+        alert('Network error, please check your internet connection!')
+        return
+      }
       if (response.status === 200) {
         console.log(response);
         localStorage.setItem('token', response.data.token);
@@ -32,8 +39,12 @@ const Signin = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.error('Error signing in:', error);
-      alert('invalid');
+      console.log('Error signing in:', error);
+      if(error.response.data){
+        alert(error?.response?.data?.error);
+      }else{
+        alert('Network error, please check your internet connection!');
+      }
     }
   };
   const handleSignUp = () =>{
