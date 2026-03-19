@@ -24,7 +24,7 @@ const Signin = () => {
         email,
         password,
       },{
-        timeout:1000
+        timeout:10000
       });
       console.log(response)
       if(!response){
@@ -40,7 +40,7 @@ const Signin = () => {
     } catch (error) {
       setLoading(false);
       console.log('Error signing in:', error);
-      if(error.response.data){
+      if(error?.response?.data){
         alert(error?.response?.data?.error);
       }else{
         alert('Network error, please check your internet connection!');
