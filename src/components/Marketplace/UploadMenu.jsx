@@ -6,7 +6,7 @@ import Popup from "./Popup";
 const UploadMenu = ({onClose, idOfQuestionSets}) =>{
     const [itemId, setItemId] = useState();
     const [menuPage, setMenuPage] = useState(1);
-    const [price, setPrice] = useState(1);
+    const [price, setPrice] = useState(0);
     const [difficulty, setDifficulty] = useState("");
     const [subject, setSubject] = useState("");
     const [userQuestionSets, setUserQuestionSets] = useState([]);
@@ -110,8 +110,8 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
                     )):
                         <div className='spacePage2'>
                             <div>
-                                <label>Price (euro) *Set price to 0 for a free set* (ONLY FREE SETS FOR NOW)</label>
-                                <input value = {price} onChange = {(e) => {if(e.target.value<0)e.target.value = 0; if(e.target.value > 100)e.target.value = 100;setPrice(e.target.value)}} className = 'inputUpload' type = "number" min = "1" max = "100"/>
+                                <label>Price (euro) *Set price to 0 for a free set*</label>
+                                <input value = {price} onChange = {(e) => {if(e.target.value<0)e.target.value = 0; if(e.target.value > 100)e.target.value = 100;setPrice(e.target.value)}} className = 'inputUpload' type = "number" min = "0" max = "100"/>
                             </div>
                             <div>
                                 <label>Difficulty</label>
