@@ -356,6 +356,10 @@
     .filterBar{
         flex-direction: column;
     }
+    .filtersDiv{
+        flex-direction: column;
+        width: 80%;
+    }
    .inputDiv{
         width:70%;
         margin-bottom: 1em;

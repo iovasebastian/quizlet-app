@@ -40,7 +40,7 @@ const Marketplace = () =>{
     useEffect(()=>{
         setIdOfQuestionSets(questionSets.map(item => item.originalSetId));
         console.log(idOfQuestionSets);
-        console.log(questionSets)
+        console.log('qs', questionSets)
     },[questionSets])
 
     const changeSearchText = (e) =>{
@@ -131,7 +131,7 @@ const Marketplace = () =>{
                         ? true
                         : costFilter > 0
                         ? set.price > 0
-                        : set.price === 0
+                        : Number(set.price) === 0
                     )
                     .map((items) =>(
                         <MarketplaceCard
