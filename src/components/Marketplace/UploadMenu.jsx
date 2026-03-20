@@ -13,6 +13,7 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
     const [errorValue, setErrorValue] = useState("");
     const [stripeId, setStripeId] = useState("");
     const [stripeError, setStripeError] = useState(false);
+    const [isFree, setIsFree] = useState(true);
     const token = localStorage.getItem("token");
 
     const baseURL = process.env.REACT_APP_BASE_URL
@@ -110,8 +111,22 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
                     )):
                         <div className='spacePage2'>
                             <div>
-                                <label>Price (euro) *Set price to 0 for a free set*</label>
-                                <input value = {price} onChange = {(e) => {if(e.target.value<0)e.target.value = 0; if(e.target.value > 100)e.target.value = 100;setPrice(e.target.value)}} className = 'inputUpload' type = "number" min = "0" max = "100"/>
+                                <label>Set the pricing for the set</label>
+                                <section className="divPaidFree">
+                                    <span>Free</span>
+                                    <input id = "radioOptions"type = "radio" name = "radioPaidFree" checked={isFree} onChange={() => {setIsFree(prev => !prev)}}/>
+                                    <section className="space"></section>
+                                    <span>Paid</span>
+                                    <input id = "radioOptions" type = "radio" name = "radioPaidFree" onChange={() => setIsFree(prev => !prev)}/>
+                                </section>
+                            </div>
+                            <div>
+                                {!isFree &&
+                                <>
+                                    <label>Price (euro)</label>
+                                    <input value = {price} onChange = {(e) => {if(e.target.value<0)e.target.value = 0; if(e.target.value > 100)e.target.value = 100;setPrice(e.target.value)}} className = 'inputUpload' type = "number" min = "0" max = "100"/>
+                                </>
+                                }
                             </div>
                             <div>
                                 <label>Difficulty</label>
@@ -126,9 +141,25 @@ const UploadMenu = ({onClose, idOfQuestionSets}) =>{
                                 <label>Subject</label>
                                 <select value = {subject} onChange = {(e) => setSubject(e.target.value)} className = 'inputUpload'>
                                     <option value = "">Select subject</option>
-                                    <option value = "Computer Science">Computer Science</option>
-                                    <option value = "Mathematics">Mathematics</option>
-                                    <option value = "Other">Other</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Languages">Languages</option>
+                                    <option value="History">History</option>
+                                    <option value="Geography">Geography</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="Biology">Biology</option>
+                                    <option value="Literature">Literature</option>
+                                    <option value="Philosophy">Philosophy</option>
+                                    <option value="Economics">Economics</option>
+                                    <option value="General Knowledge">General Knowledge</option>
+                                    <option value="Pop Culture">Pop Culture</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Movies">Movies</option>
+                                    <option value="Art">Art</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div> 
                             {errorValue && <p className="error">{errorValue}</p>}

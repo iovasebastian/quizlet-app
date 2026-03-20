@@ -80,9 +80,25 @@ const Marketplace = () =>{
                         <div className='individualFilterDiv'>
                             <label>Subject</label>
                             <select value = {subjectFilter} onChange = {(e) => setSubjectFilter(e.target.value)} className='filter subject'>
-                                <option value="" selected>All</option>
+                                <option value="">All</option>
                                 <option value="Computer Science">Computer Science</option>
                                 <option value="Mathematics">Mathematics</option>
+                                <option value="Languages">Languages</option>
+                                <option value="History">History</option>
+                                <option value="Geography">Geography</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="Literature">Literature</option>
+                                <option value="Philosophy">Philosophy</option>
+                                <option value="Economics">Economics</option>
+                                <option value="General Knowledge">General Knowledge</option>
+                                <option value="Pop Culture">Pop Culture</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Music">Music</option>
+                                <option value="Movies">Movies</option>
+                                <option value="Art">Art</option>
+                                <option value="Technology">Technology</option>
                                 <option value="Other">Other</option>
                             </select>
                         </div>

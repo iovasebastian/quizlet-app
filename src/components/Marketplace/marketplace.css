@@ -352,6 +352,22 @@
     max-width:100%;
 }
 
+.divPaidFree{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#radioOptions{
+    padding: 0;
+    margin: 0.5em;
+}
+
+.space{
+    width: 30%;
+}
+
 @media (max-width: 800px) {
     .filterBar{
         flex-direction: column;
