@@ -27,7 +27,7 @@ useEffect(() => {
     saveItems();
   }, 300000);
   return () => clearInterval(interval);
-}, [inputData]);
+}, []);
 
 
 

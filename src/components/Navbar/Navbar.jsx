@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../utils/axiosInstance";
 import { FiMenu, FiX } from "react-icons/fi";
-import {useNavigate, useLocation } from "react-router-dom";
+import {useNavigate, useLocation, Link } from "react-router-dom";
 import "./navbar.css";
 const baseURL = process.env.REACT_APP_BASE_URL
 const token = localStorage.getItem("token");
@@ -77,18 +77,20 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <span className="navbar-logo">Quiz-Ez</span>
+        <Link to="/" className="navbar-logo">
+          Quiz-Ez
+        </Link>
       </div>
 
       <ul className="navbar-links desktop-only">
-        {token && <li className='nav-item' onClick={navigateHomepage}>Homepage</li>}
+        {token && <li className='nav-item'><Link to="/">Homepage</Link></li>}
         {role === "admin" && (
-          <li className='nav-item' onClick={adminDash}>Admin</li>
+          <li className='nav-item'><Link to="/admin">Admin</Link></li>
         )}
-        {token && <li className='nav-item' onClick={navigateQuestionSet}>Question Sets</li>}
-        {token && <li className='nav-item' onClick={navigateStats}>Stats</li>}
-        {token && <li className='nav-item' onClick={navigateMarketplace}>Marketplace</li>}
-        {token && <li className='nav-item' onClick={navigateProfile}>Profile</li>}
+        {token && <li className='nav-item'><Link to="/sets">Question Sets</Link></li>}
+        {token && <li className='nav-item'><Link to="/stats">Stats</Link></li>}
+        {token && <li className='nav-item'><Link to="/marketplace">Marketplace</Link></li>}
+        {token && <li className='nav-item'><Link to="/profile">Profile</Link></li>}
       </ul>
 
       <div className="navbar-right desktop-only">
@@ -107,12 +109,12 @@ const Navbar = () => {
             <FiX color="white" size={24} />
           </div>
           <ul>
-            {token && <li className='nav-item' onClick={() => {navigateHomepage(); setMenuOpen(false)}}>Homepage</li>}
-            {role === "admin" && <li className='nav-item' onClick={() => {adminDash(); setMenuOpen(false);}}>Admin</li>}
-            {token && <li className='nav-item' onClick={() => {navigateQuestionSet(); setMenuOpen(false)}}>Question Sets</li>}
-            {token && <li className='nav-item' onClick={() => {navigateStats(); setMenuOpen(false)}}>Stats</li>}
-            {token && <li className='nav-item' onClick={() => {navigateMarketplace(); setMenuOpen(false)}}>Marketplace</li>}
-            {token && <li className='nav-item' onClick={() => {navigateProfile(); setMenuOpen(false)}}>Profile</li>}
+            {token && <li className='nav-item'><Link to="/" onClick={() => setMenuOpen(false)}>Homepage</Link></li>}
+            {role === "admin" && <li className='nav-item'><Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link></li>}
+            {token && <li className='nav-item'><Link to="/sets" onClick={() => setMenuOpen(false)}>Question Sets</Link></li>}
+            {token && <li className='nav-item'><Link to="/stats" onClick={() => setMenuOpen(false)}>Stats</Link></li>}
+            {token && <li className='nav-item'><Link to="/marketplace" onClick={() => setMenuOpen(false)}>Marketplace</Link></li>}
+            {token && <li className='nav-item'><Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link></li>}
             <li className="nav-item" onClick={() => {setMenuOpen(false); loggedIn ? signOut() : goToLogin()}}>
               {loggedIn ? "Log Out" : "Log In"}
             </li>

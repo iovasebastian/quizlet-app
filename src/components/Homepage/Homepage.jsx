@@ -1,9 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./homepage.css";
 
 export default function Homepage() {
-  const navigate = useNavigate();
   const hasToken = !!localStorage.getItem("token");
 
   return (
@@ -13,7 +12,6 @@ export default function Homepage() {
           <div className="hp-heroContent">
             <span className="hp-badge">Quiz-Ez</span>
 
-            {/* Main SEO H1 */}
             <h1 className="hp-title">
               Flashcard Study App for Smarter Learning & Exam Success
             </h1>
@@ -27,52 +25,50 @@ export default function Homepage() {
             <div className="hp-actions">
               {!hasToken ? (
                 <>
-                  <button
-                    className="hp-btn hp-btnPrimary"
-                    onClick={() => navigate("/signup")}
-                  >
+                  <Link to="/signup" className="hp-btn hp-btnPrimary">
                     Create Free Account
-                  </button>
-                  <button
-                    className="hp-btn hp-btnGhost"
-                    onClick={() => navigate("/signin")}
-                  >
+                  </Link>
+
+                  <Link to="/signin" className="hp-btn hp-btnGhost">
                     Sign In
-                  </button>
+                  </Link>
                 </>
               ) : (
                 <>
-                  <button
-                    className="hp-btn hp-btnPrimary"
-                    onClick={() => navigate("/sets")}
-                  >
+                  <Link to="/sets" className="hp-btn hp-btnPrimary">
                     Go to Study Sets
-                  </button>
-                  <button
-                    className="hp-btn hp-btnGhost"
-                    onClick={() => navigate("/stats")}
-                  >
+                  </Link>
+
+                  <Link to="/stats" className="hp-btn hp-btnGhost">
                     View Learning Stats
-                  </button>
+                  </Link>
                 </>
               )}
             </div>
 
             <div className="hp-highlights">
               <div className="hp-highlight">
-                <div className="hp-highlightTitle">Create Digital Flashcards</div>
+                <div className="hp-highlightTitle">
+                  Create Digital Flashcards
+                </div>
                 <div className="hp-highlightDesc">
                   Build unlimited study sets in seconds.
                 </div>
               </div>
+
               <div className="hp-highlight">
-                <div className="hp-highlightTitle">Practice with Quizzes</div>
+                <div className="hp-highlightTitle">
+                  Practice with Quizzes
+                </div>
                 <div className="hp-highlightDesc">
                   Test knowledge using interactive quiz mode.
                 </div>
               </div>
+
               <div className="hp-highlight">
-                <div className="hp-highlightTitle">Track Study Progress</div>
+                <div className="hp-highlightTitle">
+                  Track Study Progress
+                </div>
                 <div className="hp-highlightDesc">
                   Monitor performance and focus on weak topics.
                 </div>
@@ -97,44 +93,51 @@ export default function Homepage() {
               <div className="hp-a">
                 <div className="hp-qLabel">Answer</div>
                 <div className="hp-aText">
-                  A learning technique that improves memory by actively retrieving information.
+                  A learning technique that improves memory by actively retrieving
+                  information.
                 </div>
               </div>
             </div>
 
             <div className="hp-quickRow">
-              <button
+              <Link
+                to={hasToken ? "/marketplace" : "/signin"}
                 className="hp-quick"
-                onClick={hasToken ? () => navigate("/marketplace") : () => navigate("/signin")}
               >
                 Study Marketplace
                 <span className="hp-quickHint">
                   Discover public flashcard sets
                 </span>
-              </button>
-              <button
+              </Link>
+
+              <Link
+                to={hasToken ? "/profile" : "/signin"}
                 className="hp-quick"
-                onClick={hasToken ? () => navigate("/profile") : () => navigate("/signin")}
               >
                 Profile
                 <span className="hp-quickHint">
                   Manage your learning account
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </section>
 
         <section className="hp-section">
-          <h2 className="hp-h2">How Our Flashcard Study App Works</h2>
+          <h2 className="hp-h2">
+            How Our Flashcard Study App Works
+          </h2>
 
           <div className="hp-steps">
             <div className="hp-step">
               <div className="hp-stepNum">1</div>
               <div className="hp-stepBody">
-                <div className="hp-stepTitle">Create Study Sets</div>
+                <div className="hp-stepTitle">
+                  Create Study Sets
+                </div>
                 <div className="hp-stepDesc">
-                  Add questions and answers to build personalized digital flashcards.
+                  Add questions and answers to build personalized digital
+                  flashcards.
                 </div>
               </div>
             </div>
@@ -142,7 +145,9 @@ export default function Homepage() {
             <div className="hp-step">
               <div className="hp-stepNum">2</div>
               <div className="hp-stepBody">
-                <div className="hp-stepTitle">Practice & Test Yourself</div>
+                <div className="hp-stepTitle">
+                  Practice & Test Yourself
+                </div>
                 <div className="hp-stepDesc">
                   Use flashcard mode or quiz practice to strengthen retention.
                 </div>
@@ -152,7 +157,9 @@ export default function Homepage() {
             <div className="hp-step">
               <div className="hp-stepNum">3</div>
               <div className="hp-stepBody">
-                <div className="hp-stepTitle">Improve & Track Progress</div>
+                <div className="hp-stepTitle">
+                  Improve & Track Progress
+                </div>
                 <div className="hp-stepDesc">
                   Analyze performance stats and focus on weaker subjects.
                 </div>
@@ -170,12 +177,13 @@ export default function Homepage() {
                 prepare for exams and learn more effectively.
               </div>
             </div>
-            <button
+
+            <Link
+              to={hasToken ? "/sets" : "/signup"}
               className="hp-btn hp-btnPrimary"
-              onClick={() => navigate(hasToken ? "/sets" : "/signup")}
             >
               {hasToken ? "Start Studying" : "Create Free Account"}
-            </button>
+            </Link>
           </div>
         </section>
       </main>
