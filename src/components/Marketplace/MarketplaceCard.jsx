@@ -15,17 +15,26 @@ const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numbe
     const [publicArray, setPublicArray] = useState([]);
 
     const getSet = async () =>{
-        try{
-            await axios.post(`${baseURL}/getPublicSet`,{
-                publicSetId: publicSetId,
-                title: title
-            },{
-                headers: {Authorization : `Bearer ${token}`}
-            })
-            setSetAquired(true);
-        }catch(error){
-            console.error(error);
+        console.log('checl aquired', checkAquired())
+        console.log('public array', publicArray)
+        console.log('private array', privateArray)
+        console.log('current set', publicSetId)
+        if (!checkAquired()){
+            try{
+                await axios.post(`${baseURL}/getPublicSet`,{
+                    publicSetId: publicSetId,
+                    title: title
+                },{
+                    headers: {Authorization : `Bearer ${token}`}
+                })
+                setSetAquired(true);
+            }catch(error){
+                console.error(error);
+            }
+        }else{
+            return;
         }
+        
     }
 
     const getPersonalSets = async () =>{
@@ -57,9 +66,15 @@ const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numbe
     }
 
     const checkAquired = () =>{
-        console.log('eered', publicArray, privateArray, publicSetId, originalSetId);
-        if(publicArray.includes(publicSetId)){console.log('foundDuplicate');setSetAquired(true)};
-        if(privateArray.includes(originalSetId))setSetAquired(true);
+        if(publicArray.includes(publicSetId)){
+            setSetAquired(true); 
+            return true;
+        };
+        if(privateArray.includes(originalSetId)){
+            setSetAquired(true);
+            return true
+        }
+        return false
     }
 
 
