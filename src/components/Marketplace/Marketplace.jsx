@@ -5,6 +5,7 @@ import PreviewSet from './PreviewSet';
 import { IoIosSearch } from "react-icons/io";
 import MarketplaceCard from './MarketplaceCard';
 import { useEffect, useState } from 'react';
+import loadingAnimation from '../../Svgs/Rolling-1s-200px.svg';
 import axios from 'axios';
 
 const Marketplace = () =>{
@@ -20,15 +21,19 @@ const Marketplace = () =>{
     const [idOfQuestionSets, setIdOfQuestionSets] = useState([]);
     const [previewSetId, setPreviewSetId] = useState(null);
     const token = localStorage.getItem("token");
+    const [loading, setLoading] = useState(false);
 
     const baseURL = process.env.REACT_APP_BASE_URL
     const fetchQuestionSets = async () =>{
+        setLoading(true);
         try{
             const response = await axios.get(`${baseURL}/getPublicSets`, {
                 headers: {Authorization : `Bearer ${token}`}
             });
             setQuestionSets(response.data.questionSets);
+            setLoading(false);
         }catch(error){
+            setLoading(false);
             console.error(error);
         }
     }
@@ -122,7 +127,8 @@ const Marketplace = () =>{
                     </div>
                 </div>
                 <div className='marketplaceCardsSpace'>
-                    {questionSets
+                    {loading && <img src = {loadingAnimation}/>}
+                    {!loading && questionSets
                     //fileter searchBox
                     .filter((questionSet) => 
                         (questionSet.title.toLowerCase().includes(searchText.toLowerCase())) ||

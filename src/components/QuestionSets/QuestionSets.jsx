@@ -4,6 +4,7 @@ import "./questionset.css";
 import { useState, useEffect } from 'react';
 import RequireAuth from '../RequireAuth/RequireAuth';
 import plusSvg from "../../Svgs/plus-svgrepo-com.svg";
+import loadingAnimation from '../../Svgs/Rolling-1s-200px-signin.svg';
 const baseURL = process.env.REACT_APP_BASE_URL
 
 
@@ -21,6 +22,8 @@ const QuestionSets = () => {
     const [editTitleId, setEditTitleId] = useState(null);
     const [editTitle, setEditTitle] = useState("");
     const token = localStorage.getItem("token");
+    const [loading, setLoading] = useState(false);
+    const [loadingDone, setLoadingDone] = useState(false);
 
     const urlMap = {
         personal: `${baseURL}`,
@@ -55,6 +58,7 @@ const QuestionSets = () => {
     }
 
     const getExistingData = async () => {
+        setLoading(true);
         try {
             const response = await axios.get(
                 `${urlMap[setType]}`,{
@@ -67,9 +71,11 @@ const QuestionSets = () => {
             }
             );
             //setUsername(user.username);
+            setLoading(false);
             return response.data;
         }
         catch (error) {
+            setLoading(false);
             console.error(error);
         }
     };
@@ -92,6 +98,7 @@ const QuestionSets = () => {
     }
 
     const saveEditTitle = async (e, questionSetId) =>{
+        setLoadingDone(true);
         e.stopPropagation();
         setEditTitleToggle(false);
         console.log(questionSetId);
@@ -103,7 +110,9 @@ const QuestionSets = () => {
                 headers: {Authorization : `Bearer ${token}`}
             })
             console.log('edit title response', response);
+            setLoadingDone(false);
         }catch(e){
+            setLoadingDone(false);
             console.log(e);
         } 
         setDataStored(prev =>
@@ -169,7 +178,14 @@ const QuestionSets = () => {
             className="butonSet"
             onClick={(e) => saveEditTitle(e, data.questionSetId)}
           >
-            Done
+            <span className={`${loadingDone ? 'hidden' : ''}`}>
+                Done
+            </span>
+                <img
+                className={`imageLoadingMain ${loadingDone ? 'visible' : ''}`}
+                src={loadingAnimation}
+                alt=""
+                />
           </button>:
           <button
             className="butonSet"
@@ -221,7 +237,7 @@ const QuestionSets = () => {
                 </button>
             </div>
             <div className='elements'>
-                {elements}
+                {loading ? <img className = "loadingIcon" src = {loadingAnimation}/> : elements}
             </div>
             {deletePending && (
             <>
@@ -233,16 +249,18 @@ const QuestionSets = () => {
                     e.stopPropagation();
                     deleteSet(deleteId, e);
                     setDeletePending(false);
-                }}>Delete</button>
+                }}>
+                    Delete
+                </button>
                 </div>
             </>
             )}
-            {setType==="personal"&&<div className='divSetAdd'>
+            {setType==="personal"&& !loading &&<div className='divSetAdd'>
                 <h2>Choose a title: </h2>
                 <input className = "inputSet" placeholder = "Title..." type='text' value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
                 <button className = "butonSet" onClick={() => addNewSet(newTitle)}>Add set</button>
             </div>}
-            {setType === "public"&&<button className='butonSet' onClick={restorePurcheases}>Restore purcheases</button>}
+            {setType === "public"&&!loading&&<button className='butonSet' onClick={restorePurcheases}>Restore purcheases</button>}
         </div>
         </>
     )

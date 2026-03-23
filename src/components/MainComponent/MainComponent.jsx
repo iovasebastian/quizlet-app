@@ -7,6 +7,7 @@ import downArrow from '../../Svgs/downarrow.svg';
 import loadingAnimation from '../../Svgs/Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
 import RequireAuth from '../RequireAuth/RequireAuth';
+import { FlatTree } from 'framer-motion';
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -21,6 +22,10 @@ const token = localStorage.getItem("token");
 const questionSetId = localStorage.getItem("questionSetId");
 const questionSetTitle = location?.state?.questionSetTitle;
 const incrementedEntry = useRef(false);
+const [saveButtonLoading, setSaveButtonLoading] = useState(false);
+const [finishButtonLoading, setFinishButtonLoading] = useState(false);
+const [testButtonLoading, setTestButtonLoading] = useState(false);
+const [imageButtonLoading, setImageButtonLoading] = useState(false);
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -62,19 +67,26 @@ const handleSaveItems = async (inputData, questionSetId) => {
     setInputData(response.data);
     triggerAnimation();
   } catch (error) {
+    setSaveButtonLoading(false);
+    setTestButtonLoading(false);
+    setFinishButtonLoading(false);
+    setImageButtonLoading(false);
     console.error('Error saving data:', error);
   }
 };
 
 const handleRetreiveData = async (questionSetId) => {
+  setLoading(true);
   try {
     const response = await axios.get(`${baseURL}/retreiveQuestions`, {
       headers: {Authorization : `Bearer ${token}`},
       params: { questionSetId }
     });
     setInputData(response.data);
+    setLoading(false)
   } catch (e) {
     console.error(e);
+    setLoading(false)
   }
 };
 
@@ -136,6 +148,12 @@ const saveItems = async () => {
   await handleSaveItems(inputData, questionSetId);
 };
 
+const saveItemsButton = async () =>{
+  setSaveButtonLoading(true);
+  await handleSaveItems(inputData, questionSetId);
+  setSaveButtonLoading(false);
+}
+
 const triggerAnimation = () => {
   const saveBox = document.getElementById('saveBox');
   if (saveBox) {
@@ -147,6 +165,7 @@ const triggerAnimation = () => {
 
 const navigateToFinal = async () => {
   try {
+    setFinishButtonLoading(true);
     await saveItems(); // still saves everything
 
     // Immediately fetch fresh data
@@ -156,20 +175,26 @@ const navigateToFinal = async () => {
     });
 
     const refreshedData = response.data;
+    setFinishButtonLoading(false);
     navigate('/final', { state: { inputData: refreshedData } });
 
   } catch (err) {
+    setFinishButtonLoading(false);
     console.error("Save or fetch failed", err);
   }
 };
 
 const navigateTest = async () => {
+  setTestButtonLoading(true);
   await saveItems();
+  setTestButtonLoading(false);
   navigate('/numberpicker', { state: { inputData } });
 };
 
 const navigateImg2Text = async () =>{
+  setImageButtonLoading(true);
   await saveItems();
+  setImageButtonLoading(false)
   navigate('/img2text', { state: { questionSetId }})
 }
 
@@ -187,6 +212,7 @@ return (
     {showButton && <div className='buttonGoDown' onClick={goDown}><img className='arrowImg' src={downArrow} alt="Go Down" /></div>}
     <div className='container-main'>
       <h1 className='titleMain'>{questionSetTitle}</h1>
+      {loading && <img src = {loadingAnimation}/>}
       {elements}
       {!loading && (
         <button className="activate buttonAdd" onClick={addLine}>
@@ -194,10 +220,46 @@ return (
         </button>
       )}
       <div className='buttonsDivMain'>
-        {!loading && <button className='activate buttonRemove' onClick={saveItems}>Save</button>}
-        {!loading && <button className='activate buttonRemove' onClick={navigateTest}>Test</button>}
-        {!loading && <button className='activate buttonRemove' onClick={navigateImg2Text}>Get questions from image</button>}
-        {inputData.length > 0 && <button className='activate buttonFinish' onClick={navigateToFinal}>Finish</button>}
+        {!loading && <button className='activate buttonBottomOfMain' onClick={saveItemsButton}>
+                      <span className={`${saveButtonLoading ? 'hidden' : ''}`}>
+                        Save
+                      </span>
+                      <img
+                        className={`imageLoadingMain ${saveButtonLoading ? 'visible' : ''}`}
+                        src={loadingAnimation}
+                        alt=""
+                      />
+                     </button>}
+        {!loading && <button className='activate buttonBottomOfMain' onClick={navigateTest}>
+                      <span className={`${testButtonLoading ? 'hidden' : ''}`}>
+                        Test
+                      </span>
+                      <img
+                        className={`imageLoadingMain ${testButtonLoading ? 'visible' : ''}`}
+                        src={loadingAnimation}
+                        alt=""
+                      />
+                      </button>}
+        {!loading && <button className='activate buttonBottomOfMain' onClick={navigateImg2Text}>
+                      <span className={`${imageButtonLoading ? 'hidden' : ''}`}>
+                        Get questions from image
+                      </span>
+                      <img
+                        className={`imageLoadingMain ${imageButtonLoading ? 'visible' : ''}`}
+                        src={loadingAnimation}
+                        alt=""
+                      />
+                      </button>}
+        {inputData.length > 0 && <button className='activate buttonBottomOfMain' onClick={navigateToFinal}>
+                      <span className={`${finishButtonLoading ? 'hidden' : ''}`}>
+                        Finish
+                      </span>
+                      <img
+                        className={`imageLoadingMain ${finishButtonLoading ? 'visible' : ''}`}
+                        src={loadingAnimation}
+                        alt=""
+                      />
+                      </button>}
       </div>
     </div>
   </div>

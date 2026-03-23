@@ -76,6 +76,21 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
+.buttonBottomOfMain{
+    all: unset;
+    padding: 0.75rem 2rem;
+    position: relative;
+    background: linear-gradient(135deg, #a100a1, #d6336c);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
 .buttonFinish:hover, .buttonRemove:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
@@ -164,6 +179,25 @@ img {
 .animatedBox {
     animation: slideDownUp 3s ease-in-out;
 }
+
+.imageLoadingMain{
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.imageLoadingMain.visible {
+    opacity: 1;
+}
+
 
 @keyframes slideDownUp {
     0% { top: -10rem; }
