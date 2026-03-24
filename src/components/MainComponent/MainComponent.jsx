@@ -28,11 +28,15 @@ const [testButtonLoading, setTestButtonLoading] = useState(false);
 const [imageButtonLoading, setImageButtonLoading] = useState(false);
 
 useEffect(() => {
+  if (!questionSetId) return;
+  if (!inputData || inputData.length === 0) return;
+
   const interval = setInterval(() => {
-    saveItems();
+    handleSaveItems(inputData, questionSetId);
   }, 300000);
+
   return () => clearInterval(interval);
-}, [inputData]);
+}, [inputData, questionSetId]);
 
 
 
