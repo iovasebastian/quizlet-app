@@ -22,6 +22,7 @@ const Marketplace = () =>{
     const [previewSetId, setPreviewSetId] = useState(null);
     const token = localStorage.getItem("token");
     const [loading, setLoading] = useState(false);
+    const [ownershipResult, setOwnershipResult] = useState([])
 
     const baseURL = process.env.REACT_APP_BASE_URL
     const fetchQuestionSets = async () =>{
@@ -38,9 +39,22 @@ const Marketplace = () =>{
         }
     }
 
+    const getResultForSetOwnership = async () =>{
+        try{
+            const result = await axios.get(`${baseURL}/getTotalSets`,{
+                headers: {Authorization : `Bearer ${token}`}
+            })
+            setOwnershipResult(result);
+        }catch(error){
+            console.error(error);
+        }
+    }
+
     useEffect(()=>{
         fetchQuestionSets();
+        getResultForSetOwnership()
     },[])
+
 
     useEffect(()=>{
         setIdOfQuestionSets(questionSets.map(item => item.originalSetId));
@@ -168,6 +182,7 @@ const Marketplace = () =>{
                             onPreview={() => openPreviewFor(items.publicSetId)}
                             publicSetId={items.publicSetId}
                             originalSetId = {items.originalSetId}
+                            result = {ownershipResult}
                         />
                     ))}
                 </div>

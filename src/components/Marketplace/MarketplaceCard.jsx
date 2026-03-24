@@ -6,7 +6,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numberOfReviews, items, onPreview, publicSetId, originalSetId}) =>{
+const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numberOfReviews, items, onPreview, publicSetId, originalSetId, result}) =>{
 
     const [setAquired, setSetAquired] = useState(false);
     const baseURL = process.env.REACT_APP_BASE_URL
@@ -38,19 +38,10 @@ const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numbe
     }
 
     const getPersonalSets = async () =>{
-        let result;
-        try{
-            result = await axios.get(`${baseURL}/getTotalSets`,{
-                headers: {Authorization : `Bearer ${token}`}
-            })
-        }catch(error){
-            console.error(error);
-        }
-
         let privateArr = [];
         let publicArr = [];
 
-        result?.data.sets.forEach((set)=>{
+        result?.data?.sets?.forEach((set)=>{
             if(set.public === 0){
                 privateArr.push(set.questionSetId);
             }else{
@@ -80,7 +71,7 @@ const MarketplaceCard = ({price, title, difficultyTag, subjectTag, rating, numbe
 
     useEffect(()=>{
         getPersonalSets();
-    },[]);
+    },[result]);
 
     useEffect(()=>{
         checkAquired();
