@@ -8,6 +8,7 @@ import loadingAnimation from '../../Svgs/Rolling-1s-200px.svg';
 import { FiPlus } from "react-icons/fi";
 import RequireAuth from '../RequireAuth/RequireAuth';
 import { FlatTree } from 'framer-motion';
+import { FaStar } from "react-icons/fa";
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -26,6 +27,10 @@ const [saveButtonLoading, setSaveButtonLoading] = useState(false);
 const [finishButtonLoading, setFinishButtonLoading] = useState(false);
 const [testButtonLoading, setTestButtonLoading] = useState(false);
 const [imageButtonLoading, setImageButtonLoading] = useState(false);
+const [userHasReviewed, setUserHasReviewed] = useState(true);
+const [hover, setHover] = useState(0);
+const isPublic = !!location?.state?.isPublic;
+const publicSetId  = location?.state?.publicSetId;
 
 useEffect(() => {
   if (!questionSetId) return;
@@ -37,7 +42,6 @@ useEffect(() => {
 
   return () => clearInterval(interval);
 }, [inputData, questionSetId]);
-
 
 
 useEffect(()=>{
@@ -96,6 +100,7 @@ const handleRetreiveData = async (questionSetId) => {
 
 useEffect(() => {
   handleRetreiveData(questionSetId);
+  checkUserReview(publicSetId);
 }, []);
 
 useEffect(() => {
@@ -206,6 +211,35 @@ const goDown = () => {
   window.scrollTo(0, document.body.scrollHeight);
 };
 
+const sendReview = async (rating) =>{
+  try{
+    await axios.post(`${baseURL}/sendReview`, {
+      rating : rating,
+      publicSetId : publicSetId
+    },{
+      headers: {Authorization : `Bearer ${token}`}
+    });
+    alert('Thank you for the review!')
+    setUserHasReviewed(true);
+  }catch(e){
+    console.error(e);
+  }
+}
+
+const checkUserReview = async (publicSetId) =>{
+  try{
+    console.log('questionId', publicSetId)
+    const userHasReviewed = await axios.get(`${baseURL}/checkUserReview`, {
+      headers: {Authorization : `Bearer ${token}`},
+      params: { publicSetId : publicSetId }
+    });
+    console.log(userHasReviewed);
+    setUserHasReviewed(userHasReviewed.data.userSentReview);
+  }catch(e){
+    console.error(e);
+  }
+}
+
 return (
   <>
   <RequireAuth />
@@ -266,6 +300,27 @@ return (
                       </button>}
       </div>
     </div>
+    {userHasReviewed === false && isPublic === true && <div className='mainStarReviewDiv'>
+        <h2 className='headerReview'>Rate this set</h2>
+        <div className='starReviewDiv'>
+          {[1,2,3,4,5].map((i) => (
+            <FaStar
+              key={i}
+              className="star"
+              color={i <= hover ? "#ff4081" : "#ddd"}
+              onMouseEnter={() => setHover(i)}
+              onMouseLeave={() => setHover(0)}
+              size={40}
+              style={{
+                stroke: "black",
+                strokeWidth: 10,
+                cursor: "pointer"
+              }}
+              onClick={() => sendReview(i)}
+            />
+          ))}
+        </div>
+      </div>}
   </div>
   </>
 );

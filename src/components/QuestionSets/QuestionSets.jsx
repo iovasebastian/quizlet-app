@@ -130,7 +130,7 @@ const QuestionSets = () => {
     const navigateSet = async (data, index) => {
         localStorage.setItem('questionSetId', Number(data.questionSetId))
         navigate('/main',{
-            state : {questionSetTitle: data.title}
+            state : {questionSetTitle: data.title, isPublic: data.public, publicSetId: data.publicSetId}
         });
     };
     useEffect(() => {

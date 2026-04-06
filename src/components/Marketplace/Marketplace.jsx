@@ -176,8 +176,8 @@ const Marketplace = () =>{
                             title={items.title}
                             difficultyTag={items.difficulty}
                             subjectTag={items.subject}
-                            rating={items.rating || "0"}
-                            numberOfReviews={items.numberOfReviews || "none"}
+                            rating={items.avgRating|| "-"}
+                            numberOfReviews={items.reviewCount || "none"}
                             items={items.itemNumber}
                             onPreview={() => openPreviewFor(items.publicSetId)}
                             publicSetId={items.publicSetId}

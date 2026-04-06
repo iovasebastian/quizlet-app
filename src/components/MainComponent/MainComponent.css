@@ -198,6 +198,30 @@ img {
     opacity: 1;
 }
 
+.headerReview{
+    text-align: center;
+}
+
+.starReviewDiv{
+    padding-bottom: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5em;
+}
+
+.mainStarReviewDiv{
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1em;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
 
 @keyframes slideDownUp {
     0% { top: -10rem; }
@@ -208,6 +232,11 @@ img {
 
 @media screen and (max-width: 768px) {
     .container-main {
+        width: 90%;
+        padding: 1em;
+    }
+
+    .mainStarReviewDiv{
         width: 90%;
         padding: 1em;
     }
